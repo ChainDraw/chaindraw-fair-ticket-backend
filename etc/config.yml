@@ -6,7 +6,7 @@ server:
 zap:
   level: info
   format: console
-  prefix: "[Phospherus]"
+  prefix: "[ChainDraw]"
   director: logs
   show-line: true
   encode-level: LowercaseColorLevelEncoder
