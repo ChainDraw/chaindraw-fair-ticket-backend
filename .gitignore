@@ -3,6 +3,8 @@ tmp
 gohub
 .DS_Store
 .history
+vendor/
+
 
 # Golang #
 ######################
