@@ -59,3 +59,35 @@ go get github.com/cosmtrek/air
 
 go install github.com/cosmtrek/air
 ```
+
+## 开发规范
+
+### 命名相关规范
+
+接口请使用 RestFul 风格，比如 `GET /api/v1/user/:id`
+
+### 开发注意事项
+
+1. 如果可以，请创建自己要实现模块的分支(不要在main分支提交代码)，名称以模块名定义，比如 `feature-login`
+    
+    ```shell
+    git clone git@github.com:ChainDraw/chaindraw-fair-ticket-backend.git
+
+    # 新建并切换分支为 feature-login
+    git checkout -b feature-login
+
+    # 提交时直接提交到远程的相应分支
+    git push origin feature-login
+    ```
+
+    最后分支的合并可大家一起看看实现
+
+2. 业务逻辑不是非常复杂，可以直接在 service 调用 gorm 操作
+
+3. api 目录下区分前后台 `console` 和 `chaindraw`，其余 service model 等部分不需要像 api 目录下区分 `console` 和 `chaindraw`
+
+4. 每一个功能尽量以单独的 go 文件存在，这样能尽最大可能避免 git 冲突
+
+5. 文件名称以小写开头，多个单词以下划线 `_` 分隔，比如 `get_user_list.go`
+
+6. 测试文件单独放在项目的 `test` 目录下，比如 `test/get_user_list_test.go`
