@@ -1,6 +1,7 @@
 package router
 
 import (
+	"chaindraw-fair-ticket-backend/api/v1/user"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -27,6 +28,13 @@ func Router() *gin.Engine {
 	chaindrawApiGroup := apiGroup.Group("chaindraw")
 	{
 		chaindrawApiGroup.GET("ticket")
+	}
+
+	// 用户逻辑相关 路由组
+	userApiGroup := apiGroup.Group("user")
+	{
+		userApiGroup.POST("login", user.Login)
+		userApiGroup.POST("register", user.Register)
 	}
 
 	return r
