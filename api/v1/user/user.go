@@ -9,7 +9,7 @@ import (
 	"chaindraw-fair-ticket-backend/global"
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
-	user "chaindraw-fair-ticket-backend/service"
+	"chaindraw-fair-ticket-backend/service"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"net/http"
@@ -26,7 +26,7 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	err = user.Login(req)
+	err = service.Login(req)
 	if err != nil {
 		global.LOGGER.Error("login logic failed", zap.Any("req", req), zap.Error(err))
 		ctx.JSON(http.StatusBadRequest, resp)
@@ -46,7 +46,7 @@ func Register(ctx *gin.Context) {
 		return
 	}
 
-	err = user.Register(req)
+	err = service.Register(req)
 	if err != nil {
 		global.LOGGER.Error("Register logic failed", zap.Any("req", req), zap.Error(err))
 		ctx.JSON(http.StatusBadRequest, resp)
