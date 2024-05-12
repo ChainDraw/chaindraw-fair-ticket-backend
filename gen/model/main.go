@@ -1,7 +1,9 @@
 package main
 
 import (
+	"chaindraw-fair-ticket-backend/core"
 	"chaindraw-fair-ticket-backend/global"
+	"chaindraw-fair-ticket-backend/initialize"
 	"gorm.io/gen"
 	"gorm.io/gorm"
 	"strings"
@@ -9,6 +11,9 @@ import (
 
 // 根据库表重新生成数据库model
 func main() {
+	core.Viper()
+	global.DB = initialize.Gorm()
+
 	g := gen.NewGenerator(gen.Config{
 		OutPath: "model",
 		Mode:    gen.WithoutContext | gen.WithDefaultQuery | gen.WithQueryInterface, // generate mode

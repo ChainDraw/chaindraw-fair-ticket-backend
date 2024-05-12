@@ -38,8 +38,8 @@ CREATE TABLE tb_ticket
 (
     id                      BIGINT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
     concert_id              VARCHAR(255)   NOT NULL,
-    ticket_type             VARCHAR(255)   NOT NULL,
-    type_name               INT            NOT NULL, -- 0: 普通 1: 高级 2: vip
+    ticket_type             INT            NOT NULL, -- 0: 普通 1: 高级 2: vip
+    type_name               VARCHAR(255)   NOT NULL,
     price                   DECIMAL(10, 2) NOT NULL,
     max_quantity_per_wallet INT            NOT NULL,
     create_at               BIGINT         NOT NULL,

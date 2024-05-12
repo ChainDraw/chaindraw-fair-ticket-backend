@@ -12,15 +12,17 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"net/http"
+	"strings"
 )
 
 func ConcertList(ctx *gin.Context) {
 	resp := &commonresp.ConcertListResponse{}
-	ids := ctx.Query("ids")
+	ids := strings.Split(ctx.Query("ids"), ",")
+	concerts, err := service.ConcertList(ids)
 
-	err := service.ConcertList(ids)
+	resp.Result = concerts
 	if err != nil {
-		global.LOGGER.Error("query concerts logic failed", zap.String("ids", ids), zap.Error(err))
+		global.LOGGER.Error("query concerts logic failed", zap.Any("ids", ids), zap.Error(err))
 		ctx.JSON(http.StatusBadRequest, resp)
 	}
 
