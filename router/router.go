@@ -1,6 +1,7 @@
 package router
 
 import (
+	"chaindraw-fair-ticket-backend/api/v1/chaindraw"
 	"chaindraw-fair-ticket-backend/api/v1/user"
 	"net/http"
 
@@ -28,6 +29,8 @@ func Router() *gin.Engine {
 	chaindrawApiGroup := apiGroup.Group("chaindraw")
 	{
 		chaindrawApiGroup.GET("ticket")
+		chaindrawApiGroup.POST("lottery_record", chaindraw.LotteryRecordAdd)
+		chaindrawApiGroup.GET("concert_list", chaindraw.ConcertList)
 	}
 
 	// 用户逻辑相关 路由组
