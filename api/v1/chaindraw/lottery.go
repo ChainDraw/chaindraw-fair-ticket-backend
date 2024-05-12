@@ -12,7 +12,6 @@ import (
 	"chaindraw-fair-ticket-backend/service"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"net/http"
 )
 
 func LotteryRecordAdd(ctx *gin.Context) {
@@ -22,15 +21,15 @@ func LotteryRecordAdd(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(req)
 	if err != nil {
 		global.LOGGER.Info("LotteryRecordAdd failed,bind json params failed", zap.Any("req", req))
-		ctx.JSON(http.StatusBadRequest, resp)
+		commonresp.FailWithMessage(ctx, "参数绑定失败")
 		return
 	}
 
 	err = service.LotteryRecordAdd(req)
 	if err != nil {
 		global.LOGGER.Error("LotteryRecordAdd logic failed", zap.Any("req", req), zap.Error(err))
-		ctx.JSON(http.StatusBadRequest, resp)
+		commonresp.FailWithMessage(ctx, "抽票失败")
 	}
 
-	ctx.JSON(http.StatusOK, resp)
+	commonresp.OkWithData(ctx, resp)
 }
