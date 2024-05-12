@@ -1,6 +1,7 @@
 package router
 
 import (
+	v1 "chaindraw-fair-ticket-backend/api/v1"
 	"chaindraw-fair-ticket-backend/api/v1/chaindraw"
 	"chaindraw-fair-ticket-backend/api/v1/user"
 	"net/http"
@@ -10,7 +11,7 @@ import (
 
 func Router() *gin.Engine {
 	r := gin.Default()
-
+	r.Use(v1.CORSMiddleware())
 	r.NoRoute(func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"message": "404 PAGE NOT FOUND!",
@@ -38,6 +39,9 @@ func Router() *gin.Engine {
 	{
 		userApiGroup.POST("login", user.Login)
 		userApiGroup.POST("register", user.Register)
+		userApiGroup.POST("nonce", user.Nonce)
+		userApiGroup.POST("verify", user.Verify)
+		userApiGroup.POST("personal_information", user.PersonalInformation)
 	}
 
 	return r
