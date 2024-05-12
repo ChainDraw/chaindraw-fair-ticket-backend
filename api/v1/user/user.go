@@ -19,6 +19,19 @@ import (
 func Login(ctx *gin.Context) {
 	req := &commonreq.LoginReq{}
 	resp := &commonresp.LoginResp{}
+	// 提交测试后的响应参考
+	// resp := &commonresp.LoginResp{
+	// 	Code:      200,
+	// 	Status:    "success",
+	// 	Msg:       "User login successful",
+	// 	Reason:    "",
+	// 	RequestID: "987654321",
+	// 	Result: struct {
+	// 		UserID string `json:"userid"`
+	// 	}{
+	// 		UserID: "987654321",
+	// 	},
+	// }
 
 	err := ctx.ShouldBindJSON(req)
 	if err != nil {
