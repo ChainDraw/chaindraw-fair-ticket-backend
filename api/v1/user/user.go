@@ -10,9 +10,10 @@ import (
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
 	user "chaindraw-fair-ticket-backend/service"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"net/http"
 )
 
 func Login(ctx *gin.Context) {
