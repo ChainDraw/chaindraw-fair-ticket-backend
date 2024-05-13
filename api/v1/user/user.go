@@ -26,6 +26,11 @@ func getSession(c *gin.Context) *sessions.Session {
 	return session
 }
 
+// @Summary Generate nonce
+// @Description Generate nonce for session
+// @Produce json
+// @Success 200 {string} string "Nonce generated successfully"
+// @Router /user/nonce [get]
 func Nonce(c *gin.Context) {
 	session := getSession(c)
 	nonce := siwe.GenerateNonce()
@@ -39,6 +44,14 @@ func Nonce(c *gin.Context) {
 	commonresp.OkWithData(c, nonce)
 }
 
+// @Summary Verify signature
+// @Description Verify signature with message and nonce
+// @Produce json
+// @Param message formData string true "Message"
+// @Param signature formData string true "Signature"
+// @Success 200 {boolean} boolean "Verification success"
+// @Failure 400 {string} string "Verification failed"
+// @Router /user/verify [post]
 func Verify(c *gin.Context) {
 	session := getSession(c)
 	message := c.PostForm("message")
@@ -94,6 +107,12 @@ func Verify(c *gin.Context) {
 	commonresp.OkWithData(c, true)
 }
 
+// @Summary Get personal information
+// @Description Get personal information
+// @Produce json
+// @Success 200 {string} string "Personal information retrieved successfully"
+// @Failure 401 {string} string "Unauthorized"
+// @Router /user/personal_information [get]
 func PersonalInformation(c *gin.Context) {
 	session := getSession(c)
 	siweData := session.Values["siwe"]

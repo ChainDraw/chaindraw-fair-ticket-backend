@@ -4,9 +4,12 @@ import (
 	v1 "chaindraw-fair-ticket-backend/api/v1"
 	"chaindraw-fair-ticket-backend/api/v1/chaindraw"
 	"chaindraw-fair-ticket-backend/api/v1/user"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
+	_ "chaindraw-fair-ticket-backend/docs" // 导入自动生成的文档
+	"net/http"
 )
 
 func Router() *gin.Engine {
@@ -17,6 +20,8 @@ func Router() *gin.Engine {
 			"message": "404 PAGE NOT FOUND!",
 		})
 	})
+	// 集成 Swagger UI
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	apiGroup := r.Group("/api/v1")
 
@@ -39,9 +44,9 @@ func Router() *gin.Engine {
 	{
 		userApiGroup.POST("login", user.Login)
 		userApiGroup.POST("register", user.Register)
-		userApiGroup.POST("nonce", user.Nonce)
+		userApiGroup.GET("nonce", user.Nonce)
 		userApiGroup.POST("verify", user.Verify)
-		userApiGroup.POST("personal_information", user.PersonalInformation)
+		userApiGroup.GET("personal_information", user.PersonalInformation)
 	}
 
 	return r
