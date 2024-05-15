@@ -19,10 +19,11 @@ import (
 	"time"
 )
 
-var store = sessions.NewCookieStore([]byte("siwe-quickstart-secret"))
+var Store = sessions.NewCookieStore([]byte("siwe-quickstart-secret"))
 
 func getSession(c *gin.Context) *sessions.Session {
-	session, _ := store.Get(c.Request, "siwe-quickstart")
+
+	session, _ := Store.Get(c.Request, "siwe-quickstart")
 	return session
 }
 
