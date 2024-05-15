@@ -5,6 +5,7 @@ import (
 	"chaindraw-fair-ticket-backend/api/v1/chaindraw"
 	"chaindraw-fair-ticket-backend/api/v1/user"
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/sessions"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
@@ -20,6 +21,16 @@ func Router() *gin.Engine {
 			"message": "404 PAGE NOT FOUND!",
 		})
 	})
+
+	// 设置会话选项
+	user.Store.Options = &sessions.Options{
+		Path:     "/",
+		MaxAge:   86400 * 7, // 一周
+		HttpOnly: true,
+		SameSite: http.SameSiteStrictMode,
+		Secure:   false, // 设置为 true 时，仅允许在 HTTPS 连接中使用
+	}
+
 	// 集成 Swagger UI
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
@@ -35,15 +46,15 @@ func Router() *gin.Engine {
 	chaindrawApiGroup := apiGroup.Group("chaindraw")
 	{
 		chaindrawApiGroup.GET("ticket")
-		chaindrawApiGroup.POST("lottery_record", chaindraw.LotteryRecordAdd)
+		//chaindrawApiGroup.POST("lottery_record", chaindraw.LotteryRecordAdd)
 		chaindrawApiGroup.GET("concert_list", chaindraw.ConcertList)
 	}
 
 	// 用户逻辑相关 路由组
 	userApiGroup := apiGroup.Group("user")
 	{
-		userApiGroup.POST("login", user.Login)
-		userApiGroup.POST("register", user.Register)
+		//userApiGroup.POST("login", user.Login)
+		//userApiGroup.POST("register", user.Register)
 		userApiGroup.GET("nonce", user.Nonce)
 		userApiGroup.POST("verify", user.Verify)
 		userApiGroup.GET("personal_information", user.PersonalInformation)
