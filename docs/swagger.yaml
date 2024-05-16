@@ -35,18 +35,17 @@ paths:
       summary: Get personal information
   /user/verify:
     post:
+      consumes:
+      - application/json
       description: Verify signature with message and nonce
       parameters:
-      - description: Message
-        in: formData
-        name: message
+      - description: Request body
+        in: body
+        name: request
         required: true
-        type: string
-      - description: Signature
-        in: formData
-        name: signature
-        required: true
-        type: string
+        schema:
+          $ref: '#/definitions/%7Bobject%7D'
+          type: object
       produces:
       - application/json
       responses:

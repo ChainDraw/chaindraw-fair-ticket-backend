@@ -22,7 +22,6 @@ import (
 var Store = sessions.NewCookieStore([]byte("siwe-quickstart-secret"))
 
 func getSession(c *gin.Context) *sessions.Session {
-
 	session, _ := Store.Get(c.Request, "siwe-quickstart")
 	return session
 }
@@ -36,6 +35,7 @@ func Nonce(c *gin.Context) {
 	session := getSession(c)
 	nonce := siwe.GenerateNonce()
 	session.Values["nonce"] = nonce
+
 	err := session.Save(c.Request, c.Writer)
 	if err != nil {
 		global.LOGGER.Info("session save failed")
@@ -45,33 +45,43 @@ func Nonce(c *gin.Context) {
 	commonresp.OkWithData(c, nonce)
 }
 
+type RequestBody struct {
+	Message   string `json:"message"`
+	Signature string `json:"signature"`
+}
+
 // @Summary Verify signature
 // @Description Verify signature with message and nonce
 // @Produce json
-// @Param message formData string true "Message"
-// @Param signature formData string true "Signature"
+// @Accept json
+// @Param request body RequestBody true "Request body"
 // @Success 200 {boolean} boolean "Verification success"
 // @Failure 400 {string} string "Verification failed"
 // @Router /user/verify [post]
 func Verify(c *gin.Context) {
 	session := getSession(c)
-	message := c.PostForm("message")
-	signature := c.PostForm("signature")
+	nonce, ok := session.Values["nonce"].(string)
+	println(nonce)
+	var requestBody RequestBody
+	if err := c.BindJSON(&requestBody); err != nil {
+		commonresp.FailWithMessage(c, fmt.Sprintf("Invalid request body", err.Error()))
+		return
+	}
 
-	siweObj, err := siwe.ParseMessage(message)
+	siweObj, err := siwe.ParseMessage(requestBody.Message)
 	if err != nil {
 		global.LOGGER.Info("siwe ParseMessage failed")
 		commonresp.FailWithMessage(c, err.Error())
 		return
 	}
-	var domain = "example.com"
-	nonce, ok := session.Values["nonce"].(string)
+	//var domain = "example.com"
+	nonce, ok = session.Values["nonce"].(string)
 	if !ok {
 		global.LOGGER.Info("session get nonce failed")
 		commonresp.FailWithMessage(c, "session get nonce failed")
 		return
 	}
-	pubKey, err := siweObj.Verify(signature, &domain, &nonce, nil)
+	pubKey, err := siweObj.Verify(requestBody.Signature, nil, &nonce, nil)
 	if err != nil {
 		global.LOGGER.Info("siweObj verify failed")
 		commonresp.FailWithMessage(c, "siweObj verify failed")
@@ -121,7 +131,7 @@ func PersonalInformation(c *gin.Context) {
 		commonresp.FailWithMessage(c, "You have to first sign_in")
 		return
 	}
-
+	//siweObj, err := siwe.ParseMessage(siweData)
 	commonresp.OkWithData(c, fmt.Sprintf("You are authenticated and your address is: %s", siweData.(string)))
 }
 func Login(ctx *gin.Context) {
@@ -141,6 +151,20 @@ func Login(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, resp)
+}
+
+func SessionDemo(ctx *gin.Context) {
+	session := getSession(ctx)
+	ty := ctx.Query("type")
+	if ty == "0" { // 存
+		// 存储一个值到会话中
+		session.Values["key"] = "value"
+		session.Save(ctx.Request, ctx.Writer)
+	} else { // 取
+		// 从会话中检索一个值
+		value := session.Values["key"].(string)
+		fmt.Printf("Value: %s", value)
+	}
 }
 
 func Register(ctx *gin.Context) {

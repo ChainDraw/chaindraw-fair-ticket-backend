@@ -53,24 +53,23 @@
         "/user/verify": {
             "post": {
                 "description": "Verify signature with message and nonce",
+                "consumes": [
+                    "application/json"
+                ],
                 "produces": [
                     "application/json"
                 ],
                 "summary": "Verify signature",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "Message",
-                        "name": "message",
-                        "in": "formData",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Signature",
-                        "name": "signature",
-                        "in": "formData",
-                        "required": true
+                        "description": "Request body",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/%7Bobject%7D"
+                        }
                     }
                 ],
                 "responses": {

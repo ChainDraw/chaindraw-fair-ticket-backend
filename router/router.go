@@ -58,6 +58,9 @@ func Router() *gin.Engine {
 		userApiGroup.GET("nonce", user.Nonce)
 		userApiGroup.POST("verify", user.Verify)
 		userApiGroup.GET("personal_information", user.PersonalInformation)
+
+		userApiGroup.GET("session_test", user.SessionDemo)
+
 	}
 
 	return r
