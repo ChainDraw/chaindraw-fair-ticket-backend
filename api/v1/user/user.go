@@ -10,6 +10,7 @@ import (
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
 	"chaindraw-fair-ticket-backend/service"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
@@ -61,8 +62,6 @@ type RequestBody struct {
 // @Router /user/verify [post]
 func Verify(c *gin.Context) {
 	session := getSession(c)
-	nonce, ok := session.Values["nonce"].(string)
-	println(nonce)
 	var requestBody RequestBody
 	if err := c.BindJSON(&requestBody); err != nil {
 		commonresp.FailWithMessage(c, fmt.Sprintf("Invalid request body", err.Error()))
@@ -75,21 +74,41 @@ func Verify(c *gin.Context) {
 		commonresp.FailWithMessage(c, err.Error())
 		return
 	}
-	//var domain = "example.com"
-	nonce, ok = session.Values["nonce"].(string)
+
+	nonce, ok := session.Values["nonce"].(string)
 	if !ok {
 		global.LOGGER.Info("session get nonce failed")
 		commonresp.FailWithMessage(c, "session get nonce failed")
 		return
 	}
-	pubKey, err := siweObj.Verify(requestBody.Signature, nil, &nonce, nil)
+	_, err = siweObj.Verify(requestBody.Signature, nil, &nonce, nil)
 	if err != nil {
 		global.LOGGER.Info("siweObj verify failed")
 		commonresp.FailWithMessage(c, "siweObj verify failed")
 		return
 	}
-	session.Values["siwe"] = pubKey
-	session.Options = &sessions.Options{MaxAge: 0, Path: "/", HttpOnly: true, Secure: false, SameSite: 0}
+
+	msgJSON := commonreq.SiweMessage{
+		Domain:         siweObj.GetDomain(),
+		Address:        siweObj.GetAddress(),
+		Uri:            siweObj.GetURI(),
+		Version:        siweObj.GetVersion(),
+		Statement:      siweObj.GetStatement(),
+		Nonce:          siweObj.GetNonce(),
+		ChainID:        siweObj.GetChainID(),
+		IssuedAt:       siweObj.GetIssuedAt(),
+		ExpirationTime: siweObj.GetExpirationTime(),
+		NotBefore:      siweObj.GetNotBefore(),
+		RequestID:      siweObj.GetRequestID(),
+		Resources:      siweObj.GetResources(),
+	}
+
+	jsonString, err := json.Marshal(msgJSON)
+	if err != nil {
+		global.LOGGER.Error("siweObj transfer JSON failed", zap.Error(err))
+		return
+	}
+	session.Values["siwe"] = string(jsonString)
 
 	expireTimeStr := *siweObj.GetExpirationTime()
 	expireTime, err := time.Parse(time.RFC3339, expireTimeStr)
@@ -132,9 +151,43 @@ func PersonalInformation(c *gin.Context) {
 		commonresp.FailWithMessage(c, "You have to first sign_in")
 		return
 	}
-	//siweObj, err := siwe.ParseMessage(siweData)
-	commonresp.OkWithData(c, fmt.Sprintf("You are authenticated and your address is: %s", siweData.(string)))
+	siweDatastr := siweData.(string)
+	siweResp := &commonreq.SiweMessage{}
+	err := json.Unmarshal([]byte(siweDatastr), siweResp)
+	if err != nil {
+		global.LOGGER.Error("siwe data unmarshal failed", zap.Error(err))
+		commonresp.FailWithMessage(c, "siwe data unmarshal failed")
+		return
+	}
+	commonresp.OkWithData(c, siweResp)
 }
+
+// @Summary Get personal information
+// @Description Get personal information
+// @Produce json
+// @Success 200 {string} string "logout retrieved successfully"
+// @Failure 401 {string} string "Unauthorized"
+// @Router /user/logout [get]
+func Logout(c *gin.Context) {
+	session := getSession(c)
+	siweData := session.Values["siwe"]
+	if siweData == nil {
+		commonresp.FailWithMessage(c, "You have to first sign_in")
+		return
+	}
+
+	// 删除会话中的 siwe 数据
+	delete(session.Values, "siwe")
+	err := session.Save(c.Request, c.Writer)
+	if err != nil {
+		global.LOGGER.Error("session save failed", zap.Error(err))
+		commonresp.FailWithMessage(c, "session save failed")
+		return
+	}
+
+	commonresp.OkWithData(c, true)
+}
+
 func Login(ctx *gin.Context) {
 	req := &commonreq.LoginReq{}
 	resp := &commonresp.LoginResp{}

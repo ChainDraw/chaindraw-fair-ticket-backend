@@ -10,6 +10,29 @@
     "host": "{{.Host}}",
     "basePath": "/api/v1",
     "paths": {
+        "/user/logout": {
+            "get": {
+                "description": "Get personal information",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get personal information",
+                "responses": {
+                    "200": {
+                        "description": "logout retrieved successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/user/nonce": {
             "get": {
                 "description": "Generate nonce for session",
@@ -68,7 +91,7 @@
                         "required": true,
                         "schema": {
                             "type": "object",
-                            "$ref": "#/definitions/%7Bobject%7D"
+                            "$ref": "#/definitions/RequestBody"
                         }
                     }
                 ],

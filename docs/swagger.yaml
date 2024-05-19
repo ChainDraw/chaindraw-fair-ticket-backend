@@ -7,6 +7,21 @@ info:
   title: Your Project API
   version: "1.0"
 paths:
+  /user/logout:
+    get:
+      description: Get personal information
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: logout retrieved successfully
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      summary: Get personal information
   /user/nonce:
     get:
       description: Generate nonce for session
@@ -44,7 +59,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/%7Bobject%7D'
+          $ref: '#/definitions/RequestBody'
           type: object
       produces:
       - application/json
