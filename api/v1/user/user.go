@@ -160,6 +160,33 @@ func PersonalInformation(c *gin.Context) {
 	}
 	commonresp.OkWithData(c, siweResp)
 }
+
+// @Summary Get personal information
+// @Description Get personal information
+// @Produce json
+// @Success 200 {string} string "logout retrieved successfully"
+// @Failure 401 {string} string "Unauthorized"
+// @Router /user/logout [get]
+func Logout(c *gin.Context) {
+	session := getSession(c)
+	siweData := session.Values["siwe"]
+	if siweData == nil {
+		commonresp.FailWithMessage(c, "You have to first sign_in")
+		return
+	}
+
+	// 删除会话中的 siwe 数据
+	delete(session.Values, "siwe")
+	err := session.Save(c.Request, c.Writer)
+	if err != nil {
+		global.LOGGER.Error("session save failed", zap.Error(err))
+		commonresp.FailWithMessage(c, "session save failed")
+		return
+	}
+
+	commonresp.OkWithData(c, true)
+}
+
 func Login(ctx *gin.Context) {
 	req := &commonreq.LoginReq{}
 	resp := &commonresp.LoginResp{}
