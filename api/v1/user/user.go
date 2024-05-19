@@ -9,23 +9,15 @@ import (
 	"chaindraw-fair-ticket-backend/global"
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
-<<<<<<< HEAD
-	user "chaindraw-fair-ticket-backend/service"
-	"net/http"
-
-=======
 	"chaindraw-fair-ticket-backend/service"
 	"fmt"
->>>>>>> dev
+	"net/http"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
 	"github.com/spruceid/siwe-go"
 	"go.uber.org/zap"
-<<<<<<< HEAD
-=======
-	"net/http"
-	"time"
->>>>>>> dev
 )
 
 var Store = sessions.NewCookieStore([]byte("siwe-quickstart-secret"))
@@ -146,23 +138,6 @@ func PersonalInformation(c *gin.Context) {
 func Login(ctx *gin.Context) {
 	req := &commonreq.LoginReq{}
 	resp := &commonresp.LoginResp{}
-<<<<<<< HEAD
-	// 提交测试后的响应参考
-	// resp := &commonresp.LoginResp{
-	// 	Code:      200,
-	// 	Status:    "success",
-	// 	Msg:       "User login successful",
-	// 	Reason:    "",
-	// 	RequestID: "987654321",
-	// 	Result: struct {
-	// 		UserID string `json:"userid"`
-	// 	}{
-	// 		UserID: "987654321",
-	// 	},
-	// }
-
-=======
->>>>>>> dev
 	err := ctx.ShouldBindJSON(req)
 	if err != nil {
 		global.LOGGER.Info("login failed,bind json params failed", zap.Any("req", req))
