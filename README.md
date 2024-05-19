@@ -66,6 +66,21 @@ go install github.com/cosmtrek/air
 
 接口请使用 RestFul 风格，比如 `GET /api/v1/user/:id`
 
+## 运行
+启动后访问 localhost:8080
+
+手动
+```shell
+cd chaindraw-fair-ticket-backend
+go run ./main.go
+```
+
+热启动
+```shell
+air
+```
+
+
 ### 开发注意事项
 
 1. 如果可以，请创建自己要实现模块的分支(不要在main分支提交代码)，名称以模块名定义，比如 `feature-login`

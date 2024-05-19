@@ -3,6 +3,7 @@ package router
 import (
 	v1 "chaindraw-fair-ticket-backend/api/v1"
 	"chaindraw-fair-ticket-backend/api/v1/chaindraw"
+	"chaindraw-fair-ticket-backend/api/v1/concert"
 	"chaindraw-fair-ticket-backend/api/v1/user"
 
 	"github.com/gin-gonic/gin"
@@ -49,6 +50,13 @@ func Router() *gin.Engine {
 		chaindrawApiGroup.GET("ticket")
 		//chaindrawApiGroup.POST("lottery_record", chaindraw.LotteryRecordAdd)
 		chaindrawApiGroup.GET("concert_list", chaindraw.ConcertList)
+	}
+
+	// 演唱会
+	concertApiGroup := apiGroup.Group("concert")
+	{
+		concertApiGroup.GET("commit", concert.ConcertAdd)    //演唱会主办方提交信息
+		concertApiGroup.GET("review", concert.ReviewConcert) //演唱会审核
 	}
 
 	// 用户逻辑相关 路由组
