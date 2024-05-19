@@ -4,6 +4,7 @@ import (
 	v1 "chaindraw-fair-ticket-backend/api/v1"
 	"chaindraw-fair-ticket-backend/api/v1/chaindraw"
 	"chaindraw-fair-ticket-backend/api/v1/user"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
 	swaggerFiles "github.com/swaggo/files"
