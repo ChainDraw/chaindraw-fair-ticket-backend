@@ -1,0 +1,61 @@
+basePath: /api/v1
+host: '{{.Host}}'
+info:
+  contact: {}
+  description: This is a sample API for Your Project using Gin and Swagger
+  license: {}
+  title: Your Project API
+  version: "1.0"
+paths:
+  /user/nonce:
+    get:
+      description: Generate nonce for session
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Nonce generated successfully
+          schema:
+            type: string
+      summary: Generate nonce
+  /user/personal_information:
+    get:
+      description: Get personal information
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Personal information retrieved successfully
+          schema:
+            type: string
+        "401":
+          description: Unauthorized
+          schema:
+            type: string
+      summary: Get personal information
+  /user/verify:
+    post:
+      consumes:
+      - application/json
+      description: Verify signature with message and nonce
+      parameters:
+      - description: Request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/%7Bobject%7D'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Verification success
+          schema:
+            type: boolean
+        "400":
+          description: Verification failed
+          schema:
+            type: string
+      summary: Verify signature
+swagger: "2.0"

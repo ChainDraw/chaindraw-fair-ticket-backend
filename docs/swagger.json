@@ -1,0 +1,92 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample API for Your Project using Gin and Swagger",
+        "title": "Your Project API",
+        "contact": {},
+        "license": {},
+        "version": "1.0"
+    },
+    "host": "{{.Host}}",
+    "basePath": "/api/v1",
+    "paths": {
+        "/user/nonce": {
+            "get": {
+                "description": "Generate nonce for session",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Generate nonce",
+                "responses": {
+                    "200": {
+                        "description": "Nonce generated successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/personal_information": {
+            "get": {
+                "description": "Get personal information",
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get personal information",
+                "responses": {
+                    "200": {
+                        "description": "Personal information retrieved successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/verify": {
+            "post": {
+                "description": "Verify signature with message and nonce",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Verify signature",
+                "parameters": [
+                    {
+                        "description": "Request body",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/%7Bobject%7D"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Verification success",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    "400": {
+                        "description": "Verification failed",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
