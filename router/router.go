@@ -27,7 +27,7 @@ func Router() *gin.Engine {
 		Path:     "/",
 		MaxAge:   86400 * 7, // 一周
 		HttpOnly: true,
-		SameSite: http.SameSiteLaxMode,
+		SameSite: http.SameSiteDefaultMode,
 		Secure:   false, // 设置为 true 时，仅允许在 HTTPS 连接中使用
 	}
 

@@ -61,8 +61,6 @@ type RequestBody struct {
 // @Router /user/verify [post]
 func Verify(c *gin.Context) {
 	session := getSession(c)
-	nonce, ok := session.Values["nonce"].(string)
-	println(nonce)
 	var requestBody RequestBody
 	if err := c.BindJSON(&requestBody); err != nil {
 		commonresp.FailWithMessage(c, fmt.Sprintf("Invalid request body", err.Error()))
@@ -76,8 +74,7 @@ func Verify(c *gin.Context) {
 		return
 	}
 
-	//var domain = "example.com"
-	nonce, ok = session.Values["nonce"].(string)
+	nonce, ok := session.Values["nonce"].(string)
 	if !ok {
 		global.LOGGER.Info("session get nonce failed")
 		commonresp.FailWithMessage(c, "session get nonce failed")
