@@ -35,7 +35,3 @@ func ConcertAdd(ctx *gin.Context) {
 
 	commonresp.OkWithData(ctx, resp)
 }
-
-func ReviewConcert(ctx *gin.Context) {
-	/*待完善*/
-}

@@ -55,8 +55,7 @@ func Router() *gin.Engine {
 	// 演唱会
 	concertApiGroup := apiGroup.Group("concert")
 	{
-		concertApiGroup.GET("commit", concert.ConcertAdd)    //演唱会主办方提交信息
-		concertApiGroup.GET("review", concert.ReviewConcert) //演唱会审核
+		concertApiGroup.POST("commit", concert.ConcertAdd) //演唱会主办方提交信息
 	}
 
 	// 用户逻辑相关 路由组
