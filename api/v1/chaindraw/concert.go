@@ -35,8 +35,15 @@ func ConcertList(ctx *gin.Context) {
 func ReviewConcert(ctx *gin.Context) {
 	req := &commonreq.ConcertReViewReq{}
 	resp := &commonresp.ConcertListResponse{}
-	concerts, err := service.ConcertReview(req)
 
+	err := ctx.ShouldBindJSON(req)
+	if err != nil {
+		global.LOGGER.Info("ReviewConcert failed, bind json params failed", zap.Any("req", req))
+		commonresp.FailWithMessage(ctx, "参数绑定失败")
+		return
+	}
+
+	concerts, err := service.ConcertReview(req)
 	resp.Result = concerts
 	if err != nil {
 		global.LOGGER.Error("review concerts logic failed", zap.Error(err))
