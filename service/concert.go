@@ -30,7 +30,7 @@ func ConcertList(ids []string) ([]commonresp.Concert, error) {
 
 func ConcertReview(concertViewRecord *commonreq.ConcertReViewReq) ([]commonresp.Concert, error) {
 	res := make([]commonresp.Concert, 0)
-	global.DB.Model(&model.TbConcert{}).Where("concert_id = ?", concertViewRecord.ConcertID).Update("concert_status", 1)
+	global.DB.Model(&model.TbConcert{}).Where("concert_id = ?", concertViewRecord.ConcertID).Update("concert_status", concertViewRecord.Pass)
 
 	if global.DB.RowsAffected == 0 {
 		return res, global.DB.Error
