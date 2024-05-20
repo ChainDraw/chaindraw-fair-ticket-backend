@@ -91,3 +91,4 @@ go install github.com/cosmtrek/air
 5. 文件名称以小写开头，多个单词以下划线 `_` 分隔，比如 `get_user_list.go`
 
 6. 测试文件单独放在项目的 `test` 目录下，比如 `test/get_user_list_test.go`
+

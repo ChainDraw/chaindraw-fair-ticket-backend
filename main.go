@@ -6,6 +6,10 @@ import (
 	"chaindraw-fair-ticket-backend/initialize"
 )
 
+// @title Your Project API
+// @version 1.0
+// @description This is a sample API for Your Project using Gin and Swagger
+// @BasePath /api/v1
 func main() {
 	// 加载配置文件
 	core.Viper()

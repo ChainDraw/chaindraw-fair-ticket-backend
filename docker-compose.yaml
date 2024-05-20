@@ -1,0 +1,33 @@
+version: '3.3'
+
+services:
+  redis:
+    image: redis
+    container_name: chaindraw-redis
+    ports:
+      - "6379:6379"
+
+  mysql:
+    image: mysql
+    container_name: chaindraw-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: chaindraw_fair_ticket
+    volumes:
+      - ./manifest/deploy/sql/init_database.sql:/docker-entrypoint-initdb.d/init.sql
+  myapp:
+    build:
+      context: .
+    privileged: true
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: "3306"
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DBNAME: chaindraw_fair_ticket
