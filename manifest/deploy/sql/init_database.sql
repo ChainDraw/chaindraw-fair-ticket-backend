@@ -28,7 +28,7 @@ CREATE TABLE tb_concert (
     -- 演唱会时间
     concert_status INT NOT NULL,
     -- 0: 未开始 1：已过期 2、已取消
-    status VARCHAR(255) NOT NULL,
+    status INT NOT NULL,
     CREATE_at BIGINT NOT NULL,
     update_at BIGINT NOT NULL
 );
