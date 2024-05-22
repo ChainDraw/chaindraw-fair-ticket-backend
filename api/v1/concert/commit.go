@@ -44,3 +44,31 @@ func ConcertAdd(ctx *gin.Context) {
 
 	commonresp.OkWithData(ctx, resp)
 }
+
+// @Summary  update concert
+// @Description update concert
+// @Tags Concert
+// @Accept  json
+// @Produce  json
+// @Param   ConcertId      query    int     true  "Comma-separated list of concert IDs"
+// @Param   ConcertStatus    query    int        false "演唱会状态（0: 未开始, 1: 已过期, 2: 已取消）"
+// @Param   ReviewStatus     query    int        false "审核状态（0: 未审核, 1: 审核通过, 2: 审核失败）"
+// @Success 200 {object} commonresp.CommitResp
+// @Failure 400 {object} commonresp.CommitResp
+// @Router /concert_add [post]
+func ConcertStatusUpdate(ctx *gin.Context) {
+	req := &commonreq.ConcertAddReq{}
+	resp := &commonresp.CommitResp{}
+
+	concertId := ctx.Query("concert_id")
+	reviewStatus := ctx.Query("review_status")
+	concertStatus := ctx.Query("concert_status")
+
+	err := service.ConcertStatusUpdate(concertId, reviewStatus, concertStatus)
+	if err != nil {
+		global.LOGGER.Error("ConcertAdd logic failed", zap.Any("req", req), zap.Error(err))
+		commonresp.FailWithMessage(ctx, "抽票失败")
+	}
+
+	commonresp.OkWithData(ctx, resp)
+}

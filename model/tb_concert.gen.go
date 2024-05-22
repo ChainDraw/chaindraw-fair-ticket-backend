@@ -13,8 +13,8 @@ type TbConcert struct {
 	ConcertName   string `gorm:"column:concert_name;not null" json:"concertName"`
 	ConcertImgURL string `gorm:"column:concert_img_url;not null" json:"concertImgUrl"`
 	ConcertDate   int64  `gorm:"column:concert_date;not null" json:"concertDate"`
-	ConcertStatus int64  `gorm:"column:concert_status;not null" json:"concertStatus"`
-	Status        string `gorm:"column:status;not null" json:"status"`
+	ConcertStatus int  `gorm:"column:concert_status;not null" json:"concertStatus"`
+	Status        int `gorm:"column:status;not null" json:"status"`
 	CreateAt      int64  `gorm:"column:create_at;not null" json:"createAt"`
 	UpdateAt      int64  `gorm:"column:update_at;not null" json:"updateAt"`
 }
