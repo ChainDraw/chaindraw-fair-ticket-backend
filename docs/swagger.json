@@ -10,6 +10,144 @@
     "host": "{{.Host}}",
     "basePath": "/api/v1",
     "paths": {
+        "/concert_add": {
+            "post": {
+                "description": "Add a new concert with the given details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Concert"
+                ],
+                "summary": "Add a new concert",
+                "parameters": [
+                    {
+                        "description": "Concert Add Request",
+                        "name": "concertAddReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonreq.ConcertAddReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonresp.CommitResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonresp.CommitResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/concerts": {
+            "get": {
+                "description": "Get list of concerts by IDs with pagination",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Concert"
+                ],
+                "summary": "Get list of concerts",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Comma-separated list of concert IDs",
+                        "name": "ids",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of items per page",
+                        "name": "page_size",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonresp.ConcertListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonresp.ConcertListResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/review_concert": {
+            "post": {
+                "description": "Review concerts",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Concert"
+                ],
+                "summary": "Review concerts",
+                "parameters": [
+                    {
+                        "description": "Concert Review Request",
+                        "name": "concertReviewReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonreq.ConcertReViewReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonresp.ConcertListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonresp.ConcertListResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/user/logout": {
             "get": {
                 "description": "Get personal information",
@@ -108,6 +246,232 @@
                             "type": "string"
                         }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "commonreq.ConcertAddReq": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "description": "演唱会地址",
+                    "type": "string"
+                },
+                "concert_date": {
+                    "description": "演唱会日期",
+                    "type": "string"
+                },
+                "concert_id": {
+                    "description": "演唱会ID",
+                    "type": "string"
+                },
+                "concert_img": {
+                    "description": "演唱会图片",
+                    "type": "string"
+                },
+                "concert_name": {
+                    "description": "演唱会名称",
+                    "type": "string"
+                },
+                "concert_status": {
+                    "description": "演唱会状态（0: 未开始, 1: 已过期, 2: 已取消）",
+                    "type": "integer"
+                },
+                "lottery_end_date": {
+                    "description": "抽奖结束时间",
+                    "type": "string"
+                },
+                "lottery_start_date": {
+                    "description": "抽奖开始时间",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "演唱会备注信息",
+                    "type": "string"
+                },
+                "review_status": {
+                    "description": "审核状态（0: 未审核, 1: 审核通过, 2: 审核失败）",
+                    "type": "integer"
+                },
+                "tickets": {
+                    "description": "演唱会门票列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/commonreq.Ticket"
+                    }
+                }
+            }
+        },
+        "commonreq.ConcertReViewReq": {
+            "type": "object",
+            "properties": {
+                "concert_id": {
+                    "description": "提交的演唱会id",
+                    "type": "string"
+                },
+                "pass": {
+                    "description": "是否通过",
+                    "type": "boolean"
+                }
+            }
+        },
+        "commonreq.Ticket": {
+            "type": "object",
+            "properties": {
+                "max_quantity_per_wallet": {
+                    "description": "每个钱包最大可购买数量",
+                    "type": "integer"
+                },
+                "num": {
+                    "description": "门票数量",
+                    "type": "integer"
+                },
+                "price": {
+                    "description": "门票价格",
+                    "type": "string"
+                },
+                "ticket_id": {
+                    "description": "门票ID",
+                    "type": "string"
+                },
+                "ticket_img": {
+                    "description": "门票图片",
+                    "type": "string"
+                },
+                "ticket_type": {
+                    "description": "门票类型唯一键（对应抵押品合约和抽选合约）",
+                    "type": "string"
+                },
+                "trade": {
+                    "description": "是否可以二手交易",
+                    "type": "boolean"
+                },
+                "type_name": {
+                    "description": "门票类型名称",
+                    "type": "string"
+                }
+            }
+        },
+        "commonresp.CommitResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "返回状态码",
+                    "type": "integer"
+                },
+                "msg": {
+                    "description": "返回消息",
+                    "type": "string"
+                },
+                "reason": {
+                    "description": "错误原因",
+                    "type": "string"
+                },
+                "request_id": {
+                    "description": "请求ID",
+                    "type": "string"
+                },
+                "result": {
+                    "description": "返回结果",
+                    "type": "object",
+                    "$ref": "#/definitions/commonresp.ResultData"
+                },
+                "status": {
+                    "description": "返回状态",
+                    "type": "string"
+                }
+            }
+        },
+        "commonresp.Concert": {
+            "type": "object",
+            "properties": {
+                "concert_date": {
+                    "description": "演唱会日期",
+                    "type": "string"
+                },
+                "concert_id": {
+                    "description": "演唱会ID",
+                    "type": "string"
+                },
+                "concert_img": {
+                    "description": "演唱会图片",
+                    "type": "string"
+                },
+                "concert_name": {
+                    "description": "演唱会名称",
+                    "type": "string"
+                },
+                "concert_status": {
+                    "description": "演唱会状态",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "演唱会状态",
+                    "type": "string"
+                },
+                "ticket_types": {
+                    "description": "门票类型列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/commonresp.TicketType"
+                    }
+                }
+            }
+        },
+        "commonresp.ConcertListResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "request_id": {
+                    "type": "string"
+                },
+                "result": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/commonresp.Concert"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "commonresp.ResultData": {
+            "type": "object",
+            "properties": {
+                "concert_id": {
+                    "description": "演唱会ID",
+                    "type": "string"
+                }
+            }
+        },
+        "commonresp.TicketType": {
+            "type": "object",
+            "properties": {
+                "max_quantity_per_wallet": {
+                    "description": "单个钱包最大购买数量",
+                    "type": "integer"
+                },
+                "price": {
+                    "description": "价格",
+                    "type": "string"
+                },
+                "ticket_type": {
+                    "description": "门票种类唯一键",
+                    "type": "string"
+                },
+                "type_name": {
+                    "description": "类型名称",
+                    "type": "string"
                 }
             }
         }
