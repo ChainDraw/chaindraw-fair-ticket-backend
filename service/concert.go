@@ -12,10 +12,12 @@ import (
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
 )
 
-func ConcertList(ids []string) ([]commonresp.Concert, error) {
+func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error) {
 	res := make([]commonresp.Concert, 0)
 	concerts := make([]model.TbConcert, 0)
-	global.DB.Where("id IN ?", ids).Find(concerts)
+
+	offset := (page - 1) * pageSize
+	global.DB.Where("id IN ?", ids).Order("concert_date DESC").Limit(pageSize).Offset(offset).Find(concerts)
 	if global.DB.RowsAffected == 0 {
 		return res, global.DB.Error
 	}
@@ -30,7 +32,8 @@ func ConcertList(ids []string) ([]commonresp.Concert, error) {
 
 func ConcertReview(concertViewRecord *commonreq.ConcertReViewReq) ([]commonresp.Concert, error) {
 	res := make([]commonresp.Concert, 0)
-	global.DB.Where("concert_id = ?", concertViewRecord.ConcertID).Update("concert_status", concertViewRecord.Pass)
+	global.DB.Model(&model.TbConcert{}).Where("concert_id = ?", concertViewRecord.ConcertID).Update("concert_status", concertViewRecord.Pass)
+
 	if global.DB.RowsAffected == 0 {
 		return res, global.DB.Error
 	}

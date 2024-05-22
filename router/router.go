@@ -3,7 +3,9 @@ package router
 import (
 	v1 "chaindraw-fair-ticket-backend/api/v1"
 	"chaindraw-fair-ticket-backend/api/v1/chaindraw"
+	"chaindraw-fair-ticket-backend/api/v1/concert"
 	"chaindraw-fair-ticket-backend/api/v1/user"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/sessions"
 	swaggerFiles "github.com/swaggo/files"
@@ -27,8 +29,8 @@ func Router() *gin.Engine {
 		Path:     "/",
 		MaxAge:   86400 * 7, // 一周
 		HttpOnly: true,
-		SameSite: http.SameSiteStrictMode,
-		Secure:   false, // 设置为 true 时，仅允许在 HTTPS 连接中使用
+		SameSite: http.SameSiteNoneMode,
+		Secure:   true, // 设置为 true 时，仅允许在 HTTPS 连接中使用
 	}
 
 	// 集成 Swagger UI
@@ -50,6 +52,13 @@ func Router() *gin.Engine {
 		chaindrawApiGroup.GET("concert_list", chaindraw.ConcertList)
 	}
 
+	// 演唱会
+	concertApiGroup := apiGroup.Group("concert")
+	{
+		concertApiGroup.POST("commit", concert.ConcertAdd)      //7. 演唱会主办方提交信息
+		concertApiGroup.POST("review", chaindraw.ReviewConcert) //8. 演唱会信息审核
+	}
+
 	// 用户逻辑相关 路由组
 	userApiGroup := apiGroup.Group("user")
 	{
@@ -58,6 +67,7 @@ func Router() *gin.Engine {
 		userApiGroup.GET("nonce", user.Nonce)
 		userApiGroup.POST("verify", user.Verify)
 		userApiGroup.GET("personal_information", user.PersonalInformation)
+		userApiGroup.GET("logout", user.Logout)
 
 		userApiGroup.GET("session_test", user.SessionDemo)
 
