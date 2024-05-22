@@ -12,7 +12,7 @@
     "paths": {
         "/concert_add": {
             "post": {
-                "description": "Add a new concert with the given details",
+                "description": "update concert",
                 "consumes": [
                     "application/json"
                 ],
@@ -22,17 +22,26 @@
                 "tags": [
                     "Concert"
                 ],
-                "summary": "Add a new concert",
+                "summary": "update concert",
                 "parameters": [
                     {
-                        "description": "Concert Add Request",
-                        "name": "concertAddReq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/commonreq.ConcertAddReq"
-                        }
+                        "type": "integer",
+                        "description": "Comma-separated list of concert IDs",
+                        "name": "ConcertId",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "演唱会状态（0: 未开始, 1: 已过期, 2: 已取消）",
+                        "name": "ConcertStatus",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "审核状态（0: 未审核, 1: 审核通过, 2: 审核失败）",
+                        "name": "ReviewStatus",
+                        "in": "query"
                     }
                 ],
                 "responses": {

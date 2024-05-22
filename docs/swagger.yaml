@@ -172,15 +172,21 @@ paths:
     post:
       consumes:
       - application/json
-      description: Add a new concert with the given details
+      description: update concert
       parameters:
-      - description: Concert Add Request
-        in: body
-        name: concertAddReq
+      - description: Comma-separated list of concert IDs
+        in: query
+        name: ConcertId
         required: true
-        schema:
-          $ref: '#/definitions/commonreq.ConcertAddReq'
-          type: object
+        type: integer
+      - description: '演唱会状态（0: 未开始, 1: 已过期, 2: 已取消）'
+        in: query
+        name: ConcertStatus
+        type: integer
+      - description: '审核状态（0: 未审核, 1: 审核通过, 2: 审核失败）'
+        in: query
+        name: ReviewStatus
+        type: integer
       produces:
       - application/json
       responses:
@@ -194,7 +200,7 @@ paths:
           schema:
             $ref: '#/definitions/commonresp.CommitResp'
             type: object
-      summary: Add a new concert
+      summary: update concert
       tags:
       - Concert
   /concerts:
