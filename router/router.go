@@ -49,15 +49,15 @@ func Router() *gin.Engine {
 	{
 		chaindrawApiGroup.GET("ticket")
 		//chaindrawApiGroup.POST("lottery_record", chaindraw.LotteryRecordAdd)
-		chaindrawApiGroup.GET("concert_list", chaindraw.ConcertList)
 	}
 
 	// 演唱会
 	concertApiGroup := apiGroup.Group("concert")
 	{
-		concertApiGroup.POST("commit", concert.ConcertAdd)                 //7. 演唱会主办方提交信息
-		concertApiGroup.POST("update_status", concert.ConcertStatusUpdate) //7. 演唱会主办方提交信息
-		concertApiGroup.POST("review", chaindraw.ReviewConcert)            //8. 演唱会信息审核
+		chaindrawApiGroup.GET("concert_list", chaindraw.ConcertList)
+		concertApiGroup.POST("commit", concert.ConcertAdd)                //7. 演唱会主办方提交信息
+		concertApiGroup.GET("update_status", concert.ConcertStatusUpdate) //7. 演唱会主办方提交信息
+		concertApiGroup.POST("review", chaindraw.ReviewConcert)           //8. 演唱会信息审核
 	}
 
 	// 用户逻辑相关 路由组

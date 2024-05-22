@@ -168,7 +168,99 @@ info:
   title: Your Project API
   version: "1.0"
 paths:
-  /concert_add:
+  /concert/commit:
+    post:
+      consumes:
+      - application/json
+      description: Add a new concert with the given details
+      parameters:
+      - description: Concert Add Request
+        in: body
+        name: concertAddReq
+        required: true
+        schema:
+          $ref: '#/definitions/commonreq.ConcertAddReq'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/commonresp.CommitResp'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/commonresp.CommitResp'
+            type: object
+      summary: Add a new concert
+      tags:
+      - Concert
+  /concert/concert_list:
+    get:
+      consumes:
+      - application/json
+      description: Get list of concerts by IDs with pagination
+      parameters:
+      - description: Comma-separated list of concert IDs
+        in: query
+        name: ids
+        type: string
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Number of items per page
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/commonresp.ConcertListResponse'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/commonresp.ConcertListResponse'
+            type: object
+      summary: Get list of concerts
+      tags:
+      - Concert
+  /concert/review:
+    post:
+      consumes:
+      - application/json
+      description: Review concerts
+      parameters:
+      - description: Concert Review Request
+        in: body
+        name: concertReviewReq
+        required: true
+        schema:
+          $ref: '#/definitions/commonreq.ConcertReViewReq'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/commonresp.ConcertListResponse'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/commonresp.ConcertListResponse'
+            type: object
+      summary: Review concerts
+      tags:
+      - Concert
+  /concert/update_status:
     post:
       consumes:
       - application/json
@@ -201,70 +293,6 @@ paths:
             $ref: '#/definitions/commonresp.CommitResp'
             type: object
       summary: update concert
-      tags:
-      - Concert
-  /concerts:
-    get:
-      consumes:
-      - application/json
-      description: Get list of concerts by IDs with pagination
-      parameters:
-      - description: Comma-separated list of concert IDs
-        in: query
-        name: ids
-        required: true
-        type: string
-      - description: Page number
-        in: query
-        name: page
-        type: integer
-      - description: Number of items per page
-        in: query
-        name: page_size
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/commonresp.ConcertListResponse'
-            type: object
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/commonresp.ConcertListResponse'
-            type: object
-      summary: Get list of concerts
-      tags:
-      - Concert
-  /review_concert:
-    post:
-      consumes:
-      - application/json
-      description: Review concerts
-      parameters:
-      - description: Concert Review Request
-        in: body
-        name: concertReviewReq
-        required: true
-        schema:
-          $ref: '#/definitions/commonreq.ConcertReViewReq'
-          type: object
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/commonresp.ConcertListResponse'
-            type: object
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/commonresp.ConcertListResponse'
-            type: object
-      summary: Review concerts
       tags:
       - Concert
   /user/logout:

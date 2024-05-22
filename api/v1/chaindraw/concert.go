@@ -24,12 +24,12 @@ import (
 // @Tags Concert
 // @Accept  json
 // @Produce  json
-// @Param   ids      query    string     true  "Comma-separated list of concert IDs"
+// @Param   ids      query    string     false  "Comma-separated list of concert IDs"
 // @Param   page     query    int        false "Page number"
 // @Param   page_size query   int        false "Number of items per page"
 // @Success 200 {object} commonresp.ConcertListResponse
 // @Failure 400 {object} commonresp.ConcertListResponse
-// @Router /concerts [get]
+// @Router /concert/concert_list [get]
 func ConcertList(ctx *gin.Context) {
 	resp := &commonresp.ConcertListResponse{}
 	pageStr := ctx.Query("page")
@@ -63,7 +63,7 @@ func ConcertList(ctx *gin.Context) {
 // @Param   concertReviewReq  body    commonreq.ConcertReViewReq  true  "Concert Review Request"
 // @Success 200 {object} commonresp.ConcertListResponse
 // @Failure 400 {object} commonresp.ConcertListResponse
-// @Router /review_concert [post]
+// @Router /concert/review [post]
 func ReviewConcert(ctx *gin.Context) {
 	req := &commonreq.ConcertReViewReq{}
 	resp := &commonresp.ConcertListResponse{}

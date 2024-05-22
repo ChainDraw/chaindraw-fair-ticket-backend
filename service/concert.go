@@ -10,21 +10,30 @@ import (
 	"chaindraw-fair-ticket-backend/model"
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
+	"time"
 )
 
 func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error) {
 	res := make([]commonresp.Concert, 0)
 	concerts := make([]model.TbConcert, 0)
-
+	tx := global.DB.Debug()
 	offset := (page - 1) * pageSize
-	global.DB.Where("id IN ?", ids).Order("concert_date DESC").Limit(pageSize).Offset(offset).Find(concerts)
+	if len(ids) == 0 {
+		tx.Where("id IN ?", ids)
+	}
+	tx.Order("concert_date DESC").Limit(pageSize).Offset(offset).Find(concerts)
 	if global.DB.RowsAffected == 0 {
 		return res, global.DB.Error
 	}
 
 	for _, concert := range concerts {
+		t := time.Unix(concert.ConcertDate, 0)
+		formattedTime := t.Format("2006-01-02 15:04:05")
 		res = append(res, commonresp.Concert{
-			ConcertID: concert.ConcertID,
+			ConcertID:   concert.ConcertID,
+			ConcertName: concert.ConcertName,
+			ConcertDate: formattedTime,
+			ConcertImg:  concert.ConcertImgURL,
 		})
 	}
 	return res, nil

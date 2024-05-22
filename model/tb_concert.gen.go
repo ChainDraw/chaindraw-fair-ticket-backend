@@ -8,15 +8,19 @@ const TableNameTbConcert = "tb_concert"
 
 // TbConcert mapped from table <tb_concert>
 type TbConcert struct {
-	ID            int64  `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
-	ConcertID     string `gorm:"column:concert_id;not null" json:"concertId"`
-	ConcertName   string `gorm:"column:concert_name;not null" json:"concertName"`
-	ConcertImgURL string `gorm:"column:concert_img_url;not null" json:"concertImgUrl"`
-	ConcertDate   int64  `gorm:"column:concert_date;not null" json:"concertDate"`
-	ConcertStatus int  `gorm:"column:concert_status;not null" json:"concertStatus"`
-	Status        int `gorm:"column:status;not null" json:"status"`
-	CreateAt      int64  `gorm:"column:create_at;not null" json:"createAt"`
-	UpdateAt      int64  `gorm:"column:update_at;not null" json:"updateAt"`
+	ID               int64  `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	ConcertID        string `gorm:"column:concert_id;not null" json:"concertId"`
+	ConcertName      string `gorm:"column:concert_name;not null" json:"concertName"`
+	Address          string `gorm:"column:address;not null;comment:演唱会地址" json:"address"` // 演唱会地址
+	ConcertImgURL    string `gorm:"column:concert_img_url;not null" json:"concertImgUrl"`
+	LotteryStartDate int64  `gorm:"column:lottery_start_date;comment:订阅抽选开始时间" json:"lotteryStartDate"` // 订阅抽选开始时间
+	LotteryEndDate   int64  `gorm:"column:lottery_end_date;comment:订阅抽选结束时间" json:"lotteryEndDate"`     // 订阅抽选结束时间
+	ConcertDate      int64  `gorm:"column:concert_date;not null" json:"concertDate"`
+	ConcertStatus    int64  `gorm:"column:concert_status;not null;comment:演唱会状态 0未开始；1已过期" json:"concertStatus"`  // 演唱会状态 0未开始；1已过期
+	ReviewStatus     int64  `gorm:"column:review_status;not null;comment:审核状态 0 待审核； 1审核通过；" json:"reviewStatus"` // 审核状态 0 待审核； 1审核通过；
+	CreateAt         int64  `gorm:"column:create_at;not null" json:"createAt"`
+	UpdateAt         int64  `gorm:"column:update_at;not null" json:"updateAt"`
+	Remark           string `gorm:"column:remark;comment:备注描述" json:"remark"` // 备注描述
 }
 
 // TableName TbConcert's table name
