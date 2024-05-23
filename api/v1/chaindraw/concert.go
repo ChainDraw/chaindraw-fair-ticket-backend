@@ -37,10 +37,10 @@ func ConcertList(ctx *gin.Context) {
 	ids := strings.Split(ctx.Query("ids"), ",")
 	page := 1      // 当前页码
 	pageSize := 10 // 每页记录数
-	if len(pageStr) == 0 {
+	if len(pageStr) != 0 {
 		page, _ = strconv.Atoi(pageStr)
 	}
-	if len(pageSizeStr) == 0 {
+	if len(pageSizeStr) != 0 {
 		page, _ = strconv.Atoi(pageSizeStr)
 	}
 

@@ -19,9 +19,9 @@ func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error)
 	tx := global.DB.Debug()
 	offset := (page - 1) * pageSize
 	if len(ids) == 0 {
-		tx.Where("id IN ?", ids)
+		tx.Where("id IN (?)", ids)
 	}
-	tx.Order("concert_date DESC").Limit(pageSize).Offset(offset).Find(concerts)
+	tx.Order("concert_date DESC").Limit(pageSize).Offset(offset).Find(&concerts)
 	if global.DB.RowsAffected == 0 {
 		return res, global.DB.Error
 	}
