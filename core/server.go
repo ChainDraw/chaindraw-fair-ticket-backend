@@ -36,6 +36,7 @@ func RunServer() {
 	// signal.Notify把收到的 syscall.SIGINT或syscall.SIGTERM 信号转发给quit
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM) // 此处不会阻塞
 	<-quit                                               // 阻塞在此，当接收到上述两种信号时才会往下执行
+
 	global.LOGGER.Info("Shutdown Server ...")
 	// 创建一个5秒超时的context
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)

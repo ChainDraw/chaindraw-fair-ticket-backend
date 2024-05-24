@@ -24,7 +24,7 @@ import (
 // @Param   concertAddReq  body    commonreq.ConcertAddReq  true  "Concert Add Request"
 // @Success 200 {object} commonresp.CommitResp
 // @Failure 400 {object} commonresp.CommitResp
-// @Router /concert_add [post]
+// @Router /concert/commit [post]
 func ConcertAdd(ctx *gin.Context) {
 	req := &commonreq.ConcertAddReq{}
 	resp := &commonresp.CommitResp{}
@@ -55,9 +55,8 @@ func ConcertAdd(ctx *gin.Context) {
 // @Param   ReviewStatus     query    int        false "审核状态（0: 未审核, 1: 审核通过, 2: 审核失败）"
 // @Success 200 {object} commonresp.CommitResp
 // @Failure 400 {object} commonresp.CommitResp
-// @Router /concert_add [post]
+// @Router /concert/update_status [post]
 func ConcertStatusUpdate(ctx *gin.Context) {
-	req := &commonreq.ConcertAddReq{}
 	resp := &commonresp.CommitResp{}
 
 	concertId := ctx.Query("concert_id")
@@ -66,8 +65,8 @@ func ConcertStatusUpdate(ctx *gin.Context) {
 
 	err := service.ConcertStatusUpdate(concertId, reviewStatus, concertStatus)
 	if err != nil {
-		global.LOGGER.Error("ConcertAdd logic failed", zap.Any("req", req), zap.Error(err))
-		commonresp.FailWithMessage(ctx, "抽票失败")
+		global.LOGGER.Error("ConcertStatusUpdate logic failed")
+		commonresp.FailWithMessage(ctx, "演唱会状态更改失败")
 	}
 
 	commonresp.OkWithData(ctx, resp)

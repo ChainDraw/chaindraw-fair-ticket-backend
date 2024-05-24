@@ -9,10 +9,13 @@ const TableNameTbTicket = "tb_ticket"
 // TbTicket mapped from table <tb_ticket>
 type TbTicket struct {
 	ID                   int64   `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
-	ConcertID            string  `gorm:"column:concert_id;not null" json:"concertId"`
-	TicketType           int64   `gorm:"column:ticket_type;not null" json:"ticketType"`
-	TypeName             string  `gorm:"column:type_name;not null" json:"typeName"`
-	Price                float64 `gorm:"column:price;not null" json:"price"`
+	ConcertID            string  `gorm:"column:concert_id;not null;comment:演唱会id" json:"concertId"`     // 演唱会id
+	TicketType           int64   `gorm:"column:ticket_type;not null;comment:门票种类唯一键" json:"ticketType"` // 门票种类唯一键
+	TypeName             string  `gorm:"column:type_name;not null;comment:门票种类名称" json:"typeName"`      // 门票种类名称
+	Num                  int64  `gorm:"column:num;comment:门票数量" json:"num"`                            // 门票数量
+	Price                float64 `gorm:"column:price;not null;comment:门票价格" json:"price"`               // 门票价格
+	TicketImg            string  `gorm:"column:ticket_img;comment:门票照片" json:"ticketImg"`               // 门票照片
+	Trade                int64  `gorm:"column:trade;comment:是否可以二手交易" json:"trade"`                    // 是否可以二手交易
 	MaxQuantityPerWallet int64   `gorm:"column:max_quantity_per_wallet;not null" json:"maxQuantityPerWallet"`
 	CreateAt             int64   `gorm:"column:create_at;not null" json:"createAt"`
 	UpdateAt             int64   `gorm:"column:update_at;not null" json:"updateAt"`
