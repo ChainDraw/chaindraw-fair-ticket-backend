@@ -36,8 +36,17 @@ func LotteryRecordAdd(ctx *gin.Context) {
 	commonresp.OkWithData(ctx, resp)
 }
 
+// @Summary Lottery list
+// @Description GETLotterylist
+// @Tags Lottery
+// @Accept  json
+// @Produce  json
+// @Param   LotteryListReq  body    commonreq.LotteryListReq  true  "LotteryListRequest"
+// @Success 200 {object} commonresp.LotteryListResponse
+// @Failure 400 {object} commonresp.LotteryListResponse
+// @Router /lottery/list [get]
 func LotteryListGet(ctx *gin.Context) {
-	req := &commonreq.LotteryListRep{}
+	req := &commonreq.LotteryListReq{}
 	err := ctx.ShouldBindJSON(req)
 	if err != nil {
 		fmt.Println(err)
