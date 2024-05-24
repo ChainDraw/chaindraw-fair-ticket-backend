@@ -74,5 +74,16 @@ func Router() *gin.Engine {
 
 	}
 
+	// 抽奖相关 路由组
+	lottery := apiGroup.Group("lottery")
+	{
+		lottery.GET("list", chaindraw.LotteryListGet)
+	}
+
+	// event相关 路由组
+	apiGroup.Group("event")
+	{
+	}
+
 	return r
 }
