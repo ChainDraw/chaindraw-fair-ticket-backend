@@ -25,7 +25,7 @@ var (
 	WSS = "wss://go.getblock.io/74d1785308b244db9c9fda86104694c5" // 合约部署所在链的WSS地址  wss://go.getblock.io/74d1785308b244db9c9fda86104694c5
 	//WSS           = "ws://127.0.0.1:8545" // 合约部署所在链的WSS地址
 	ListenAddress = []common.Address{
-		common.HexToAddress("0x8464135c8f25da09e49bc8782676a84730c318bc"),
+		common.HexToAddress("0xD03B33A15854CeFbD502BcE5F580fa4790FBAA34"),
 	} // 监听的合约
 	client, _ = ethclient.Dial(WSS) // 客户端
 	events    = map[string]DB{
