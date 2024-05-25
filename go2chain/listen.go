@@ -1,6 +1,7 @@
-package main
+package go2chain
 
 import (
+	"chaindraw-fair-ticket-backend/global"
 	"chaindraw-fair-ticket-backend/go2chain/LotteryEscrow"
 	"chaindraw-fair-ticket-backend/go2chain/LotteryEscrowFactory"
 	"chaindraw-fair-ticket-backend/go2chain/LotteryMarket"
@@ -12,9 +13,6 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	"log"
 	"strings"
 )
@@ -22,11 +20,10 @@ import (
 type DB func(data types.Log)
 
 var (
-	dsn   = "root:12345678@tcp(127.0.0.1:3306)/chaindraw?charset=utf8mb4&parseTime=True&loc=Local&timeout=10000ms"
-	db, _ = gorm.Open(mysql.Open(dsn), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Info),
-	})
-	WSS           = "ws://127.0.0.1:8545" // 合约部署所在链的WSS地址
+	//dsn   = "root:12345678@tcp(127.0.0.1:3306)/chaindraw?charset=utf8mb4&parseTime=True&loc=Local&timeout=10000ms"
+	db  = global.DB
+	WSS = "wss://go.getblock.io/74d1785308b244db9c9fda86104694c5" // 合约部署所在链的WSS地址  wss://go.getblock.io/74d1785308b244db9c9fda86104694c5
+	//WSS           = "ws://127.0.0.1:8545" // 合约部署所在链的WSS地址
 	ListenAddress = []common.Address{
 		common.HexToAddress("0x8464135c8f25da09e49bc8782676a84730c318bc"),
 	} // 监听的合约
@@ -124,23 +121,24 @@ var (
 )
 
 // TODO 1.chan 设置chan缓存容量 2.Log 记录监听日志
-func main() {
+func Run() {
 	query := ethereum.FilterQuery{
 		Addresses: ListenAddress,
 	}
-	logs := make(chan types.Log) //TODO chan
+	logs := make(chan types.Log, 100)
 	sub, err := client.SubscribeFilterLogs(context.Background(), query, logs)
 	if err != nil {
-		log.Fatal(err) // TODO Log
+		log.Fatal(err)
 	}
 	for {
 		select {
-		case err := <-sub.Err(): // TODO Log
+		case err := <-sub.Err():
 			log.Fatal(err)
 		case vLog := <-logs:
 			events[vLog.Topics[0].Hex()](vLog)
 		}
 	}
+
 }
 
 func getLotteryEscrowFactoryABI() abi.ABI {
