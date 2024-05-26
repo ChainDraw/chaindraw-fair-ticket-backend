@@ -199,6 +199,49 @@
                 }
             }
         },
+        "/lottery/list": {
+            "get": {
+                "description": "GETLotterylist",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Lottery"
+                ],
+                "summary": "Lottery list",
+                "parameters": [
+                    {
+                        "description": "LotteryListRequest",
+                        "name": "LotteryListReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonreq.LotteryListReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonresp.LotteryListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonresp.LotteryListResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/user/logout": {
             "get": {
                 "description": "Get personal information",
@@ -367,6 +410,19 @@
                 }
             }
         },
+        "commonreq.LotteryListReq": {
+            "type": "object",
+            "properties": {
+                "concert_id": {
+                    "description": "提交的演唱会id",
+                    "type": "string"
+                },
+                "ticket_type": {
+                    "description": "票种类型",
+                    "type": "string"
+                }
+            }
+        },
         "commonreq.Ticket": {
             "type": "object",
             "properties": {
@@ -489,6 +545,37 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/commonresp.Concert"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "commonresp.LotteryListResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "request_id": {
+                    "type": "string"
+                },
+                "result": {
+                    "type": "object",
+                    "properties": {
+                        "lottery_list": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 },
                 "status": {

@@ -47,6 +47,15 @@ definitions:
         description: 是否通过
         type: boolean
     type: object
+  commonreq.LotteryListReq:
+    properties:
+      concert_id:
+        description: 提交的演唱会id
+        type: string
+      ticket_type:
+        description: 票种类型
+        type: string
+    type: object
   commonreq.Ticket:
     properties:
       max_quantity_per_wallet:
@@ -136,6 +145,26 @@ definitions:
         items:
           $ref: '#/definitions/commonresp.Concert'
         type: array
+      status:
+        type: string
+    type: object
+  commonresp.LotteryListResponse:
+    properties:
+      code:
+        type: integer
+      msg:
+        type: string
+      reason:
+        type: string
+      request_id:
+        type: string
+      result:
+        properties:
+          lottery_list:
+            items:
+              type: string
+            type: array
+        type: object
       status:
         type: string
     type: object
@@ -295,6 +324,35 @@ paths:
       summary: update concert
       tags:
       - Concert
+  /lottery/list:
+    get:
+      consumes:
+      - application/json
+      description: GETLotterylist
+      parameters:
+      - description: LotteryListRequest
+        in: body
+        name: LotteryListReq
+        required: true
+        schema:
+          $ref: '#/definitions/commonreq.LotteryListReq'
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/commonresp.LotteryListResponse'
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/commonresp.LotteryListResponse'
+            type: object
+      summary: Lottery list
+      tags:
+      - Lottery
   /user/logout:
     get:
       description: Get personal information
