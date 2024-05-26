@@ -10,6 +10,7 @@ import (
 	"chaindraw-fair-ticket-backend/model"
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
+	"fmt"
 	"time"
 )
 
@@ -29,9 +30,9 @@ func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error)
 	}
 
 	for _, concert := range concerts {
-
-		t := time.Unix(concert.ConcertDate, 0)
-		formattedTime := t.Format("2006-01-02 15:04:05")
+		fmt.Println("时间戳->", concert.ConcertDate)
+		t := time.Unix(concert.ConcertDate/1000, 0)
+		formattedTime := t.Format(time.RFC3339)
 		res = append(res, commonresp.Concert{
 			ConcertID:   concert.ConcertID,
 			ConcertName: concert.ConcertName,
