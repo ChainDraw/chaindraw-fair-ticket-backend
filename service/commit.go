@@ -32,7 +32,8 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (err error) {
 		LotteryStartDate: lotteryStartDate.UnixMilli(),
 		LotteryEndDate:   lotteryEndDate.UnixMilli(),
 	}
-	global.DB.Save(record)
+
+	global.DB.Save(&record)
 	err = global.DB.Error
 	if err != nil {
 		return
@@ -59,7 +60,7 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (err error) {
 			CreateAt:             time.Now().Unix(),
 			UpdateAt:             time.Now().Unix(),
 		}
-		global.DB.Save(ticketRecord)
+		global.DB.Save(&ticketRecord)
 		if global.DB.Error != nil {
 			return
 		}

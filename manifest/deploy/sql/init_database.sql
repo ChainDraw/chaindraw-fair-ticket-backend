@@ -16,22 +16,8 @@ CREATE TABLE if NOT EXISTS tb_user (
     password VARCHAR(255) NOT NULL,
     CREATE_at BIGINT NOT NULL,
     update_at BIGINT NOT NULL
-);
+)ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- 演唱会表
-CREATE TABLE tb_concert (
-    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    concert_id VARCHAR(255) NOT NULL,
-    concert_name VARCHAR(255) NOT NULL,
-    concert_img_url VARCHAR(255) NOT NULL,
-    concert_date BIGINT NOT NULL,
-    -- 演唱会时间
-    concert_status INT NOT NULL,
-    -- 0: 未开始 1：已过期 2、已取消
-    status INT NOT NULL,
-    CREATE_at BIGINT NOT NULL,
-    update_at BIGINT NOT NULL
-);
 
 -- 演唱会票表
 CREATE table if NOT EXISTS tb_ticket (
@@ -46,8 +32,9 @@ CREATE table if NOT EXISTS tb_ticket (
     max_quantity_per_wallet int NOT NULL,
     CREATE_at BIGINT NOT NULL,
     update_at BIGINT NOT NULL
-);
+)ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- 演唱会表
 CREATE table if NOT EXISTS tb_concert (
     id BIGINT auto_increment primary key,
     concert_id VARCHAR(255) NOT NULL,
@@ -62,8 +49,113 @@ CREATE table if NOT EXISTS tb_concert (
     CREATE_at BIGINT NOT NULL,
     update_at BIGINT NOT NULL,
     remark VARCHAR(255) collate utf8mb4_bin null comment '备注描述'
-);
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- 监听事件表
+CREATE TABLE `event_escrow_created` (
+                                        `id` bigint NOT NULL AUTO_INCREMENT,
+                                        `concert_id` varchar(255) NOT NULL,
+                                        `ticket_type` varchar(255) NOT NULL,
+                                        `escrow_address` varchar(255) NOT NULL,
+                                        `created_at` datetime NOT NULL,
+                                        `updated_at` datetime NOT NULL,
+                                        PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `event_lotteryescrow__claimedfund` (
+                                                    `id` bigint NOT NULL AUTO_INCREMENT,
+                                                    `concert_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                    `ticket_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                    `organizer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                    `winner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                    `money` varchar(255) NOT NULL,
+                                                    `created_at` datetime NOT NULL,
+                                                    `updated_at` datetime NOT NULL,
+                                                    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `event_lotteryescrow__completedraw` (
+                                                     `id` bigint NOT NULL AUTO_INCREMENT,
+                                                     `lottery_address` varchar(255) NOT NULL,
+                                                     `created_at` datetime NOT NULL,
+                                                     `updated_at` datetime NOT NULL,
+                                                     PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `event_lotteryescrow__deposited` (
+                                                  `id` bigint NOT NULL AUTO_INCREMENT,
+                                                  `concert_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                  `ticket_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                  `buyer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                  `money` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                  `created_at` datetime NOT NULL,
+                                                  `updated_at` datetime NOT NULL,
+                                                  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `event_lotteryescrow__nonwinner` (
+                                                  `id` bigint NOT NULL AUTO_INCREMENT,
+                                                  `concert_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                  `ticket_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                  `non_winner` varchar(255) NOT NULL,
+                                                  `money` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                  `created_at` datetime NOT NULL,
+                                                  `updated_at` datetime NOT NULL,
+                                                  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `event_lotteryescrow__refunded` (
+                                                 `id` bigint NOT NULL AUTO_INCREMENT,
+                                                 `concert_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                 `ticket_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                 `buyer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                 `money` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                                 `created_at` datetime NOT NULL,
+                                                 `updated_at` datetime NOT NULL,
+                                                 PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `event_lotteryescrow__winner` (
+                                               `id` bigint NOT NULL AUTO_INCREMENT,
+                                               `concert_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                               `ticket_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                               `winner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                               `created_at` datetime NOT NULL,
+                                               `updated_at` datetime NOT NULL,
+                                               PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `event_nft_delisted` (
+                                      `id` bigint NOT NULL AUTO_INCREMENT,
+                                      `seller` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                      `lottery_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                      `token_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                      `created_at` datetime NOT NULL,
+                                      `updated_at` datetime NOT NULL,
+                                      PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `event_nft_listed` (
+                                    `id` bigint NOT NULL AUTO_INCREMENT,
+                                    `seller` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                    `lottery_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                    `token_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                    `price` varchar(255) NOT NULL,
+                                    `created_at` datetime NOT NULL,
+                                    `updated_at` datetime NOT NULL,
+                                    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `event_nft_sold` (
+                                  `id` bigint NOT NULL AUTO_INCREMENT,
+                                  `buyer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                  `lottery_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                  `token_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                  `price` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+                                  `created_at` datetime NOT NULL,
+                                  `updated_at` datetime NOT NULL,
+                                  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE definer = root @localhost trigger auto_increment_ticket_type BEFORE
 INSERT

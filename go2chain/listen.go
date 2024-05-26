@@ -22,11 +22,12 @@ type DB func(data types.Log)
 var (
 	//dsn   = "root:12345678@tcp(127.0.0.1:3306)/chaindraw?charset=utf8mb4&parseTime=True&loc=Local&timeout=10000ms"
 	db  = global.DB
-	WSS = "wss://go.getblock.io/74d1785308b244db9c9fda86104694c5" // 合约部署所在链的WSS地址  wss://go.getblock.io/74d1785308b244db9c9fda86104694c5
-	//WSS           = "ws://127.0.0.1:8545" // 合约部署所在链的WSS地址
+	WSS = "wss://go.getblock.io/74d1785308b244db9c9fda86104694c5" // 合约部署所在链的WSS  wss://go.getblock.io/74d1785308b244db9c9fda86104694c5
+	// WSS           = "ws://127.0.0.1:8545" // 合约部署所在链的WSS
 	ListenAddress = []common.Address{
-		common.HexToAddress("0xD03B33A15854CeFbD502BcE5F580fa4790FBAA34"),
-	} // 监听的合约
+		common.HexToAddress("0xD03B33A15854CeFbD502BcE5F580fa4790FBAA34"), //
+		common.HexToAddress("0x50E8A353B68c3d635a69e5a72e9b563a87ee4Ef3"), // LotteryMarket合约地址
+	} // 监听的合约地址
 	client, _ = ethclient.Dial(WSS) // 客户端
 	events    = map[string]DB{
 		crypto.Keccak256Hash([]byte("EscrowCreated(uint256,uint256,address)")).Hex(): DB(func(data types.Log) {
@@ -117,10 +118,43 @@ var (
 			getLotteryEscrowABI().UnpackIntoInterface(event, "LotteryEscrow__CompleteDraw", data.Data)
 			db.Save(event)
 		}),
+		crypto.Keccak256Hash([]byte("event_nft_listed(address,address,uint256,uint256)")).Hex(): DB(func(data types.Log) {
+			event := &model.EventNftListed{
+				Seller:         data.Topics[1].Hex(),
+				LotteryAddress: data.Topics[2].Hex(),
+				TokenId:        data.Topics[3].Hex(),
+			}
+			tmp := &struct {
+				price string
+			}{}
+			getLotteryMarketABI().UnpackIntoInterface(tmp, "event_nft_listed", data.Data)
+			event.Price = tmp.price
+			db.Save(event)
+		}),
+		crypto.Keccak256Hash([]byte("NFTSold(address,address,uint256,uint256)")).Hex(): DB(func(data types.Log) {
+			event := &model.EventNftSold{
+				Buyer:          data.Topics[1].Hex(),
+				LotteryAddress: data.Topics[2].Hex(),
+				TokenId:        data.Topics[3].Hex(),
+			}
+			tmp := &struct {
+				price string
+			}{}
+			getLotteryMarketABI().UnpackIntoInterface(tmp, "event_nft_sold", data.Data)
+			event.Price = tmp.price
+			db.Save(event)
+		}),
+		crypto.Keccak256Hash([]byte("NFTDelisted(address,address,uint256)")).Hex(): DB(func(data types.Log) {
+			event := &model.EventNftDelisted{
+				Seller:         data.Topics[1].Hex(),
+				LotteryAddress: data.Topics[2].Hex(),
+				TokenId:        data.Topics[3].Hex(),
+			}
+			db.Save(event)
+		}),
 	}
 )
 
-// TODO 1.chan 设置chan缓存容量 2.Log 记录监听日志
 func Run() {
 	query := ethereum.FilterQuery{
 		Addresses: ListenAddress,
@@ -144,7 +178,7 @@ func Run() {
 func getLotteryEscrowFactoryABI() abi.ABI {
 	abi, err := abi.JSON(strings.NewReader(LotteryEscrowFactory.LotteryEscrowFactoryMetaData.ABI))
 	if err != nil {
-		log.Fatal(err) // TODO Log
+		log.Fatal(err)
 	}
 	return abi
 }
@@ -152,7 +186,7 @@ func getLotteryEscrowFactoryABI() abi.ABI {
 func getLotteryEscrowABI() abi.ABI {
 	abi, err := abi.JSON(strings.NewReader(LotteryEscrow.LotteryEscrowMetaData.ABI))
 	if err != nil {
-		log.Fatal(err) // TODO Log
+		log.Fatal(err)
 	}
 	return abi
 }
@@ -160,7 +194,7 @@ func getLotteryEscrowABI() abi.ABI {
 func getLotteryMarketABI() abi.ABI {
 	abi, err := abi.JSON(strings.NewReader(LotteryMarket.LotteryMarketMetaData.ABI))
 	if err != nil {
-		log.Fatal(err) // TODO Log
+		log.Fatal(err)
 	}
 	return abi
 }
