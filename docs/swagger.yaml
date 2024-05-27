@@ -47,15 +47,6 @@ definitions:
         description: 是否通过
         type: boolean
     type: object
-  commonreq.LotteryListReq:
-    properties:
-      concert_id:
-        description: 提交的演唱会id
-        type: string
-      ticket_type:
-        description: 票种类型
-        type: string
-    type: object
   commonreq.Ticket:
     properties:
       max_quantity_per_wallet:
@@ -172,38 +163,6 @@ definitions:
     properties:
       concert_id:
         description: 演唱会ID
-        type: string
-    type: object
-  commonresp.SoldTicket:
-    properties:
-      concert_name:
-        type: string
-      price:
-        type: number
-      seller:
-        type: string
-      token_id:
-        type: string
-      type_name:
-        type: string
-      url:
-        type: string
-    type: object
-  commonresp.TicketListResponse:
-    properties:
-      code:
-        type: integer
-      msg:
-        type: string
-      reason:
-        type: string
-      request_id:
-        type: string
-      result:
-        items:
-          $ref: '#/definitions/commonresp.SoldTicket'
-        type: array
-      status:
         type: string
     type: object
   commonresp.TicketType:
@@ -357,12 +316,14 @@ paths:
       - application/json
       description: GETLotterylist
       parameters:
-      - description: LotteryListRequest
-        in: body
-        name: LotteryListReq
-        required: true
-        schema:
-          $ref: '#/definitions/commonreq.LotteryListReq'
+      - description: ' concert_id'
+        in: query
+        name: concert_id
+        type: string
+      - description: ticket_type
+        in: query
+        name: ticket_type
+        type: string
       produces:
       - application/json
       responses:
@@ -374,28 +335,7 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/commonresp.LotteryListResponse'
-      summary: Lottery list
-      tags:
-      - Lottery
-  /lottery/ticketList:
-    get:
-      description: GETTicketlist
-      parameters:
-      - description: Lottery Address
-        in: query
-        name: lottery_address
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/commonresp.TicketListResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/commonresp.TicketListResponse'
-      summary: ticket list
+      summary: Get Lottery Address
       tags:
       - Lottery
   /user/logout:
