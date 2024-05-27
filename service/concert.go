@@ -67,7 +67,7 @@ func ConcertCancel(concertCancelReq *commonreq.ConcertCancelReq) (commonresp.Con
 	if result.RowsAffected > 0 {
 		res = commonresp.ConcertCancellationResponse{
 			Status:    "success",
-			Msg:       "Concert cancelled, tickets and deposits refunded",
+			Msg:       "Concert was cancelled, tickets and deposits refunded",
 			RequestID: concertCancelReq.ConcertID,
 			Result: commonresp.CancelResult{
 				ConcertID: concertCancelReq.ConcertID,
