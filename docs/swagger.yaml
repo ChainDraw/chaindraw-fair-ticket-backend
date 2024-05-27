@@ -178,11 +178,15 @@ definitions:
     properties:
       concert_name:
         type: string
+      price:
+        type: number
       seller:
         type: string
       token_id:
         type: string
       type_name:
+        type: string
+      url:
         type: string
     type: object
   commonresp.TicketListResponse:

@@ -113,21 +113,13 @@ func TicketListGet(ctx *gin.Context) {
 		resp.Result = append(resp.Result, commonresp.SoldTicket{
 			ConcertName: concert.ConcertName,
 			TypeName:    ticketType.TypeName,
+			Url:         ticketType.TicketImg,
+			Price:       ticketType.Price,
 			Seller:      ticket.Seller,
 			TokenID:     ticket.TokenId,
 		})
 	}
 
 	commonresp.OkWithData(ctx, resp)
-	//if lotteryAddress == "" {
-	//	commonresp.FailWithMessage(ctx, "缺少必要的查询参数")
-	//	return
-	//}
-	//tickets := make([]model.EventNftListed, 0)
-	//global.DB.Where("lottery_address = ?", lotteryAddress).Find(&tickets)
-	//resp := &commonresp.TicketListResponse{}
-	//for _, ticket := range tickets {
-	//	resp.Result.TicketList = append(resp.Result.TicketList)
-	//}
-	//commonresp.OkWithData(ctx, resp)
+
 }

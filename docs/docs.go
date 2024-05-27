@@ -624,6 +624,9 @@ const docTemplate = `{
                 "concert_name": {
                     "type": "string"
                 },
+                "price": {
+                    "type": "number"
+                },
                 "seller": {
                     "type": "string"
                 },
@@ -631,6 +634,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "type_name": {
+                    "type": "string"
+                },
+                "url": {
                     "type": "string"
                 }
             }

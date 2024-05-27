@@ -20,10 +20,12 @@ type LotteryListResponse struct {
 }
 
 type SoldTicket struct {
-	ConcertName string `json:"concert_name"`
-	TypeName    string `json:"type_name"`
-	Seller      string `json:"seller"`
-	TokenID     string `json:"token_id"`
+	ConcertName string  `json:"concert_name"`
+	TypeName    string  `json:"type_name"`
+	Price       float64 `json:"price"`
+	Url         string  `json:"url"`
+	Seller      string  `json:"seller"`
+	TokenID     string  `json:"token_id"`
 }
 type TicketListResponse struct {
 	CommonResp
