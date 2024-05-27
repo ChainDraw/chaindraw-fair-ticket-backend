@@ -158,27 +158,23 @@ CREATE TABLE `event_nft_sold` (
                                   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
 DELIMITER //
 
-CREATE definer = root @localhost trigger auto_increment_ticket_type BEFORE
-INSERT
-    on tb_ticket for each row BEGIN DECLARE max_value INT;
+CREATE TRIGGER auto_increment_ticket_type
+    BEFORE INSERT ON tb_ticket
+    FOR EACH ROW
+BEGIN
+    DECLARE max_value INT;
 
-SELECT
-    MAX(ticket_type) INTO max_value
-FROM
-    tb_ticket;
+    SELECT MAX(ticket_type) INTO max_value
+    FROM tb_ticket;
 
-IF max_value IS NULL THEN
-SET
-    NEW.ticket_type = 1;
-
-ELSE
-SET
-    NEW.ticket_type = max_value + 1;
-
+    IF max_value IS NULL THEN
+        SET NEW.ticket_type = 1;
+    ELSE
+        SET NEW.ticket_type = max_value + 1;
 END IF;
-
 END;//
 
 DELIMITER ;
