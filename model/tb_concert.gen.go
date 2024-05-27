@@ -18,6 +18,7 @@ type TbConcert struct {
 	ConcertDate      int64  `gorm:"column:concert_date;not null" json:"concertDate"`
 	ConcertStatus    int64  `gorm:"column:concert_status;not null;comment:演唱会状态 0未开始；1已过期" json:"concertStatus"`  // 演唱会状态 0未开始；1已过期
 	ReviewStatus     int64  `gorm:"column:review_status;not null;comment:审核状态 0 待审核； 1审核通过；" json:"reviewStatus"` // 审核状态 0 待审核； 1审核通过；
+	CancelReason	 string `gorm:"column:cancel_reason;not null;comment:退票理由" json:"cancelReason"` //退票理由
 	CreateAt         int64  `gorm:"column:create_at;not null" json:"createAt"`
 	UpdateAt         int64  `gorm:"column:update_at;not null" json:"updateAt"`
 	Remark           string `gorm:"column:remark;comment:备注描述" json:"remark"` // 备注描述

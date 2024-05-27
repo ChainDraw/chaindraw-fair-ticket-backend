@@ -3,7 +3,6 @@ module chaindraw-fair-ticket-backend
 go 1.22.1
 
 require (
-	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/ethereum/go-ethereum v1.14.3
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/gin-gonic/gin v1.10.0

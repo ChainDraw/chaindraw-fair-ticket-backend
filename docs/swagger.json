@@ -4,10 +4,8 @@
         "description": "This is a sample API for Your Project using Gin and Swagger",
         "title": "Your Project API",
         "contact": {},
-        "license": {},
         "version": "1.0"
     },
-    "host": "{{.Host}}",
     "basePath": "/api/v1",
     "paths": {
         "/concert/commit": {
@@ -30,7 +28,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonreq.ConcertAddReq"
                         }
                     }
@@ -39,15 +36,56 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.CommitResp"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.CommitResp"
+                        }
+                    }
+                }
+            }
+        },
+        "/concert/cancel": {
+            "post": {
+                "description": "cancel a existed concert by cid",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Concert"
+                ],
+                "summary": "Concel a concert",
+                "parameters": [
+                    {
+                        "description": "Concert Cancel Request",
+                        "name": "concertCancelReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonreq.ConcertCancelReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonresp.ConcertCancelResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonresp.ConcertCancelResp"
                         }
                     }
                 }
@@ -90,14 +128,12 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.ConcertListResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.ConcertListResponse"
                         }
                     }
@@ -124,7 +160,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonreq.ConcertReViewReq"
                         }
                     }
@@ -133,14 +168,12 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.ConcertListResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.ConcertListResponse"
                         }
                     }
@@ -185,14 +218,12 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.CommitResp"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.CommitResp"
                         }
                     }
@@ -211,32 +242,64 @@
                 "tags": [
                     "Lottery"
                 ],
-                "summary": "Lottery list",
+                "summary": "Get Lottery Address",
                 "parameters": [
                     {
-                        "description": "LotteryListRequest",
-                        "name": "LotteryListReq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/commonreq.LotteryListReq"
-                        }
+                        "type": "string",
+                        "description": " concert_id",
+                        "name": "concert_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "ticket_type",
+                        "name": "ticket_type",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.LotteryListResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.LotteryListResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/lottery/ticketList": {
+            "get": {
+                "description": "GETTicketlist",
+                "tags": [
+                    "Lottery"
+                ],
+                "summary": "ticket list",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Lottery Address",
+                        "name": "lottery_address",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/commonresp.TicketListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/commonresp.TicketListResponse"
                         }
                     }
                 }
@@ -322,8 +385,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/RequestBody"
+                            "$ref": "#/definitions/user.RequestBody"
                         }
                     }
                 ],
@@ -410,19 +472,6 @@
                 }
             }
         },
-        "commonreq.LotteryListReq": {
-            "type": "object",
-            "properties": {
-                "concert_id": {
-                    "description": "提交的演唱会id",
-                    "type": "string"
-                },
-                "ticket_type": {
-                    "description": "票种类型",
-                    "type": "string"
-                }
-            }
-        },
         "commonreq.Ticket": {
             "type": "object",
             "properties": {
@@ -481,8 +530,11 @@
                 },
                 "result": {
                     "description": "返回结果",
-                    "type": "object",
-                    "$ref": "#/definitions/commonresp.ResultData"
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/commonresp.ResultData"
+                        }
+                    ]
                 },
                 "status": {
                     "description": "返回状态",
@@ -490,39 +542,97 @@
                 }
             }
         },
-        "commonresp.Concert": {
-            "type": "object",
+        "commonresp.ConcertCancelResp": {
             "properties": {
-                "concert_date": {
-                    "description": "演唱会日期",
-                    "type": "string"
-                },
-                "concert_id": {
-                    "description": "演唱会ID",
-                    "type": "string"
-                },
-                "concert_img": {
-                    "description": "演唱会图片",
-                    "type": "string"
-                },
-                "concert_name": {
-                    "description": "演唱会名称",
-                    "type": "string"
-                },
-                "concert_status": {
-                    "description": "演唱会状态",
+                "code": {
                     "type": "integer"
                 },
                 "status": {
-                    "description": "演唱会状态",
                     "type": "string"
                 },
-                "ticket_types": {
-                    "description": "门票类型列表",
+                "msg": {
+                    "type": "string"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "request_id": {
+                    "type": "string"
+                },
+                "result": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/commonresp.TicketType"
+                        "$ref": "#/definitions/commonresp.CancelResult"
                     }
+                }
+            },
+            "type": "object",
+            "example": {
+                "code": 0,
+                "status": "failed",
+                "msg": "failed to cancel ticket",
+                "reason": "",
+                "request_id": "234",
+                "result": {
+                    "concert_id": "234"
+                }
+            }
+        },
+        "commonreq.ConcertCancelReq": {
+            "properties": {
+                "concert_id": {
+                    "type": "string"
+                },
+                "cancel_reason": {
+                    "type": "string"
+                }
+            },
+            "type": "object",
+            "example": {
+                "code": 0,
+                "status": "failed",
+                "msg": "failed to cancel ticket",
+                "reason": "",
+                "request_id": "234",
+                "result": {
+                    "concert_id": "234",
+                    "cancel_reason": "天气原因"
+                }
+            }
+        }
+    },
+    "commonresp.Concert": {
+        "type": "object",
+        "properties": {
+            "concert_date": {
+                "description": "演唱会日期",
+                "type": "string"
+            },
+            "concert_id": {
+                "description": "演唱会ID",
+                "type": "string"
+            },
+            "concert_img": {
+                "description": "演唱会图片",
+                "type": "string"
+            },
+            "concert_name": {
+                "description": "演唱会名称",
+                "type": "string"
+            },
+            "concert_status": {
+                "description": "演唱会状态",
+                "type": "integer"
+            },
+            "status": {
+                "description": "演唱会状态",
+                "type": "string"
+            },
+            "ticket_types": {
+                "description": "门票类型列表",
+                "type": "array",
+                "items": {
+                    "$ref": "#/definitions/commonresp.TicketType"
                 }
             }
         },
@@ -592,6 +702,55 @@
                 }
             }
         },
+        "commonresp.SoldTicket": {
+            "type": "object",
+            "properties": {
+                "concert_name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "seller": {
+                    "type": "string"
+                },
+                "token_id": {
+                    "type": "string"
+                },
+                "type_name": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "commonresp.TicketListResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "request_id": {
+                    "type": "string"
+                },
+                "result": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/commonresp.SoldTicket"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
         "commonresp.TicketType": {
             "type": "object",
             "properties": {
@@ -609,6 +768,17 @@
                 },
                 "type_name": {
                     "description": "类型名称",
+                    "type": "string"
+                }
+            }
+        },
+        "user.RequestBody": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "signature": {
                     "type": "string"
                 }
             }

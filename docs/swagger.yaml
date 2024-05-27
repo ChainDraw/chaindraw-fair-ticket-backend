@@ -18,7 +18,7 @@ definitions:
         description: 演唱会名称
         type: string
       concert_status:
-        description: '演唱会状态（0: 未开始, 1: 已过期, 2: 已取消）'
+        description: "演唱会状态（0: 未开始, 1: 已过期, 2: 已取消）"
         type: integer
       lottery_end_date:
         description: 抽奖结束时间
@@ -30,12 +30,12 @@ definitions:
         description: 演唱会备注信息
         type: string
       review_status:
-        description: '审核状态（0: 未审核, 1: 审核通过, 2: 审核失败）'
+        description: "审核状态（0: 未审核, 1: 审核通过, 2: 审核失败）"
         type: integer
       tickets:
         description: 演唱会门票列表
         items:
-          $ref: '#/definitions/commonreq.Ticket'
+          $ref: "#/definitions/commonreq.Ticket"
         type: array
     type: object
   commonreq.ConcertReViewReq:
@@ -47,13 +47,13 @@ definitions:
         description: 是否通过
         type: boolean
     type: object
-  commonreq.LotteryListReq:
+  commonreq.ConcertCancelReq:
     properties:
       concert_id:
-        description: 提交的演唱会id
+        description: 演唱会id
         type: string
-      ticket_type:
-        description: 票种类型
+      cancel_reason:
+        description: 取消原因
         type: string
     type: object
   commonreq.Ticket:
@@ -98,9 +98,9 @@ definitions:
         description: 请求ID
         type: string
       result:
-        $ref: '#/definitions/commonresp.ResultData'
+        allOf:
+        - $ref: '#/definitions/commonresp.ResultData'
         description: 返回结果
-        type: object
       status:
         description: 返回状态
         type: string
@@ -128,9 +128,53 @@ definitions:
       ticket_types:
         description: 门票类型列表
         items:
-          $ref: '#/definitions/commonresp.TicketType'
+          $ref: "#/definitions/commonresp.TicketType"
         type: array
     type: object
+  commonresp.ConcertCancelResponse:
+    properties:
+      code:
+        description: 响应代码
+        type: integer
+      msg:
+        description: 消息
+        type: string
+      reason:
+        description: 原因
+        type: string
+      request_id:
+        description: 请求ID
+        type: string
+      result:
+        description: 结果
+        type: array
+        items:
+          $ref: "#/definitions/commonresp.CancelResult"
+      status:
+        type: string
+    type: object
+    example:
+      code: 200
+      status: success
+      msg: Concert cancelled, tickets and deposits refunded
+      reason: ""
+      request_id: "123456789"
+      result:
+        - concert_id: "123456789"
+  commonresp.CancelResult:
+    properties:
+      concert_id:
+        description: 演唱会ID
+        type: string
+    type: object
+    example:
+      code: 200
+      status: success
+      msg: Concert cancelled, tickets and deposits refunded
+      reason: ""
+      request_id: "123456789"
+      result:
+        - concert_id: "123456789"
   commonresp.ConcertListResponse:
     properties:
       code:
@@ -143,7 +187,7 @@ definitions:
         type: string
       result:
         items:
-          $ref: '#/definitions/commonresp.Concert'
+          $ref: "#/definitions/commonresp.Concert"
         type: array
       status:
         type: string
@@ -174,6 +218,38 @@ definitions:
         description: 演唱会ID
         type: string
     type: object
+  commonresp.SoldTicket:
+    properties:
+      concert_name:
+        type: string
+      price:
+        type: number
+      seller:
+        type: string
+      token_id:
+        type: string
+      type_name:
+        type: string
+      url:
+        type: string
+    type: object
+  commonresp.TicketListResponse:
+    properties:
+      code:
+        type: integer
+      msg:
+        type: string
+      reason:
+        type: string
+      request_id:
+        type: string
+      result:
+        items:
+          $ref: '#/definitions/commonresp.SoldTicket'
+        type: array
+      status:
+        type: string
+    type: object
   commonresp.TicketType:
     properties:
       max_quantity_per_wallet:
@@ -189,18 +265,23 @@ definitions:
         description: 类型名称
         type: string
     type: object
-host: '{{.Host}}'
+  user.RequestBody:
+    properties:
+      message:
+        type: string
+      signature:
+        type: string
+    type: object
 info:
   contact: {}
   description: This is a sample API for Your Project using Gin and Swagger
-  license: {}
   title: Your Project API
   version: "1.0"
 paths:
   /concert/commit:
     post:
       consumes:
-      - application/json
+        - application/json
       description: Add a new concert with the given details
       parameters:
       - description: Concert Add Request
@@ -209,61 +290,56 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/commonreq.ConcertAddReq'
-          type: object
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/commonresp.CommitResp'
-            type: object
         "400":
           description: Bad Request
           schema:
             $ref: '#/definitions/commonresp.CommitResp'
-            type: object
       summary: Add a new concert
       tags:
-      - Concert
+        - Concert
   /concert/concert_list:
     get:
       consumes:
-      - application/json
+        - application/json
       description: Get list of concerts by IDs with pagination
       parameters:
-      - description: Comma-separated list of concert IDs
-        in: query
-        name: ids
-        type: string
-      - description: Page number
-        in: query
-        name: page
-        type: integer
-      - description: Number of items per page
-        in: query
-        name: page_size
-        type: integer
+        - description: Comma-separated list of concert IDs
+          in: query
+          name: ids
+          type: string
+        - description: Page number
+          in: query
+          name: page
+          type: integer
+        - description: Number of items per page
+          in: query
+          name: page_size
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/commonresp.ConcertListResponse'
-            type: object
         "400":
           description: Bad Request
           schema:
             $ref: '#/definitions/commonresp.ConcertListResponse'
-            type: object
       summary: Get list of concerts
       tags:
-      - Concert
+        - Concert
   /concert/review:
     post:
       consumes:
-      - application/json
+        - application/json
       description: Review concerts
       parameters:
       - description: Concert Review Request
@@ -272,55 +348,79 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/commonreq.ConcertReViewReq'
-          type: object
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/commonresp.ConcertListResponse'
-            type: object
         "400":
           description: Bad Request
           schema:
             $ref: '#/definitions/commonresp.ConcertListResponse'
+      summary: Review concerts
+      tags:
+        - Concert
+  /concert/cancel:
+    post:
+      consumes:
+        - application/json
+      description: Review concerts
+      parameters:
+        - description: Concert Review Request
+          in: body
+          name: concertReviewReq
+          required: true
+          schema:
+            $ref: "#/definitions/commonreq.ConcertCancelReq"
+            type: object
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/commonresp.ConcertCancelResponse"
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: "#/definitions/commonresp.ConcertCancelResponse"
             type: object
       summary: Review concerts
       tags:
-      - Concert
+        - Concert
   /concert/update_status:
     post:
       consumes:
-      - application/json
+        - application/json
       description: update concert
       parameters:
-      - description: Comma-separated list of concert IDs
-        in: query
-        name: ConcertId
-        required: true
-        type: integer
-      - description: '演唱会状态（0: 未开始, 1: 已过期, 2: 已取消）'
-        in: query
-        name: ConcertStatus
-        type: integer
-      - description: '审核状态（0: 未审核, 1: 审核通过, 2: 审核失败）'
-        in: query
-        name: ReviewStatus
-        type: integer
+        - description: Comma-separated list of concert IDs
+          in: query
+          name: ConcertId
+          required: true
+          type: integer
+        - description: "演唱会状态（0: 未开始, 1: 已过期, 2: 已取消）"
+          in: query
+          name: ConcertStatus
+          type: integer
+        - description: "审核状态（0: 未审核, 1: 审核通过, 2: 审核失败）"
+          in: query
+          name: ReviewStatus
+          type: integer
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: OK
           schema:
             $ref: '#/definitions/commonresp.CommitResp'
-            type: object
         "400":
           description: Bad Request
           schema:
             $ref: '#/definitions/commonresp.CommitResp'
-            type: object
       summary: update concert
       tags:
       - Concert
@@ -330,13 +430,14 @@ paths:
       - application/json
       description: GETLotterylist
       parameters:
-      - description: LotteryListRequest
-        in: body
-        name: LotteryListReq
-        required: true
-        schema:
-          $ref: '#/definitions/commonreq.LotteryListReq'
-          type: object
+      - description: ' concert_id'
+        in: query
+        name: concert_id
+        type: string
+      - description: ticket_type
+        in: query
+        name: ticket_type
+        type: string
       produces:
       - application/json
       responses:
@@ -344,20 +445,39 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/commonresp.LotteryListResponse'
-            type: object
         "400":
           description: Bad Request
           schema:
             $ref: '#/definitions/commonresp.LotteryListResponse'
-            type: object
       summary: Lottery list
+      tags:
+      - Lottery
+  /lottery/ticketList:
+    get:
+      description: GETTicketlist
+      parameters:
+      - description: Lottery Address
+        in: query
+        name: lottery_address
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/commonresp.TicketListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/commonresp.TicketListResponse'
+      summary: ticket list
       tags:
       - Lottery
   /user/logout:
     get:
       description: Get personal information
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: logout retrieved successfully
@@ -372,7 +492,7 @@ paths:
     get:
       description: Generate nonce for session
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: Nonce generated successfully
@@ -383,7 +503,7 @@ paths:
     get:
       description: Get personal information
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: Personal information retrieved successfully
@@ -397,7 +517,7 @@ paths:
   /user/verify:
     post:
       consumes:
-      - application/json
+        - application/json
       description: Verify signature with message and nonce
       parameters:
       - description: Request body
@@ -405,10 +525,9 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/RequestBody'
-          type: object
+          $ref: '#/definitions/user.RequestBody'
       produces:
-      - application/json
+        - application/json
       responses:
         "200":
           description: Verification success
