@@ -58,6 +58,7 @@ func Router() *gin.Engine {
 		concertApiGroup.POST("commit", concert.ConcertAdd)                //7. 演唱会主办方提交信息
 		concertApiGroup.GET("update_status", concert.ConcertStatusUpdate) //7. 演唱会主办方提交信息
 		concertApiGroup.POST("review", chaindraw.ReviewConcert)           //8. 演唱会信息审核
+		concertApiGroup.POST("cancel", chaindraw.CancelConcert)           //9. 演唱会取消及门票、抵押品退回
 	}
 
 	// 用户逻辑相关 路由组
