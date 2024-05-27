@@ -23,7 +23,7 @@ func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error)
 		tx.Model(&model.TbConcert{}).Where("id IN ?", ids)
 	}
 
-	result := tx.Order("concert_date DESC").Limit(pageSize).Offset(offset).Find(&concerts)
+	result := tx.Order("concert_date DESC").Where("concert_status = 0").Limit(pageSize).Offset(offset).Find(&concerts)
 
 	if result.RowsAffected == 0 {
 		return res, global.DB.Error
@@ -54,5 +54,35 @@ func ConcertReview(concertViewRecord *commonreq.ConcertReViewReq) ([]commonresp.
 	res = append(res, commonresp.Concert{
 		ConcertID: concertViewRecord.ConcertID,
 	})
+	return res, nil
+}
+
+func ConcertCancel(concertCancelReq *commonreq.ConcertCancelReq) (commonresp.ConcertCancellationResponse, error) {
+	result := global.DB.Model(&model.TbConcert{}).Where("concert_id = ?", concertCancelReq.ConcertID).Updates(map[string]interface{}{
+		"concert_status": 1,
+		"cancel_reason":  concertCancelReq.CancelReason,
+	})
+
+	var res commonresp.ConcertCancellationResponse
+	if result.RowsAffected > 0 {
+		res = commonresp.ConcertCancellationResponse{
+			Status:    "success",
+			Msg:       "Concert cancelled, tickets and deposits refunded",
+			RequestID: concertCancelReq.ConcertID,
+			Result: commonresp.CancelResult{
+				ConcertID: concertCancelReq.ConcertID,
+			},
+		}
+	} else {
+		res = commonresp.ConcertCancellationResponse{
+			Status:    "failed",
+			Msg:       "failed to cancel ticket",
+			RequestID: concertCancelReq.ConcertID,
+			Result: commonresp.CancelResult{
+				ConcertID: concertCancelReq.ConcertID,
+			},
+		}
+	}
+
 	return res, nil
 }
