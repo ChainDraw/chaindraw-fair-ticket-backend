@@ -17,7 +17,8 @@ import (
 
 func Router() *gin.Engine {
 	r := gin.Default()
-	r.Use(v1.CORSMiddleware())
+	allowedOrigins := []string{"http://localhost:3000", "http://chaindraw.biturd.com", "https://chaindraw.biturd.com"}
+	r.Use(v1.CORSMiddleware(allowedOrigins))
 	r.NoRoute(func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"message": "404 PAGE NOT FOUND!",
