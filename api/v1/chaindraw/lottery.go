@@ -11,6 +11,7 @@ import (
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
 	event "chaindraw-fair-ticket-backend/model/event"
+
 	"chaindraw-fair-ticket-backend/service"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -55,7 +56,7 @@ func LotteryListGet(ctx *gin.Context) {
 		commonresp.FailWithMessage(ctx, "参数获取失败")
 		return
 	}
-	lotterys := make([]model.EventEscrowCreated, 0)
+	lotterys := make([]event.EventEscrowCreated, 0)
 	global.DB.Where("concert_id = ?", conertId).Where("ticket_type = ?", ticket_type).Find(&lotterys)
 	resp := &commonresp.LotteryListResponse{}
 	for _, lottery := range lotterys {
