@@ -237,6 +237,38 @@ const docTemplate = `{
                 }
             }
         },
+        "/lottery/ticketList": {
+            "get": {
+                "description": "GETTicketlist",
+                "tags": [
+                    "Lottery"
+                ],
+                "summary": "ticket list",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Lottery Address",
+                        "name": "lottery_address",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/commonresp.TicketListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/commonresp.TicketListResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/user/logout": {
             "get": {
                 "description": "Get personal information",
@@ -572,6 +604,55 @@ const docTemplate = `{
             "properties": {
                 "concert_id": {
                     "description": "演唱会ID",
+                    "type": "string"
+                }
+            }
+        },
+        "commonresp.SoldTicket": {
+            "type": "object",
+            "properties": {
+                "concert_name": {
+                    "type": "string"
+                },
+                "price": {
+                    "type": "number"
+                },
+                "seller": {
+                    "type": "string"
+                },
+                "token_id": {
+                    "type": "string"
+                },
+                "type_name": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "commonresp.TicketListResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "request_id": {
+                    "type": "string"
+                },
+                "result": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/commonresp.SoldTicket"
+                    }
+                },
+                "status": {
                     "type": "string"
                 }
             }

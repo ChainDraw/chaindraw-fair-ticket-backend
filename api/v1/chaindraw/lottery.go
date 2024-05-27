@@ -7,9 +7,10 @@ package chaindraw
 
 import (
 	"chaindraw-fair-ticket-backend/global"
+	"chaindraw-fair-ticket-backend/model"
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
-	model "chaindraw-fair-ticket-backend/model/event"
+	event "chaindraw-fair-ticket-backend/model/event"
 	"chaindraw-fair-ticket-backend/service"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -61,4 +62,67 @@ func LotteryListGet(ctx *gin.Context) {
 		resp.Result.LotteryList = append(resp.Result.LotteryList, lottery.EscrowAddress)
 	}
 	commonresp.OkWithData(ctx, resp)
+}
+
+// @Summary ticket list
+// @Description GETTicketlist
+// @Tags Lottery
+// @Param   lottery_address  query    string  true  "Lottery Address"
+// @Success 200 {object} commonresp.TicketListResponse
+// @Failure 400 {object} commonresp.TicketListResponse
+// @Router /lottery/ticketList [get]
+func TicketListGet(ctx *gin.Context) {
+	lotteryAddress := ctx.Query("lottery_address")
+	resp := &commonresp.TicketListResponse{}
+	// Step 1: Query event_nft_listed table
+	tickets := make([]event.EventNftListed, 0)
+	result := global.DB.Where("lottery_address = ?", lotteryAddress).Find(&tickets)
+	if result.Error != nil {
+		commonresp.FailWithMessage(ctx, "查询 event_nft_listed 表时出错")
+		return
+	}
+
+	if len(tickets) == 0 {
+		commonresp.FailWithMessage(ctx, "未找到相关门票")
+		return
+	}
+	// Step 2: Query event_escrow_created table using the first ticket's lottery_address
+	var escrow event.EventEscrowCreated
+	result = global.DB.Where("escrow_address = ?", lotteryAddress).First(&escrow)
+	if result.Error != nil {
+		commonresp.FailWithMessage(ctx, "查询 event_escrow_created 表时出错")
+		return
+	}
+
+	// Step 3: Query tb_concert table using concert_id from the event_escrow_created
+	var concert *model.TbConcert
+	result = global.DB.Where("concert_id = ?", escrow.ConcertId).First(&concert)
+	if result.Error != nil {
+		commonresp.FailWithMessage(ctx, "查询 tb_concert 表时出错")
+		return
+	}
+
+	// Step 4: Query tb_ticket table using ticket_type from the event_escrow_created
+	var ticketType model.TbTicket
+	result = global.DB.Where("ticket_type = ?", escrow.TicketType).First(&ticketType)
+	if result.Error != nil {
+		commonresp.FailWithMessage(ctx, "查询 tb_ticket 表时出错")
+		return
+	}
+
+	// Build response
+	resp.Result = make([]commonresp.SoldTicket, 0)
+	for _, ticket := range tickets {
+		resp.Result = append(resp.Result, commonresp.SoldTicket{
+			ConcertName: concert.ConcertName,
+			TypeName:    ticketType.TypeName,
+			Url:         ticketType.TicketImg,
+			Price:       ticketType.Price,
+			Seller:      ticket.Seller,
+			TokenID:     ticket.TokenId,
+		})
+	}
+
+	commonresp.OkWithData(ctx, resp)
+
 }
