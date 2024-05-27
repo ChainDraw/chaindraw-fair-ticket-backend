@@ -66,6 +66,49 @@ var doc = `{
                 }
             }
         },
+        "/concert/cancel": {
+            "post": {
+                "description": "cancel a existed concert by concert_id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Concert"
+                ],
+                "summary": "cancel a concert",
+                "parameters": [
+                    {
+                        "description": "Concert Cancel Request",
+                        "name": "concertAddReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonreq.ConcertCancelReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonresp.ConcertCancelResp"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "object",
+                            "$ref": "#/definitions/commonresp.ConcertCancelResp"
+                        }
+                    }
+                }
+            }
+        },
         "/concert/concert_list": {
             "get": {
                 "description": "Get list of concerts by IDs with pagination",
@@ -380,6 +423,19 @@ var doc = `{
                 }
             }
         },
+        "commonreq.ConcertCancelReq": {
+            "type": "object",
+            "properties": {
+                "concert_id": {
+                    "description": "提交的演唱会id",
+                    "type": "string"
+                },
+                "cancel_reason": {
+                    "description": "取消原因",
+                    "type": "string"
+                }
+            }
+        },
         "commonreq.Ticket": {
             "type": "object",
             "properties": {
@@ -418,6 +474,36 @@ var doc = `{
             }
         },
         "commonresp.CommitResp": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "description": "返回状态码",
+                    "type": "integer"
+                },
+                "msg": {
+                    "description": "返回消息",
+                    "type": "string"
+                },
+                "reason": {
+                    "description": "错误原因",
+                    "type": "string"
+                },
+                "request_id": {
+                    "description": "请求ID",
+                    "type": "string"
+                },
+                "result": {
+                    "description": "返回结果",
+                    "type": "object",
+                    "$ref": "#/definitions/commonresp.ResultData"
+                },
+                "status": {
+                    "description": "返回状态",
+                    "type": "string"
+                }
+            }
+        },
+        "commonresp.ConcertCancelResp": {
             "type": "object",
             "properties": {
                 "code": {
