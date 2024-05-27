@@ -4,10 +4,8 @@
         "description": "This is a sample API for Your Project using Gin and Swagger",
         "title": "Your Project API",
         "contact": {},
-        "license": {},
         "version": "1.0"
     },
-    "host": "{{.Host}}",
     "basePath": "/api/v1",
     "paths": {
         "/concert/commit": {
@@ -30,7 +28,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonreq.ConcertAddReq"
                         }
                     }
@@ -39,14 +36,12 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.CommitResp"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.CommitResp"
                         }
                     }
@@ -90,14 +85,12 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.ConcertListResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.ConcertListResponse"
                         }
                     }
@@ -124,7 +117,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonreq.ConcertReViewReq"
                         }
                     }
@@ -133,14 +125,12 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.ConcertListResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.ConcertListResponse"
                         }
                     }
@@ -185,14 +175,12 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.CommitResp"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.CommitResp"
                         }
                     }
@@ -219,7 +207,6 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonreq.LotteryListReq"
                         }
                     }
@@ -228,15 +215,45 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.LotteryListResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "type": "object",
                             "$ref": "#/definitions/commonresp.LotteryListResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/lottery/ticketList": {
+            "get": {
+                "description": "GETTicketlist",
+                "tags": [
+                    "Lottery"
+                ],
+                "summary": "ticket list",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Lottery Address",
+                        "name": "lottery_address",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/commonresp.TicketListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/commonresp.TicketListResponse"
                         }
                     }
                 }
@@ -322,8 +339,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/RequestBody"
+                            "$ref": "#/definitions/user.RequestBody"
                         }
                     }
                 ],
@@ -481,8 +497,11 @@
                 },
                 "result": {
                     "description": "返回结果",
-                    "type": "object",
-                    "$ref": "#/definitions/commonresp.ResultData"
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/commonresp.ResultData"
+                        }
+                    ]
                 },
                 "status": {
                     "description": "返回状态",
@@ -592,6 +611,49 @@
                 }
             }
         },
+        "commonresp.SoldTicket": {
+            "type": "object",
+            "properties": {
+                "concert_name": {
+                    "type": "string"
+                },
+                "seller": {
+                    "type": "string"
+                },
+                "token_id": {
+                    "type": "string"
+                },
+                "type_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "commonresp.TicketListResponse": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "msg": {
+                    "type": "string"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "request_id": {
+                    "type": "string"
+                },
+                "result": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/commonresp.SoldTicket"
+                    }
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
         "commonresp.TicketType": {
             "type": "object",
             "properties": {
@@ -609,6 +671,17 @@
                 },
                 "type_name": {
                     "description": "类型名称",
+                    "type": "string"
+                }
+            }
+        },
+        "user.RequestBody": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "signature": {
                     "type": "string"
                 }
             }

@@ -98,9 +98,9 @@ definitions:
         description: 请求ID
         type: string
       result:
-        $ref: '#/definitions/commonresp.ResultData'
+        allOf:
+        - $ref: '#/definitions/commonresp.ResultData'
         description: 返回结果
-        type: object
       status:
         description: 返回状态
         type: string
@@ -174,6 +174,34 @@ definitions:
         description: 演唱会ID
         type: string
     type: object
+  commonresp.SoldTicket:
+    properties:
+      concert_name:
+        type: string
+      seller:
+        type: string
+      token_id:
+        type: string
+      type_name:
+        type: string
+    type: object
+  commonresp.TicketListResponse:
+    properties:
+      code:
+        type: integer
+      msg:
+        type: string
+      reason:
+        type: string
+      request_id:
+        type: string
+      result:
+        items:
+          $ref: '#/definitions/commonresp.SoldTicket'
+        type: array
+      status:
+        type: string
+    type: object
   commonresp.TicketType:
     properties:
       max_quantity_per_wallet:
@@ -189,11 +217,16 @@ definitions:
         description: 类型名称
         type: string
     type: object
-host: '{{.Host}}'
+  user.RequestBody:
+    properties:
+      message:
+        type: string
+      signature:
+        type: string
+    type: object
 info:
   contact: {}
   description: This is a sample API for Your Project using Gin and Swagger
-  license: {}
   title: Your Project API
   version: "1.0"
 paths:
@@ -209,7 +242,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/commonreq.ConcertAddReq'
-          type: object
       produces:
       - application/json
       responses:
@@ -217,12 +249,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/commonresp.CommitResp'
-            type: object
         "400":
           description: Bad Request
           schema:
             $ref: '#/definitions/commonresp.CommitResp'
-            type: object
       summary: Add a new concert
       tags:
       - Concert
@@ -251,12 +281,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/commonresp.ConcertListResponse'
-            type: object
         "400":
           description: Bad Request
           schema:
             $ref: '#/definitions/commonresp.ConcertListResponse'
-            type: object
       summary: Get list of concerts
       tags:
       - Concert
@@ -272,7 +300,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/commonreq.ConcertReViewReq'
-          type: object
       produces:
       - application/json
       responses:
@@ -280,12 +307,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/commonresp.ConcertListResponse'
-            type: object
         "400":
           description: Bad Request
           schema:
             $ref: '#/definitions/commonresp.ConcertListResponse'
-            type: object
       summary: Review concerts
       tags:
       - Concert
@@ -315,12 +340,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/commonresp.CommitResp'
-            type: object
         "400":
           description: Bad Request
           schema:
             $ref: '#/definitions/commonresp.CommitResp'
-            type: object
       summary: update concert
       tags:
       - Concert
@@ -336,7 +359,6 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/commonreq.LotteryListReq'
-          type: object
       produces:
       - application/json
       responses:
@@ -344,13 +366,32 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/commonresp.LotteryListResponse'
-            type: object
         "400":
           description: Bad Request
           schema:
             $ref: '#/definitions/commonresp.LotteryListResponse'
-            type: object
       summary: Lottery list
+      tags:
+      - Lottery
+  /lottery/ticketList:
+    get:
+      description: GETTicketlist
+      parameters:
+      - description: Lottery Address
+        in: query
+        name: lottery_address
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/commonresp.TicketListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/commonresp.TicketListResponse'
+      summary: ticket list
       tags:
       - Lottery
   /user/logout:
@@ -405,8 +446,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/RequestBody'
-          type: object
+          $ref: '#/definitions/user.RequestBody'
       produces:
       - application/json
       responses:

@@ -18,3 +18,14 @@ type LotteryListResponse struct {
 		LotteryList []string `json:"lottery_list"`
 	} `json:"result"`
 }
+
+type SoldTicket struct {
+	ConcertName string `json:"concert_name"`
+	TypeName    string `json:"type_name"`
+	Seller      string `json:"seller"`
+	TokenID     string `json:"token_id"`
+}
+type TicketListResponse struct {
+	CommonResp
+	Result []SoldTicket `json:"result"`
+}

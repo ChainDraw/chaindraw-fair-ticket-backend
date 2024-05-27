@@ -78,6 +78,7 @@ func Router() *gin.Engine {
 	lottery := apiGroup.Group("lottery")
 	{
 		lottery.GET("list", chaindraw.LotteryListGet)
+		lottery.GET("ticketList", chaindraw.TicketListGet)
 	}
 
 	// event相关 路由组
