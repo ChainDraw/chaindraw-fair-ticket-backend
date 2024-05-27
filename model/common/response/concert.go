@@ -25,3 +25,16 @@ type ConcertListResponse struct {
 	CommonResp
 	Result []Concert `json:"result"`
 }
+
+type ConcertCancellationResponse struct {
+	Code      int          `json:"code"`
+	Status    string       `json:"status"`
+	Msg       string       `json:"msg"`
+	Reason    string       `json:"reason"`
+	RequestID string       `json:"request_id"`
+	Result    CancelResult `json:"result"`
+}
+
+type CancelResult struct {
+	ConcertID string `json:"concert_id"`
+}
