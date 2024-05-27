@@ -3,6 +3,7 @@ package main
 import (
 	"chaindraw-fair-ticket-backend/core"
 	"chaindraw-fair-ticket-backend/global"
+	"chaindraw-fair-ticket-backend/go2chain"
 	"chaindraw-fair-ticket-backend/initialize"
 )
 
@@ -22,6 +23,10 @@ func main() {
 
 	// 初始化 Redis 数据库
 
+	//  初始化chain监听
+	go go2chain.Run()
+
 	// 启动服务
 	core.RunServer()
+
 }

@@ -32,17 +32,11 @@ import (
 // @Router /concert/concert_list [get]
 func ConcertList(ctx *gin.Context) {
 	resp := &commonresp.ConcertListResponse{}
-	pageStr := ctx.Query("page")
-	pageSizeStr := ctx.Query("page_size")
+	pageStr := ctx.DefaultQuery("page", "1")
+	pageSizeStr := ctx.DefaultQuery("page_size", "10")
 	ids := strings.Split(ctx.Query("ids"), ",")
-	page := 1      // 当前页码
-	pageSize := 10 // 每页记录数
-	if len(pageStr) == 0 {
-		page, _ = strconv.Atoi(pageStr)
-	}
-	if len(pageSizeStr) == 0 {
-		page, _ = strconv.Atoi(pageSizeStr)
-	}
+	page, _ := strconv.Atoi(pageStr)         // 当前页码
+	pageSize, _ := strconv.Atoi(pageSizeStr) // 每页记录数
 
 	concerts, err := service.ConcertList(ids, page, pageSize)
 

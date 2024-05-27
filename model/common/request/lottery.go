@@ -13,7 +13,12 @@ type LotteryRecordReq struct {
 	WalletAddress string `json:"wallet_address"` // 抽票地址
 }
 
-type LotteryListRep struct {
+type LotteryListReq struct {
 	ConcertID  string `json:"concert_id"`  // 提交的演唱会id
 	TicketType string `json:"ticket_type"` // 票种类型
+}
+
+type TicketListReq struct {
+	LotteryAddress string `json:"lottery_address"` //奖池地址
+
 }

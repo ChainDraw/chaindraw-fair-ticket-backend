@@ -9,7 +9,6 @@ type EventLotteryescrowNonwinner struct {
 	Id         int64     `gorm:"column:id;primary_key;AUTO_INCREMENT;NOT NULL"`
 	ConcertId  string    `gorm:"column:concert_id;NOT NULL"`
 	TicketType string    `gorm:"column:ticket_type;NOT NULL"`
-	Organizer  string    `gorm:"column:organizer;NOT NULL"`
 	NonWinner  string    `gorm:"column:non_winner;NOT NULL"`
 	Money      string    `gorm:"column:money;NOT NULL"`
 	CreatedAt  time.Time `gorm:"column:created_at;NOT NULL"`

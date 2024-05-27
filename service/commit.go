@@ -14,11 +14,10 @@ import (
 )
 
 func ConcertAdd(concert *commonreq.ConcertAddReq) (err error) {
-	//2024-05-20 待解决，演唱会主办方提交信息Req涉及到tb_concert和tb_ticket共2个表的数据存储，需要考虑到ticket结构体数组的问题，Req参考的是文档 by ASWLauncher
-	//日期转换
-	lotteryStartDate, _ := time.Parse("2006-01-02 15:04:05", concert.LotteryStartDate)
-	lotteryEndDate, _ := time.Parse("2006-01-02 15:04:05", concert.LotteryEndDate)
-	concertDate, _ := time.Parse("2006-01-02 15:04:05", concert.ConcertDate)
+	//datetime convertion method must use time.RFC3339 .
+	lotteryStartDate, _ := time.Parse(time.RFC3339, concert.LotteryStartDate)
+	lotteryEndDate, _ := time.Parse(time.RFC3339, concert.LotteryEndDate)
+	concertDate, _ := time.Parse(time.RFC3339, concert.ConcertDate)
 
 	record := &model.TbConcert{
 		ConcertID:        concert.ConcertID,
@@ -32,7 +31,8 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (err error) {
 		LotteryStartDate: lotteryStartDate.UnixMilli(),
 		LotteryEndDate:   lotteryEndDate.UnixMilli(),
 	}
-	global.DB.Save(record)
+
+	global.DB.Save(&record)
 	err = global.DB.Error
 	if err != nil {
 		return
@@ -59,7 +59,7 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (err error) {
 			CreateAt:             time.Now().Unix(),
 			UpdateAt:             time.Now().Unix(),
 		}
-		global.DB.Save(ticketRecord)
+		global.DB.Save(&ticketRecord)
 		if global.DB.Error != nil {
 			return
 		}
