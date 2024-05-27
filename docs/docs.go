@@ -206,16 +206,19 @@ const docTemplate = `{
                 "tags": [
                     "Lottery"
                 ],
-                "summary": "Lottery list",
+                "summary": "Get Lottery Address",
                 "parameters": [
                     {
-                        "description": "LotteryListRequest",
-                        "name": "LotteryListReq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/commonreq.LotteryListReq"
-                        }
+                        "type": "string",
+                        "description": " concert_id",
+                        "name": "concert_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "ticket_type",
+                        "name": "ticket_type",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -430,19 +433,6 @@ const docTemplate = `{
                 "pass": {
                     "description": "是否通过",
                     "type": "boolean"
-                }
-            }
-        },
-        "commonreq.LotteryListReq": {
-            "type": "object",
-            "properties": {
-                "concert_id": {
-                    "description": "提交的演唱会id",
-                    "type": "string"
-                },
-                "ticket_type": {
-                    "description": "票种类型",
-                    "type": "string"
                 }
             }
         },

@@ -47,15 +47,6 @@ definitions:
         description: 是否通过
         type: boolean
     type: object
-  commonreq.LotteryListReq:
-    properties:
-      concert_id:
-        description: 提交的演唱会id
-        type: string
-      ticket_type:
-        description: 票种类型
-        type: string
-    type: object
   commonreq.Ticket:
     properties:
       max_quantity_per_wallet:
@@ -357,12 +348,14 @@ paths:
       - application/json
       description: GETLotterylist
       parameters:
-      - description: LotteryListRequest
-        in: body
-        name: LotteryListReq
-        required: true
-        schema:
-          $ref: '#/definitions/commonreq.LotteryListReq'
+      - description: ' concert_id'
+        in: query
+        name: concert_id
+        type: string
+      - description: ticket_type
+        in: query
+        name: ticket_type
+        type: string
       produces:
       - application/json
       responses:

@@ -11,8 +11,8 @@ import (
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
 	event "chaindraw-fair-ticket-backend/model/event"
+
 	"chaindraw-fair-ticket-backend/service"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -37,23 +37,27 @@ func LotteryRecordAdd(ctx *gin.Context) {
 	commonresp.OkWithData(ctx, resp)
 }
 
-// @Summary Lottery list
+// @Summary Get Lottery Address
 // @Description GETLotterylist
 // @Tags Lottery
 // @Accept  json
 // @Produce  json
-// @Param   LotteryListReq  body    commonreq.LotteryListReq  true  "LotteryListRequest"
+// @Param   concert_id      query    string     false  " concert_id"
+// @Param   ticket_type     query    string     false   "ticket_type"
 // @Success 200 {object} commonresp.LotteryListResponse
 // @Failure 400 {object} commonresp.LotteryListResponse
 // @Router /lottery/list [get]
 func LotteryListGet(ctx *gin.Context) {
-	req := &commonreq.LotteryListReq{}
-	err := ctx.ShouldBindJSON(req)
-	if err != nil {
-		fmt.Println(err)
+	conertId, existC := ctx.GetQuery("concert_id")
+	ticket_type, existT := ctx.GetQuery("ticket_type")
+	if !existC || !existT {
+		global.LOGGER.Info("LotteryListGet failed, get query params failed", zap.Any("req", gin.H{"concert_id": conertId,
+			"ticket_type": ticket_type}))
+		commonresp.FailWithMessage(ctx, "参数获取失败")
+		return
 	}
 	lotterys := make([]event.EventEscrowCreated, 0)
-	global.DB.Where("concert_id = ?", req.ConcertID).Where("ticket_type = ?", req.TicketType).Find(&lotterys)
+	global.DB.Where("concert_id = ?", conertId).Where("ticket_type = ?", ticket_type).Find(&lotterys)
 	resp := &commonresp.LotteryListResponse{}
 	for _, lottery := range lotterys {
 		resp.Result.LotteryList = append(resp.Result.LotteryList, lottery.EscrowAddress)
