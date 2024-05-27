@@ -32,6 +32,7 @@ func Router() *gin.Engine {
 		HttpOnly: true,
 		SameSite: http.SameSiteNoneMode,
 		Secure:   true, // 设置为 true 时，仅允许在 HTTPS 连接中使用
+		Domain: ".biturd.com",
 	}
 
 	// 集成 Swagger UI
