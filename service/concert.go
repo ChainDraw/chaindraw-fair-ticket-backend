@@ -53,7 +53,6 @@ func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error)
 		for _, ticket := range ticketTypes {
 			formattedPrice := fmt.Sprintf("%.2f", ticket.Price)
 			priceFloat, _ := strconv.ParseFloat(formattedPrice, 64)
-			// 现在 priceFloat 是保留两位小数的 float64 类型
 
 			ticketTypeList = append(ticketTypeList, commonresp.TicketType{
 				TicketType:           ticket.TicketType,
@@ -65,11 +64,13 @@ func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error)
 			})
 		}
 		res = append(res, commonresp.Concert{
-			ConcertID:   concert.ConcertID,
-			ConcertName: concert.ConcertName,
-			ConcertDate: formattedTime,
-			ConcertImg:  concert.ConcertImgURL,
-			TicketTypes: ticketTypeList,
+			ConcertID:     concert.ConcertID,
+			ConcertName:   concert.ConcertName,
+			ConcertDate:   formattedTime,
+			ConcertStatus: int(concert.ConcertStatus),
+			ConcertImg:    concert.ConcertImgURL,
+			TicketTypes:   ticketTypeList,
+			Status:        "scheduled",
 		})
 	}
 	return res, nil
@@ -77,15 +78,16 @@ func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error)
 
 func ConcertReview(concertViewRecord *commonreq.ConcertReViewReq) ([]commonresp.Concert, error) {
 	res := make([]commonresp.Concert, 0)
-	global.DB.Model(&model.TbConcert{}).Where("concert_id = ?", concertViewRecord.ConcertID).Update("concert_status", concertViewRecord.Pass)
+	result := global.DB.Debug().Model(&model.TbConcert{}).Where("concert_id = ?", concertViewRecord.ConcertID).Update("review_status", concertViewRecord.Pass)
 
-	if global.DB.RowsAffected == 0 {
-		return res, global.DB.Error
+	if result.RowsAffected == 0 {
+		return res, result.Error
 	}
 
 	res = append(res, commonresp.Concert{
 		ConcertID: concertViewRecord.ConcertID,
 	})
+
 	return res, nil
 }
 
@@ -108,7 +110,7 @@ func ConcertCancel(concertCancelReq *commonreq.ConcertCancelReq) (commonresp.Con
 	} else {
 		res = commonresp.ConcertCancellationResponse{
 			Status:    "failed",
-			Msg:       "failed to cancel ticket",
+			Msg:       "Failed to cancel ticket",
 			RequestID: concertCancelReq.ConcertID,
 			Result: commonresp.CancelResult{
 				ConcertID: concertCancelReq.ConcertID,
