@@ -33,11 +33,29 @@ func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error)
 		fmt.Println("时间戳->", concert.ConcertDate)
 		t := time.Unix(concert.ConcertDate/1000, 0)
 		formattedTime := t.Format(time.RFC3339)
+		// 查询相应的门票类型信息
+		var ticketTypes []model.TbTicket
+		ticketResult := global.DB.Where("concert_id = ?", concert.ConcertID).Find(&ticketTypes)
+		if ticketResult.Error != nil {
+			return res, ticketResult.Error
+		}
+
+		// 构建 TicketType 列表
+		var ticketTypeList []commonresp.TicketType
+		for _, ticket := range ticketTypes {
+			ticketTypeList = append(ticketTypeList, commonresp.TicketType{
+				TicketType:           fmt.Sprintf("%d", ticket.TicketType),
+				TypeName:             ticket.TypeName,
+				Price:                fmt.Sprintf("%.2f", ticket.Price),
+				MaxQuantityPerWallet: int(ticket.MaxQuantityPerWallet),
+			})
+		}
 		res = append(res, commonresp.Concert{
 			ConcertID:   concert.ConcertID,
 			ConcertName: concert.ConcertName,
 			ConcertDate: formattedTime,
 			ConcertImg:  concert.ConcertImgURL,
+			TicketTypes: ticketTypeList,
 		})
 	}
 	return res, nil
