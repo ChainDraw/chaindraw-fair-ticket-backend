@@ -77,6 +77,7 @@ go run ./main.go
 
 热启动
 ```shell
+cd chaindraw-fair-ticket-backend
 air
 ```
 
