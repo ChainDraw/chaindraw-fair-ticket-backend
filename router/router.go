@@ -17,7 +17,8 @@ import (
 
 func Router() *gin.Engine {
 	r := gin.Default()
-	r.Use(v1.CORSMiddleware())
+	allowedOrigins := []string{"http://localhost:3000", "http://chaindraw.biturd.com", "https://chaindraw.biturd.com"}
+	r.Use(v1.CORSMiddleware(allowedOrigins))
 	r.NoRoute(func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"message": "404 PAGE NOT FOUND!",
@@ -31,6 +32,7 @@ func Router() *gin.Engine {
 		HttpOnly: true,
 		SameSite: http.SameSiteNoneMode,
 		Secure:   true, // 设置为 true 时，仅允许在 HTTPS 连接中使用
+		Domain: ".biturd.com",
 	}
 
 	// 集成 Swagger UI
@@ -79,6 +81,7 @@ func Router() *gin.Engine {
 	lottery := apiGroup.Group("lottery")
 	{
 		lottery.GET("list", chaindraw.LotteryListGet)
+		lottery.GET("ticketList", chaindraw.TicketListGet)
 	}
 
 	// event相关 路由组

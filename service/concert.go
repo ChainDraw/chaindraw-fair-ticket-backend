@@ -11,33 +11,65 @@ import (
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
 	"fmt"
+	"strconv"
 	"time"
 )
 
 func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error) {
 	res := make([]commonresp.Concert, 0)
 	concerts := make([]model.TbConcert, 0)
+	tickets := make([]model.TbTicket, 0)
 	tx := global.DB.Debug()
 	offset := (page - 1) * pageSize
 	if len(ids) == 0 {
 		tx.Model(&model.TbConcert{}).Where("id IN ?", ids)
 	}
 
-	result := tx.Order("concert_date DESC").Where("concert_status = 0").Limit(pageSize).Offset(offset).Find(&concerts)
+	//query some concert data according to limit and page size.
+	resultConcerts := tx.Order("concert_date DESC").Limit(pageSize).Offset(offset).Find(&concerts)
 
-	if result.RowsAffected == 0 {
+	if resultConcerts.RowsAffected == 0 {
 		return res, global.DB.Error
+	} else {
+		concertIds := make([]string, 0)
+		for _, v := range concerts {
+			concertIds = append(concertIds, v.ConcertID)
+		}
+		tx.Where("concert_id IN (?)", concertIds).Order("create_at DESC").Limit(pageSize).Offset(offset).Find(&tickets)
 	}
 
 	for _, concert := range concerts {
-		fmt.Println("时间戳->", concert.ConcertDate)
 		t := time.Unix(concert.ConcertDate/1000, 0)
 		formattedTime := t.Format(time.RFC3339)
+		// 查询相应的门票类型信息
+		var ticketTypes []model.TbTicket
+		ticketResult := global.DB.Where("concert_id = ?", concert.ConcertID).Find(&ticketTypes)
+		if ticketResult.Error != nil {
+			return res, ticketResult.Error
+		}
+
+		// 构建 TicketType 列表
+		var ticketTypeList []commonresp.TicketType
+		for _, ticket := range ticketTypes {
+			formattedPrice := fmt.Sprintf("%.2f", ticket.Price)
+			priceFloat, _ := strconv.ParseFloat(formattedPrice, 64)
+			// 现在 priceFloat 是保留两位小数的 float64 类型
+
+			ticketTypeList = append(ticketTypeList, commonresp.TicketType{
+				TicketType:           ticket.TicketType,
+				TypeName:             ticket.TypeName,
+				Price:                priceFloat,
+				MaxQuantityPerWallet: ticket.MaxQuantityPerWallet,
+				CreateAt:             ticket.CreateAt,
+				UpdateAt:             ticket.UpdateAt,
+			})
+		}
 		res = append(res, commonresp.Concert{
 			ConcertID:   concert.ConcertID,
 			ConcertName: concert.ConcertName,
 			ConcertDate: formattedTime,
 			ConcertImg:  concert.ConcertImgURL,
+			TicketTypes: ticketTypeList,
 		})
 	}
 	return res, nil
@@ -67,7 +99,7 @@ func ConcertCancel(concertCancelReq *commonreq.ConcertCancelReq) (commonresp.Con
 	if result.RowsAffected > 0 {
 		res = commonresp.ConcertCancellationResponse{
 			Status:    "success",
-			Msg:       "Concert cancelled, tickets and deposits refunded",
+			Msg:       "Concert was cancelled, tickets and deposits refunded",
 			RequestID: concertCancelReq.ConcertID,
 			Result: commonresp.CancelResult{
 				ConcertID: concertCancelReq.ConcertID,

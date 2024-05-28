@@ -40,6 +40,11 @@ func ConcertList(ctx *gin.Context) {
 
 	concerts, err := service.ConcertList(ids, page, pageSize)
 
+	resp.Code = 200
+	resp.Status = "success"
+	resp.Msg = "Concert information retrieved successfully"
+	resp.Reason = ""
+	// resp.RequestID = ? //I can't find this RequestID from route params
 	resp.Result = concerts
 	if err != nil {
 		global.LOGGER.Error("query concerts logic failed", zap.Any("ids", ids), zap.Error(err))
