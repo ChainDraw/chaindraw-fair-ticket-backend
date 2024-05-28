@@ -6,10 +6,12 @@
 package commonresp
 
 type TicketType struct {
-	TicketType           string `json:"ticket_type"`             // 门票种类唯一键
-	TypeName             string `json:"type_name"`               // 类型名称
-	Price                string `json:"price"`                   // 价格
-	MaxQuantityPerWallet int    `json:"max_quantity_per_wallet"` // 单个钱包最大购买数量
+	TicketType           int64   `json:"ticket_type"`             // 门票种类唯一键
+	TypeName             string  `json:"type_name"`               // 类型名称
+	Price                float64 `json:"price"`                   // 价格
+	MaxQuantityPerWallet int64   `json:"max_quantity_per_wallet"` // 单个钱包最大购买数量
+	CreateAt             int64   `json:"create_at"`               // 创建时间
+	UpdateAt             int64   `json:"update_at"`               // 更新时间
 }
 type Concert struct {
 	ConcertID     string       `json:"concert_id"`     // 演唱会ID

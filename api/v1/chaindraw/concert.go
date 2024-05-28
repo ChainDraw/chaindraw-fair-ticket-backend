@@ -40,6 +40,11 @@ func ConcertList(ctx *gin.Context) {
 
 	concerts, err := service.ConcertList(ids, page, pageSize)
 
+	resp.Code = 200
+	resp.Status = "success"
+	resp.Msg = "Concert information retrieved successfully"
+	resp.Reason = ""
+	// resp.RequestID = ? //I can't find this RequestID from route params
 	resp.Result = concerts
 	if err != nil {
 		global.LOGGER.Error("query concerts logic failed", zap.Any("ids", ids), zap.Error(err))
@@ -70,7 +75,23 @@ func ReviewConcert(ctx *gin.Context) {
 	}
 
 	concerts, err := service.ConcertReview(req)
-	resp.Result = concerts
+
+	if len(concerts) > 0 {
+		resp.Code = 200
+		resp.Status = "success"
+		resp.Msg = "Concert passed"
+		resp.Reason = ""
+		resp.RequestID = req.ConcertID
+		resp.Result = concerts
+	} else {
+		resp.Code = 400
+		resp.Status = "failed"
+		resp.Msg = "Unqualified concert."
+		resp.Reason = ""
+		resp.RequestID = req.ConcertID
+		resp.Result = concerts
+	}
+
 	if err != nil {
 		global.LOGGER.Error("review concerts logic failed", zap.Error(err))
 		ctx.JSON(http.StatusBadRequest, resp)
