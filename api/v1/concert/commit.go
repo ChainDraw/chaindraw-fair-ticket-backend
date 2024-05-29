@@ -36,7 +36,7 @@ func ConcertAdd(ctx *gin.Context) {
 		return
 	}
 
-	err = service.ConcertAdd(req)
+	resp, err = service.ConcertAdd(req)
 	if err != nil {
 		global.LOGGER.Error("ConcertAdd logic failed", zap.Any("req", req), zap.Error(err))
 		commonresp.FailWithMessage(ctx, "抽票失败")
