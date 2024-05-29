@@ -37,6 +37,7 @@ CREATE table if NOT EXISTS tb_ticket (
 -- 演唱会表
 CREATE table if NOT EXISTS tb_concert (
     id BIGINT auto_increment primary key,
+    concert_id VARCHAR(255) NOT NULL,
     concert_name VARCHAR(255) NOT NULL,
     address VARCHAR(255) collate utf8mb4_bin NOT NULL comment '演唱会地址',
     concert_img_url VARCHAR(255) NOT NULL,
