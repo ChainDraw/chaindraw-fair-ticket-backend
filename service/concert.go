@@ -69,6 +69,7 @@ func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error)
 			ConcertID:     concert.ConcertID,
 			ConcertName:   concert.ConcertName,
 			ConcertDate:   formattedTime,
+			ReviewStatus:  int(concert.ReviewStatus),
 			ConcertStatus: int(concert.ConcertStatus),
 			ConcertImg:    concert.ConcertImgURL,
 			TicketTypes:   ticketTypeList,
