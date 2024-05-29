@@ -179,3 +179,10 @@ END;//
 
 DELIMITER ;
 
+INSERT INTO chaindraw_fair_ticket.event_escrow_created (id, concert_id, ticket_type, escrow_address, created_at, updated_at) VALUES (4, '10010', '1', '0x1234567890abcdef1234567890abcdef12345678', '2024-05-27 14:42:44', '2024-05-27 14:42:44');
+INSERT INTO chaindraw_fair_ticket.event_nft_listed (id, seller, lottery_address, token_id, price, created_at, updated_at) VALUES (3, 'seller3', '0x7890abcdef1234567890abcdef1234567890abcd', '3', '1 ETH', '2024-05-27 14:42:44', '2024-05-27 14:42:44');
+INSERT INTO chaindraw_fair_ticket.event_nft_listed (id, seller, lottery_address, token_id, price, created_at, updated_at) VALUES (2, 'seller2', '0xabcdef1234567890abcdef1234567890abcdef12', '2', '0.75 ETH', '2024-05-27 14:42:44', '2024-05-27 14:42:44');
+INSERT INTO chaindraw_fair_ticket.event_nft_listed (id, seller, lottery_address, token_id, price, created_at, updated_at) VALUES (1, 'seller1', '0x1234567890abcdef1234567890abcdef12345678', '1', '0.5 ETH', '2024-05-27 14:42:44', '2024-05-27 14:42:44');
+INSERT INTO chaindraw_fair_ticket.tb_concert (id, concert_id, concert_name, address, concert_img_url, lottery_start_date, lottery_end_date, concert_date, concert_status, review_status, CREATE_at, update_at, remark) VALUES (4, '10010', '宇多田光', '日本', 'www.test.com', 1716820964000, 1716820964000, 1716820964000, 0, 1, 1716820964000, 1716820964000, '备注');
+INSERT INTO chaindraw_fair_ticket.tb_ticket (id, concert_id, ticket_type, type_name, num, price, ticket_img, trade, max_quantity_per_wallet, CREATE_at, update_at) VALUES (4, '10010', 1, 'VIP', 100, 10.00, 'www.test.com', 1, 10, 1716820964000, 1716820964000);
+INSERT INTO chaindraw_fair_ticket.tb_ticket (id, concert_id, ticket_type, type_name, num, price, ticket_img, trade, max_quantity_per_wallet, CREATE_at, update_at) VALUES (5, '10010', 2, 'NORMAL', 1000, 1.00, 'www.test.com', 1, 10, 1716820964000, 1716820964000);
