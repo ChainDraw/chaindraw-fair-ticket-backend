@@ -10,7 +10,6 @@ import (
 	"chaindraw-fair-ticket-backend/model"
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
-	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -27,7 +26,6 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (resp *commonresp.CommitResp, 
 	//if concert id is not existed then set a uuid value to it.
 	if len(strings.TrimSpace(concert.ConcertID)) == 0 {
 		uuidV4 := uuid.New()
-		fmt.Printf("UUIDv4: %s\n", uuidV4)
 		concert.ConcertID = uuidV4.String()
 	}
 
