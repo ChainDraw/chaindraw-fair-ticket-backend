@@ -11,6 +11,7 @@ import (
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
 	"chaindraw-fair-ticket-backend/service"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -42,7 +43,7 @@ func ConcertAdd(ctx *gin.Context) {
 		commonresp.FailWithMessage(ctx, "抽票失败")
 	}
 
-	commonresp.OkWithData(ctx, resp)
+	ctx.JSON(http.StatusOK, resp)
 }
 
 // @Summary  update concert
