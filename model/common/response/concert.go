@@ -18,6 +18,7 @@ type Concert struct {
 	ConcertName   string       `json:"concert_name"`   // 演唱会名称
 	ConcertImg    string       `json:"concert_img"`    // 演唱会图片
 	ConcertDate   string       `json:"concert_date"`   // 演唱会日期
+	ReviewStatus  int          `json:"review_status"`  //审核状态
 	ConcertStatus int          `json:"concert_status"` // 演唱会状态
 	TicketTypes   []TicketType `json:"ticket_types"`   // 门票类型列表
 	Status        string       `json:"status"`         // 演唱会状态
