@@ -10,7 +10,10 @@ import (
 	"chaindraw-fair-ticket-backend/model"
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	"strconv"
+	"strings"
 	"time"
+
+	uuid "github.com/satori/go.uuid"
 )
 
 func ConcertAdd(concert *commonreq.ConcertAddReq) (err error) {
@@ -18,6 +21,12 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (err error) {
 	lotteryStartDate, _ := time.Parse(time.RFC3339, concert.LotteryStartDate)
 	lotteryEndDate, _ := time.Parse(time.RFC3339, concert.LotteryEndDate)
 	concertDate, _ := time.Parse(time.RFC3339, concert.ConcertDate)
+
+	//if concert id is not existed then set a uuid value to it.
+	if len(strings.TrimSpace(concert.ConcertID)) == 0 {
+		u1, _ := uuid.FromString("6ba7b810-9dad-11d1-80b4-00c04fd430c8")
+		concert.ConcertID = u1.String()
+	}
 
 	record := &model.TbConcert{
 		ConcertID:        concert.ConcertID,
@@ -68,7 +77,6 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (err error) {
 	return
 }
 func ConcertStatusUpdate(concertId, reviewStatusStr, concertStatusStr string) (err error) {
-	//2024-05-20 待解决，演唱会主办方提交信息Req涉及到tb_concert和tb_ticket共2个表的数据存储，需要考虑到ticket结构体数组的问题，Req参考的是文档 by ASWLauncher
 	reviewStatus, _ := strconv.Atoi(reviewStatusStr)
 	concertStatus, _ := strconv.Atoi(concertStatusStr)
 	global.DB.Where("concert_id = ?", concertId).Updates(model.TbConcert{ReviewStatus: int64(reviewStatus), ConcertStatus: int64(concertStatus)})
