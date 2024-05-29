@@ -19,6 +19,8 @@ func Router() *gin.Engine {
 	r := gin.Default()
 	allowedOrigins := []string{"http://localhost:3000", "http://chaindraw.biturd.com", "https://chaindraw.biturd.com"}
 	r.Use(v1.CORSMiddleware(allowedOrigins))
+	r.Use(gin.Recovery())
+
 	r.NoRoute(func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{
 			"message": "404 PAGE NOT FOUND!",
@@ -32,7 +34,7 @@ func Router() *gin.Engine {
 		HttpOnly: true,
 		SameSite: http.SameSiteNoneMode,
 		Secure:   true, // 设置为 true 时，仅允许在 HTTPS 连接中使用
-		Domain: ".biturd.com",
+		Domain:   ".biturd.com",
 	}
 
 	// 集成 Swagger UI

@@ -1,6 +1,7 @@
 package go2chain
 
 import (
+	"chaindraw-fair-ticket-backend/global"
 	"chaindraw-fair-ticket-backend/go2chain/LotteryEscrow"
 	"chaindraw-fair-ticket-backend/go2chain/LotteryEscrowFactory"
 	"chaindraw-fair-ticket-backend/go2chain/LotteryMarket"
@@ -12,6 +13,7 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 	"log"
 	"strings"
@@ -33,7 +35,7 @@ func ListerInit(db *gorm.DB) {
 	ListenAddress = []common.Address{
 		common.HexToAddress("0x683A3c225FFbAAC03F25Eab457edeB202cEBEd26"), //factory合约地址
 		common.HexToAddress("0xD2BDf4F1F8f667d91809594cbbdCc7b23a160656"), // LotteryMarket合约地址
-	} // 监听的合约地址
+	}                               // 监听的合约地址
 	client, _ = ethclient.Dial(WSS) // 客户端
 	events = map[string]DB{
 		crypto.Keccak256Hash([]byte("EscrowCreated(uint256,uint256,address)")).Hex(): DB(func(data types.Log) {
@@ -162,6 +164,12 @@ func ListerInit(db *gorm.DB) {
 }
 
 func Run() {
+	defer func() {
+		if r := recover(); r != nil {
+			global.LOGGER.Info("panic: %v", zap.Any("panic", r))
+		}
+	}()
+
 	query := ethereum.FilterQuery{
 		Addresses: ListenAddress,
 	}
