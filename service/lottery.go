@@ -11,7 +11,7 @@ import (
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 )
 
-func LotteryRecordAdd(lotteryRecord *commonreq.LotteryRecordReq) (err error ){
+func LotteryRecordAdd(lotteryRecord *commonreq.LotteryRecordReq) (err error) {
 	record := &model.TbTicket{
 		ConcertID: lotteryRecord.ConcertID,
 		TypeName:  lotteryRecord.TypeName,
@@ -21,7 +21,7 @@ func LotteryRecordAdd(lotteryRecord *commonreq.LotteryRecordReq) (err error ){
 	}
 	global.DB.Save(record)
 	err = global.DB.Error
-	if err!=nil{
+	if err != nil {
 		return
 	}
 	return
