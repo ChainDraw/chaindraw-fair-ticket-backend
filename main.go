@@ -24,6 +24,7 @@ func main() {
 	// 初始化 Redis 数据库
 
 	//  初始化chain监听
+	go2chain.ListerInit(global.DB)
 	go go2chain.Run()
 
 	// 启动服务

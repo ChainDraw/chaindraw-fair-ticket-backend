@@ -1,7 +1,6 @@
 package go2chain
 
 import (
-	"chaindraw-fair-ticket-backend/global"
 	"chaindraw-fair-ticket-backend/go2chain/LotteryEscrow"
 	"chaindraw-fair-ticket-backend/go2chain/LotteryEscrowFactory"
 	"chaindraw-fair-ticket-backend/go2chain/LotteryMarket"
@@ -13,6 +12,7 @@ import (
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"gorm.io/gorm"
 	"log"
 	"strings"
 )
@@ -20,8 +20,14 @@ import (
 type DB func(data types.Log)
 
 var (
+	WSS           string
+	ListenAddress []common.Address
+	client        *ethclient.Client
+	events        map[string]DB
+)
+
+func ListerInit(db *gorm.DB) {
 	//dsn   = "root:12345678@tcp(127.0.0.1:3306)/chaindraw?charset=utf8mb4&parseTime=True&loc=Local&timeout=10000ms"
-	db  = global.DB
 	WSS = "wss://go.getblock.io/74d1785308b244db9c9fda86104694c5" // 合约部署所在链的WSS  wss://go.getblock.io/74d1785308b244db9c9fda86104694c5
 	// WSS           = "ws://127.0.0.1:8545" // 合约部署所在链的WSS
 	ListenAddress = []common.Address{
@@ -29,7 +35,7 @@ var (
 		common.HexToAddress("0x50E8A353B68c3d635a69e5a72e9b563a87ee4Ef3"), // LotteryMarket合约地址
 	} // 监听的合约地址
 	client, _ = ethclient.Dial(WSS) // 客户端
-	events    = map[string]DB{
+	events = map[string]DB{
 		crypto.Keccak256Hash([]byte("EscrowCreated(uint256,uint256,address)")).Hex(): DB(func(data types.Log) {
 			event := &model.EventEscrowCreated{
 				ConcertId:  data.Topics[1].Hex(),
@@ -153,7 +159,7 @@ var (
 			db.Save(event)
 		}),
 	}
-)
+}
 
 func Run() {
 	query := ethereum.FilterQuery{
