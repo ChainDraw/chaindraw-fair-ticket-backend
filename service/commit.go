@@ -9,6 +9,7 @@ import (
 	"chaindraw-fair-ticket-backend/global"
 	"chaindraw-fair-ticket-backend/model"
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
+	commonresp "chaindraw-fair-ticket-backend/model/common/response"
 	"strconv"
 	"strings"
 	"time"
@@ -16,7 +17,7 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-func ConcertAdd(concert *commonreq.ConcertAddReq) (err error) {
+func ConcertAdd(concert *commonreq.ConcertAddReq) (resp *commonresp.CommitResp, err error) {
 	//datetime convertion method must use time.RFC3339 .
 	lotteryStartDate, _ := time.Parse(time.RFC3339, concert.LotteryStartDate)
 	lotteryEndDate, _ := time.Parse(time.RFC3339, concert.LotteryEndDate)
@@ -28,6 +29,7 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (err error) {
 		concert.ConcertID = u1.String()
 	}
 
+	//store concert.
 	record := &model.TbConcert{
 		ConcertID:        concert.ConcertID,
 		ConcertName:      concert.ConcertName,
@@ -41,6 +43,15 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (err error) {
 		LotteryEndDate:   lotteryEndDate.UnixMilli(),
 	}
 
+	//set resp
+	resp = &commonresp.CommitResp{}
+	resp.Code = 200
+	resp.Msg = "Concert commit success!"
+	resp.RequestID = concert.ConcertID
+	resp.Result = &commonresp.ResultData{
+		ConcertID: concert.ConcertID,
+	}
+
 	global.DB.Save(&record)
 	err = global.DB.Error
 	if err != nil {
@@ -48,6 +59,7 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (err error) {
 	}
 
 	// 保存演唱会门票
+	//store ticket.
 	for _, ticket := range concert.Tickets {
 		ticketType, _ := strconv.Atoi(ticket.TicketType)
 		price, _ := strconv.ParseFloat(ticket.Price, 64)
@@ -70,10 +82,10 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (err error) {
 		}
 		global.DB.Save(&ticketRecord)
 		if global.DB.Error != nil {
-			return
+			return resp, global.DB.Error
 		}
-
 	}
+
 	return
 }
 func ConcertStatusUpdate(concertId, reviewStatusStr, concertStatusStr string) (err error) {
