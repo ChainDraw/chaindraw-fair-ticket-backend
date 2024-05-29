@@ -78,8 +78,8 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (resp *commonresp.CommitResp, 
 			TicketImg:            ticket.TicketImg,
 			Trade:                int64(canTrade),
 			MaxQuantityPerWallet: int64(ticket.MaxQuantityPerWallet),
-			CreateAt:             time.Now().Unix(),
-			UpdateAt:             time.Now().Unix(),
+			CreateAt:             time.Now().UnixMilli(),
+			UpdateAt:             time.Now().UnixMilli(),
 		}
 		global.DB.Save(&ticketRecord)
 		if global.DB.Error != nil {
