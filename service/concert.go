@@ -13,6 +13,8 @@ import (
 	"fmt"
 	"strconv"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error) {
@@ -21,12 +23,16 @@ func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error)
 	tickets := make([]model.TbTicket, 0)
 	tx := global.DB.Debug()
 	offset := (page - 1) * pageSize
-	if len(ids) == 0 {
-		tx.Model(&model.TbConcert{}).Where("id IN ?", ids)
-	}
 
-	//query some concert data according to limit and page size.
-	resultConcerts := tx.Order("concert_date DESC").Limit(pageSize).Offset(offset).Find(&concerts)
+	//if frontend give ids, then query database according to ids.
+	//else query database is default according to offset+size .
+	var resultConcerts *gorm.DB
+	if len(ids) > 0 {
+		resultConcerts = tx.Where("concert_id IN ?", ids).Find(&concerts)
+	} else {
+		//query some concert data according to limit and page size.
+		resultConcerts = tx.Order("concert_date DESC").Limit(pageSize).Offset(offset).Find(&concerts)
+	}
 
 	if resultConcerts.RowsAffected == 0 {
 		return res, global.DB.Error
@@ -41,27 +47,23 @@ func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error)
 	for _, concert := range concerts {
 		t := time.Unix(concert.ConcertDate/1000, 0)
 		formattedTime := t.Format(time.RFC3339)
-		// 查询相应的门票类型信息
-		var ticketTypes []model.TbTicket
-		ticketResult := global.DB.Where("concert_id = ?", concert.ConcertID).Find(&ticketTypes)
-		if ticketResult.Error != nil {
-			return res, ticketResult.Error
-		}
 
-		// 构建 TicketType 列表
+		// build TicketType list
 		var ticketTypeList []commonresp.TicketType
-		for _, ticket := range ticketTypes {
+		for _, ticket := range tickets {
 			formattedPrice := fmt.Sprintf("%.2f", ticket.Price)
 			priceFloat, _ := strconv.ParseFloat(formattedPrice, 64)
 
-			ticketTypeList = append(ticketTypeList, commonresp.TicketType{
-				TicketType:           ticket.TicketType,
-				TypeName:             ticket.TypeName,
-				Price:                priceFloat,
-				MaxQuantityPerWallet: ticket.MaxQuantityPerWallet,
-				CreateAt:             ticket.CreateAt,
-				UpdateAt:             ticket.UpdateAt,
-			})
+			if ticket.ConcertID == concert.ConcertID {
+				ticketTypeList = append(ticketTypeList, commonresp.TicketType{
+					TicketType:           ticket.TicketType,
+					TypeName:             ticket.TypeName,
+					Price:                priceFloat,
+					MaxQuantityPerWallet: ticket.MaxQuantityPerWallet,
+					CreateAt:             ticket.CreateAt,
+					UpdateAt:             ticket.UpdateAt,
+				})
+			}
 		}
 		res = append(res, commonresp.Concert{
 			ConcertID:     concert.ConcertID,
@@ -100,6 +102,7 @@ func ConcertCancel(concertCancelReq *commonreq.ConcertCancelReq) (commonresp.Con
 	var res commonresp.ConcertCancellationResponse
 	if result.RowsAffected > 0 {
 		res = commonresp.ConcertCancellationResponse{
+			Code:      200,
 			Status:    "success",
 			Msg:       "Concert was cancelled, tickets and deposits refunded",
 			RequestID: concertCancelReq.ConcertID,
@@ -109,6 +112,7 @@ func ConcertCancel(concertCancelReq *commonreq.ConcertCancelReq) (commonresp.Con
 		}
 	} else {
 		res = commonresp.ConcertCancellationResponse{
+			Code:      200,
 			Status:    "failed",
 			Msg:       "Failed to cancel ticket",
 			RequestID: concertCancelReq.ConcertID,
