@@ -10,11 +10,12 @@ import (
 	"chaindraw-fair-ticket-backend/model"
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
 
-	uuid "github.com/satori/go.uuid"
+	"github.com/google/uuid"
 )
 
 func ConcertAdd(concert *commonreq.ConcertAddReq) (resp *commonresp.CommitResp, err error) {
@@ -25,8 +26,9 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (resp *commonresp.CommitResp, 
 
 	//if concert id is not existed then set a uuid value to it.
 	if len(strings.TrimSpace(concert.ConcertID)) == 0 {
-		u1, _ := uuid.FromString("6ba7b810-9dad-11d1-80b4-00c04fd430c8")
-		concert.ConcertID = u1.String()
+		uuidV4 := uuid.New()
+		fmt.Printf("UUIDv4: %s\n", uuidV4)
+		concert.ConcertID = uuidV4.String()
 	}
 
 	//store concert.
