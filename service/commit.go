@@ -46,6 +46,7 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (resp *commonresp.CommitResp, 
 	//set resp
 	resp = &commonresp.CommitResp{}
 	resp.Code = 200
+	resp.Status = "success"
 	resp.Msg = "Concert commit success!"
 	resp.RequestID = concert.ConcertID
 	resp.Result = &commonresp.ResultData{
@@ -55,7 +56,7 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (resp *commonresp.CommitResp, 
 	global.DB.Save(&record)
 	err = global.DB.Error
 	if err != nil {
-		return
+		return resp, global.DB.Error
 	}
 
 	// 保存演唱会门票
@@ -86,7 +87,7 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (resp *commonresp.CommitResp, 
 		}
 	}
 
-	return
+	return resp, nil
 }
 func ConcertStatusUpdate(concertId, reviewStatusStr, concertStatusStr string) (err error) {
 	reviewStatus, _ := strconv.Atoi(reviewStatusStr)
