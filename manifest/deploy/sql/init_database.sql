@@ -14,7 +14,7 @@ CREATE TABLE if NOT EXISTS tb_user (
     identity_document_image_url VARCHAR(255) NOT NULL,
     wallet_address VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    CREATE_at BIGINT NOT NULL,
+    create_at BIGINT NOT NULL,
     update_at BIGINT NOT NULL
 )ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -30,7 +30,7 @@ CREATE table if NOT EXISTS tb_ticket (
     ticket_img VARCHAR(255) collate utf8mb4_bin null comment '门票照片',
     trade INT NULL comment '是否可以二手交易',
     max_quantity_per_wallet int NOT NULL,
-    CREATE_at BIGINT NOT NULL,
+    create_at BIGINT NOT NULL,
     update_at BIGINT NOT NULL
 )ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -47,7 +47,7 @@ CREATE table if NOT EXISTS tb_concert (
     concert_status int NOT NULL comment '演唱会状态 0未开始；1已过期',
     review_status int NOT NULL comment '审核状态 0 待审核； 1审核通过；',
     cancel_reason VARCHAR(255) comment '退票理由',
-    CREATE_at BIGINT NOT NULL,
+    create_at BIGINT NOT NULL,
     update_at BIGINT NOT NULL,
     remark VARCHAR(255) collate utf8mb4_bin null comment '备注描述'
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

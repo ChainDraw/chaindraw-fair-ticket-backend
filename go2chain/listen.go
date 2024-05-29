@@ -31,8 +31,8 @@ func ListerInit(db *gorm.DB) {
 	WSS = "wss://go.getblock.io/74d1785308b244db9c9fda86104694c5" // 合约部署所在链的WSS  wss://go.getblock.io/74d1785308b244db9c9fda86104694c5
 	// WSS           = "ws://127.0.0.1:8545" // 合约部署所在链的WSS
 	ListenAddress = []common.Address{
-		common.HexToAddress("0xD03B33A15854CeFbD502BcE5F580fa4790FBAA34"), //
-		common.HexToAddress("0x50E8A353B68c3d635a69e5a72e9b563a87ee4Ef3"), // LotteryMarket合约地址
+		common.HexToAddress("0x683A3c225FFbAAC03F25Eab457edeB202cEBEd26"), //factory合约地址
+		common.HexToAddress("0xD2BDf4F1F8f667d91809594cbbdCc7b23a160656"), // LotteryMarket合约地址
 	} // 监听的合约地址
 	client, _ = ethclient.Dial(WSS) // 客户端
 	events = map[string]DB{
