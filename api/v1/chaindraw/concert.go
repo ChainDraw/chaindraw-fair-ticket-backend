@@ -34,9 +34,14 @@ func ConcertList(ctx *gin.Context) {
 	resp := &commonresp.ConcertListResponse{}
 	pageStr := ctx.DefaultQuery("page", "1")
 	pageSizeStr := ctx.DefaultQuery("page_size", "10")
-	ids := strings.Split(ctx.Query("ids"), ",")
 	page, _ := strconv.Atoi(pageStr)         // 当前页码
 	pageSize, _ := strconv.Atoi(pageSizeStr) // 每页记录数
+
+	ids := []string{}
+	idsStr := strings.TrimSpace(ctx.Query("ids")) //trim spaces for ids, prevent ids value is empty array but display length is 1.
+	if len(idsStr) > 0 {
+		ids = strings.Split(idsStr, ",")
+	}
 
 	concerts, err := service.ConcertList(ids, page, pageSize)
 
@@ -44,7 +49,7 @@ func ConcertList(ctx *gin.Context) {
 	resp.Status = "success"
 	resp.Msg = "Concert information retrieved successfully"
 	resp.Reason = ""
-	// resp.RequestID = ? //I can't find this RequestID from route params
+	resp.RequestID = strings.Join(ids, ",") //It is concert id from front param, I think it should must be.
 	resp.Result = concerts
 	if err != nil {
 		global.LOGGER.Error("query concerts logic failed", zap.Any("ids", ids), zap.Error(err))
