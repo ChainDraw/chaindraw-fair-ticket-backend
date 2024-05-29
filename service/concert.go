@@ -60,8 +60,8 @@ func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error)
 					TypeName:             ticket.TypeName,
 					Price:                priceFloat,
 					MaxQuantityPerWallet: ticket.MaxQuantityPerWallet,
-					CreateAt:             ticket.CreateAt,
-					UpdateAt:             ticket.UpdateAt,
+					CreateAt:             strconv.Itoa(int(ticket.CreateAt)),
+					UpdateAt:             strconv.Itoa(int(ticket.UpdateAt)),
 				})
 			}
 		}
