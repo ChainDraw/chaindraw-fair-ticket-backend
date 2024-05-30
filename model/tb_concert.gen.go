@@ -16,7 +16,7 @@ type TbConcert struct {
 	LotteryStartDate int64  `gorm:"column:lottery_start_date;comment:订阅抽选开始时间" json:"lotteryStartDate"` // 订阅抽选开始时间
 	LotteryEndDate   int64  `gorm:"column:lottery_end_date;comment:订阅抽选结束时间" json:"lotteryEndDate"`     // 订阅抽选结束时间
 	ConcertDate      int64  `gorm:"column:concert_date;not null" json:"concertDate"`
-	ConcertEndDate   int64  `gorm:"column:concert_end_date;not null" json:"concertEndDate"`                       //演唱会结束日期
+	ConcertEndDate   int64  `gorm:"column:concert_end_date;not null" json:"concertEndDate"`   //演唱会结束日期
 	ConcertStatus    int64  `gorm:"column:concert_status;not null;comment:演唱会状态 0未开始；1已过期" json:"concertStatus"`  // 演唱会状态 0未开始；1已过期
 	ReviewStatus     int64  `gorm:"column:review_status;not null;comment:审核状态 0 待审核； 1审核通过；" json:"reviewStatus"` // 审核状态 0 待审核； 1审核通过；
 	CancelReason     string `gorm:"column:cancel_reason;not null;comment:退票理由" json:"cancelReason"`               //退票理由
