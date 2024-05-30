@@ -10,9 +10,9 @@ import (
 	"chaindraw-fair-ticket-backend/model"
 	commonreq "chaindraw-fair-ticket-backend/model/common/request"
 	commonresp "chaindraw-fair-ticket-backend/model/common/response"
+	"chaindraw-fair-ticket-backend/utils"
 	"fmt"
 	"strconv"
-	"time"
 
 	"gorm.io/gorm"
 )
@@ -45,9 +45,6 @@ func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error)
 	}
 
 	for _, concert := range concerts {
-		t := time.Unix(concert.ConcertDate/1000, 0)
-		formattedTime := t.Format(time.RFC3339)
-
 		// build TicketType list
 		var ticketTypeList []commonresp.TicketType
 		for _, ticket := range tickets {
@@ -55,25 +52,41 @@ func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error)
 			priceFloat, _ := strconv.ParseFloat(formattedPrice, 64)
 
 			if ticket.ConcertID == concert.ConcertID {
+				var isTrade bool
+				if ticket.Trade == 0 {
+					isTrade = false
+				} else {
+					isTrade = true
+				}
+
 				ticketTypeList = append(ticketTypeList, commonresp.TicketType{
 					TicketType:           ticket.TicketType,
 					TypeName:             ticket.TypeName,
+					Num:                  int(ticket.Num),
 					Price:                priceFloat,
+					TicketImg:            ticket.TicketImg,
+					Trade:                isTrade,
 					MaxQuantityPerWallet: ticket.MaxQuantityPerWallet,
-					CreateAt:             ticket.CreateAt,
-					UpdateAt:             ticket.UpdateAt,
+					CreateAt:             strconv.Itoa(int(ticket.CreateAt)),
+					UpdateAt:             strconv.Itoa(int(ticket.UpdateAt)),
 				})
 			}
 		}
 		res = append(res, commonresp.Concert{
-			ConcertID:     concert.ConcertID,
-			ConcertName:   concert.ConcertName,
-			ConcertDate:   formattedTime,
-			ReviewStatus:  int(concert.ReviewStatus),
-			ConcertStatus: int(concert.ConcertStatus),
-			ConcertImg:    concert.ConcertImgURL,
-			TicketTypes:   ticketTypeList,
-			Status:        "scheduled",
+			ConcertID:        concert.ConcertID,
+			ConcertName:      concert.ConcertName,
+			Address:          concert.Address,
+			ConcertImg:       concert.ConcertImgURL,
+			ConcertDate:      utils.Time.Timestamp2RFC3339(concert.ConcertDate),
+			ConcertEndDate:   utils.Time.Timestamp2RFC3339(concert.ConcertEndDate),
+			LotteryStartDate: utils.Time.Timestamp2RFC3339(concert.LotteryStartDate),
+			LotteryEndDate:   utils.Time.Timestamp2RFC3339(concert.LotteryEndDate),
+			ReviewStatus:     int(concert.ReviewStatus),
+			CancelReason:     concert.CancelReason,
+			ConcertStatus:    int(concert.ConcertStatus),
+			Remark:           concert.Remark,
+			Status:           "scheduled",
+			TicketTypes:      ticketTypeList,
 		})
 	}
 	return res, nil

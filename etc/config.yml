@@ -18,7 +18,7 @@ mysql:
   port: 3306
   dbname: "chaindraw_fair_ticket"
   user: "root"
-  password: "root"
+  password: "BESuVF6bLe"
   max_open_conns: 200
   max_idle_conns: 50
 

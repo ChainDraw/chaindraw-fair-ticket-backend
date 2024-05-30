@@ -22,6 +22,7 @@ type Concert struct {
 	Address          string       `json:"address"`            //演唱会地点
 	ConcertImg       string       `json:"concert_img"`        // 演唱会图片
 	ConcertDate      string       `json:"concert_date"`       // 演唱会日期
+	ConcertEndDate   string       `json:"concert_end_date"`   // 演唱会结束日期
 	LotteryStartDate string       `json:"lottery_start_date"` //彩票开始日期
 	LotteryEndDate   string       `json:"lottery_end_date"`   //彩票开始日期
 	ReviewStatus     int          `json:"review_status"`      //审核状态

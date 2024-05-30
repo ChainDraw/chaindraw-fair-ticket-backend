@@ -22,6 +22,11 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (resp *commonresp.CommitResp, 
 	lotteryStartDate, _ := time.Parse(time.RFC3339, concert.LotteryStartDate)
 	lotteryEndDate, _ := time.Parse(time.RFC3339, concert.LotteryEndDate)
 	concertDate, _ := time.Parse(time.RFC3339, concert.ConcertDate)
+	concertEndDate, _ := time.Parse(time.RFC3339, concert.ConcertEndDate)
+	if concertDate.After(concertEndDate) {
+		//concertDate must before concertEndDate.
+		return resp, global.DB.Error
+	}
 
 	//if concert id is not existed then set a uuid value to it.
 	if len(strings.TrimSpace(concert.ConcertID)) == 0 {
@@ -36,6 +41,7 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (resp *commonresp.CommitResp, 
 		Address:          concert.Address,
 		Remark:           concert.Remark,
 		ConcertDate:      concertDate.UnixMilli(),
+		ConcertEndDate:   concertEndDate.UnixMilli(),
 		ConcertImgURL:    concert.ConcertImg,
 		ConcertStatus:    int64(concert.ConcertStatus),
 		ReviewStatus:     int64(concert.ReviewStatus),
@@ -89,6 +95,7 @@ func ConcertAdd(concert *commonreq.ConcertAddReq) (resp *commonresp.CommitResp, 
 
 	return resp, nil
 }
+
 func ConcertStatusUpdate(concertId, reviewStatusStr, concertStatusStr string) (err error) {
 	reviewStatus, _ := strconv.Atoi(reviewStatusStr)
 	concertStatus, _ := strconv.Atoi(concertStatusStr)

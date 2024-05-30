@@ -31,7 +31,7 @@ var (
 
 // LotteryEscrowFactoryMetaData contains all meta data concerning the LotteryEscrowFactory contract.
 var LotteryEscrowFactoryMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[],\"name\":\"TicketTypeAlreadyExists\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"concertId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"ticketType\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"escrowAddress\",\"type\":\"address\"}],\"name\":\"EscrowCreated\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allEscrows\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_organizer\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_concertId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_ticketType\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_typeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_url\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_ticketCount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_ddl\",\"type\":\"uint256\"}],\"name\":\"createEscrow\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"escrowAddress\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"escrows\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"ticketType\",\"type\":\"uint256\"}],\"name\":\"getEscrowAddressByTicketType\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"isRegistered\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}]",
+	ABI: "[{\"inputs\":[],\"name\":\"TicketTypeAlreadyExists\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"concertId\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"ticketType\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"escrowAddress\",\"type\":\"address\"}],\"name\":\"EscrowCreated\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allEscrows\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_organizer\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"_concertId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_ticketType\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_typeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_url\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_ticketCount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_ddl\",\"type\":\"uint256\"}],\"name\":\"createEscrow\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"escrowAddress\",\"type\":\"address\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"escrows\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"ticketType\",\"type\":\"uint256\"}],\"name\":\"getEscrowAddressByTicketType\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"isRegistered\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}]",
 }
 
 // LotteryEscrowFactoryABI is the input ABI used to generate the binding from.
@@ -304,24 +304,24 @@ func (_LotteryEscrowFactory *LotteryEscrowFactoryCallerSession) IsRegistered(arg
 	return _LotteryEscrowFactory.Contract.IsRegistered(&_LotteryEscrowFactory.CallOpts, arg0)
 }
 
-// CreateEscrow is a paid mutator transaction binding the contract method 0x97fc63d1.
+// CreateEscrow is a paid mutator transaction binding the contract method 0x12f4a228.
 //
-// Solidity: function createEscrow(address _organizer, uint256 _concertId, uint256 _ticketType, string _typeName, string _name, uint256 _price, string _url, uint256 _ticketCount, uint256 _ddl) returns(address escrowAddress)
-func (_LotteryEscrowFactory *LotteryEscrowFactoryTransactor) CreateEscrow(opts *bind.TransactOpts, _organizer common.Address, _concertId *big.Int, _ticketType *big.Int, _typeName string, _name string, _price *big.Int, _url string, _ticketCount *big.Int, _ddl *big.Int) (*types.Transaction, error) {
+// Solidity: function createEscrow(address _organizer, string _concertId, uint256 _ticketType, string _typeName, string _name, uint256 _price, string _url, uint256 _ticketCount, uint256 _ddl) returns(address escrowAddress)
+func (_LotteryEscrowFactory *LotteryEscrowFactoryTransactor) CreateEscrow(opts *bind.TransactOpts, _organizer common.Address, _concertId string, _ticketType *big.Int, _typeName string, _name string, _price *big.Int, _url string, _ticketCount *big.Int, _ddl *big.Int) (*types.Transaction, error) {
 	return _LotteryEscrowFactory.contract.Transact(opts, "createEscrow", _organizer, _concertId, _ticketType, _typeName, _name, _price, _url, _ticketCount, _ddl)
 }
 
-// CreateEscrow is a paid mutator transaction binding the contract method 0x97fc63d1.
+// CreateEscrow is a paid mutator transaction binding the contract method 0x12f4a228.
 //
-// Solidity: function createEscrow(address _organizer, uint256 _concertId, uint256 _ticketType, string _typeName, string _name, uint256 _price, string _url, uint256 _ticketCount, uint256 _ddl) returns(address escrowAddress)
-func (_LotteryEscrowFactory *LotteryEscrowFactorySession) CreateEscrow(_organizer common.Address, _concertId *big.Int, _ticketType *big.Int, _typeName string, _name string, _price *big.Int, _url string, _ticketCount *big.Int, _ddl *big.Int) (*types.Transaction, error) {
+// Solidity: function createEscrow(address _organizer, string _concertId, uint256 _ticketType, string _typeName, string _name, uint256 _price, string _url, uint256 _ticketCount, uint256 _ddl) returns(address escrowAddress)
+func (_LotteryEscrowFactory *LotteryEscrowFactorySession) CreateEscrow(_organizer common.Address, _concertId string, _ticketType *big.Int, _typeName string, _name string, _price *big.Int, _url string, _ticketCount *big.Int, _ddl *big.Int) (*types.Transaction, error) {
 	return _LotteryEscrowFactory.Contract.CreateEscrow(&_LotteryEscrowFactory.TransactOpts, _organizer, _concertId, _ticketType, _typeName, _name, _price, _url, _ticketCount, _ddl)
 }
 
-// CreateEscrow is a paid mutator transaction binding the contract method 0x97fc63d1.
+// CreateEscrow is a paid mutator transaction binding the contract method 0x12f4a228.
 //
-// Solidity: function createEscrow(address _organizer, uint256 _concertId, uint256 _ticketType, string _typeName, string _name, uint256 _price, string _url, uint256 _ticketCount, uint256 _ddl) returns(address escrowAddress)
-func (_LotteryEscrowFactory *LotteryEscrowFactoryTransactorSession) CreateEscrow(_organizer common.Address, _concertId *big.Int, _ticketType *big.Int, _typeName string, _name string, _price *big.Int, _url string, _ticketCount *big.Int, _ddl *big.Int) (*types.Transaction, error) {
+// Solidity: function createEscrow(address _organizer, string _concertId, uint256 _ticketType, string _typeName, string _name, uint256 _price, string _url, uint256 _ticketCount, uint256 _ddl) returns(address escrowAddress)
+func (_LotteryEscrowFactory *LotteryEscrowFactoryTransactorSession) CreateEscrow(_organizer common.Address, _concertId string, _ticketType *big.Int, _typeName string, _name string, _price *big.Int, _url string, _ticketCount *big.Int, _ddl *big.Int) (*types.Transaction, error) {
 	return _LotteryEscrowFactory.Contract.CreateEscrow(&_LotteryEscrowFactory.TransactOpts, _organizer, _concertId, _ticketType, _typeName, _name, _price, _url, _ticketCount, _ddl)
 }
 
@@ -415,48 +415,40 @@ func (it *LotteryEscrowFactoryEscrowCreatedIterator) Close() error {
 
 // LotteryEscrowFactoryEscrowCreated represents a EscrowCreated event raised by the LotteryEscrowFactory contract.
 type LotteryEscrowFactoryEscrowCreated struct {
-	ConcertId     *big.Int
+	ConcertId     string
 	TicketType    *big.Int
 	EscrowAddress common.Address
 	Raw           types.Log // Blockchain specific contextual infos
 }
 
-// FilterEscrowCreated is a free log retrieval operation binding the contract event 0x4c98e229e2f01f3e7de1e15f4599733605128275cac56f442301b55975b538bc.
+// FilterEscrowCreated is a free log retrieval operation binding the contract event 0xed6859b036a1de681a479ac0a9a650bc1c5b8a11968fb44dc2c151eb1a3d8bb3.
 //
-// Solidity: event EscrowCreated(uint256 indexed concertId, uint256 indexed ticketType, address escrowAddress)
-func (_LotteryEscrowFactory *LotteryEscrowFactoryFilterer) FilterEscrowCreated(opts *bind.FilterOpts, concertId []*big.Int, ticketType []*big.Int) (*LotteryEscrowFactoryEscrowCreatedIterator, error) {
+// Solidity: event EscrowCreated(string concertId, uint256 indexed ticketType, address escrowAddress)
+func (_LotteryEscrowFactory *LotteryEscrowFactoryFilterer) FilterEscrowCreated(opts *bind.FilterOpts, ticketType []*big.Int) (*LotteryEscrowFactoryEscrowCreatedIterator, error) {
 
-	var concertIdRule []interface{}
-	for _, concertIdItem := range concertId {
-		concertIdRule = append(concertIdRule, concertIdItem)
-	}
 	var ticketTypeRule []interface{}
 	for _, ticketTypeItem := range ticketType {
 		ticketTypeRule = append(ticketTypeRule, ticketTypeItem)
 	}
 
-	logs, sub, err := _LotteryEscrowFactory.contract.FilterLogs(opts, "EscrowCreated", concertIdRule, ticketTypeRule)
+	logs, sub, err := _LotteryEscrowFactory.contract.FilterLogs(opts, "EscrowCreated", ticketTypeRule)
 	if err != nil {
 		return nil, err
 	}
 	return &LotteryEscrowFactoryEscrowCreatedIterator{contract: _LotteryEscrowFactory.contract, event: "EscrowCreated", logs: logs, sub: sub}, nil
 }
 
-// WatchEscrowCreated is a free log subscription operation binding the contract event 0x4c98e229e2f01f3e7de1e15f4599733605128275cac56f442301b55975b538bc.
+// WatchEscrowCreated is a free log subscription operation binding the contract event 0xed6859b036a1de681a479ac0a9a650bc1c5b8a11968fb44dc2c151eb1a3d8bb3.
 //
-// Solidity: event EscrowCreated(uint256 indexed concertId, uint256 indexed ticketType, address escrowAddress)
-func (_LotteryEscrowFactory *LotteryEscrowFactoryFilterer) WatchEscrowCreated(opts *bind.WatchOpts, sink chan<- *LotteryEscrowFactoryEscrowCreated, concertId []*big.Int, ticketType []*big.Int) (event.Subscription, error) {
+// Solidity: event EscrowCreated(string concertId, uint256 indexed ticketType, address escrowAddress)
+func (_LotteryEscrowFactory *LotteryEscrowFactoryFilterer) WatchEscrowCreated(opts *bind.WatchOpts, sink chan<- *LotteryEscrowFactoryEscrowCreated, ticketType []*big.Int) (event.Subscription, error) {
 
-	var concertIdRule []interface{}
-	for _, concertIdItem := range concertId {
-		concertIdRule = append(concertIdRule, concertIdItem)
-	}
 	var ticketTypeRule []interface{}
 	for _, ticketTypeItem := range ticketType {
 		ticketTypeRule = append(ticketTypeRule, ticketTypeItem)
 	}
 
-	logs, sub, err := _LotteryEscrowFactory.contract.WatchLogs(opts, "EscrowCreated", concertIdRule, ticketTypeRule)
+	logs, sub, err := _LotteryEscrowFactory.contract.WatchLogs(opts, "EscrowCreated", ticketTypeRule)
 	if err != nil {
 		return nil, err
 	}
@@ -488,9 +480,9 @@ func (_LotteryEscrowFactory *LotteryEscrowFactoryFilterer) WatchEscrowCreated(op
 	}), nil
 }
 
-// ParseEscrowCreated is a log parse operation binding the contract event 0x4c98e229e2f01f3e7de1e15f4599733605128275cac56f442301b55975b538bc.
+// ParseEscrowCreated is a log parse operation binding the contract event 0xed6859b036a1de681a479ac0a9a650bc1c5b8a11968fb44dc2c151eb1a3d8bb3.
 //
-// Solidity: event EscrowCreated(uint256 indexed concertId, uint256 indexed ticketType, address escrowAddress)
+// Solidity: event EscrowCreated(string concertId, uint256 indexed ticketType, address escrowAddress)
 func (_LotteryEscrowFactory *LotteryEscrowFactoryFilterer) ParseEscrowCreated(log types.Log) (*LotteryEscrowFactoryEscrowCreated, error) {
 	event := new(LotteryEscrowFactoryEscrowCreated)
 	if err := _LotteryEscrowFactory.contract.UnpackLog(event, "EscrowCreated", log); err != nil {

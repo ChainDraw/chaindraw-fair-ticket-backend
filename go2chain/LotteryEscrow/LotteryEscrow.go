@@ -31,7 +31,7 @@ var (
 
 // LotteryEscrowMetaData contains all meta data concerning the LotteryEscrow contract.
 var LotteryEscrowMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_organizer\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_concertId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_ticketType\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_typeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_url\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_ticketCount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_ddl\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"ERC721IncorrectOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ERC721InsufficientApproval\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"approver\",\"type\":\"address\"}],\"name\":\"ERC721InvalidApprover\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"ERC721InvalidOperator\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"ERC721InvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"}],\"name\":\"ERC721InvalidReceiver\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"ERC721InvalidSender\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ERC721NonexistentToken\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"LotteryEscrowError__DepositTimeOut\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"LotteryEscrowError__alreadyJoin\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ReentrancyGuardReentrantCall\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"approved\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"ApprovalForAll\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_fromTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_toTokenId\",\"type\":\"uint256\"}],\"name\":\"BatchMetadataUpdate\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"requestId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256[]\",\"name\":\"randomWords\",\"type\":\"uint256[]\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"payment\",\"type\":\"uint256\"}],\"name\":\"ChainlinkVrf__RequestFulfilled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"requestId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint32\",\"name\":\"numWords\",\"type\":\"uint32\"}],\"name\":\"ChainlinkVrf__RequestSent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"concertId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"ticketType\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"organizer\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"winner\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"money\",\"type\":\"uint256\"}],\"name\":\"LotteryEscrow__ClaimedFund\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"lotteryAddress\",\"type\":\"address\"}],\"name\":\"LotteryEscrow__CompleteDraw\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"concertId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"ticketType\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"money\",\"type\":\"uint256\"}],\"name\":\"LotteryEscrow__Deposited\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"concertId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"ticketType\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"nonWinner\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"money\",\"type\":\"uint256\"}],\"name\":\"LotteryEscrow__NonWinner\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"concertId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"ticketType\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"money\",\"type\":\"uint256\"}],\"name\":\"LotteryEscrow__Refunded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"concertId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"ticketType\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"winner\",\"type\":\"address\"}],\"name\":\"LotteryEscrow__Winner\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"MetadataUpdate\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"OwnershipTransferRequested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"Factory\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"acceptOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allBuyer\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"completeDraw\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"concertId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ddl\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"deposit\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"deposits\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getApproved\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"isApprovedForAll\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"isWinner\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"lastRequestId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"linkToken\",\"outputs\":[{\"internalType\":\"contractLinkTokenInterface\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"organizer\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"price\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_requestId\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"_randomWords\",\"type\":\"uint256[]\"}],\"name\":\"rawFulfillRandomWords\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"participant\",\"type\":\"address\"}],\"name\":\"refund\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"remainingTicketCount\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"requestIds\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"s_requests\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"paid\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"fulfilled\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"setApprovalForAll\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"startLottery\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ticketCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ticketType\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"tokenURI\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"url\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"withdrawLink\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}]",
+	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_organizer\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"_concertId\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_ticketType\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_typeName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_url\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"_ticketCount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_ddl\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"ERC721IncorrectOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ERC721InsufficientApproval\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"approver\",\"type\":\"address\"}],\"name\":\"ERC721InvalidApprover\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"ERC721InvalidOperator\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"ERC721InvalidOwner\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"receiver\",\"type\":\"address\"}],\"name\":\"ERC721InvalidReceiver\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"ERC721InvalidSender\",\"type\":\"error\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ERC721NonexistentToken\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"LotteryEscrowError__DepositTimeOut\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"LotteryEscrowError__alreadyJoin\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"ReentrancyGuardReentrantCall\",\"type\":\"error\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"approved\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"Approval\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"ApprovalForAll\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_fromTokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_toTokenId\",\"type\":\"uint256\"}],\"name\":\"BatchMetadataUpdate\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"requestId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256[]\",\"name\":\"randomWords\",\"type\":\"uint256[]\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"payment\",\"type\":\"uint256\"}],\"name\":\"ChainlinkVrf__RequestFulfilled\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"requestId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint32\",\"name\":\"numWords\",\"type\":\"uint32\"}],\"name\":\"ChainlinkVrf__RequestSent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"concertId\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"ticketType\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"organizer\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"winner\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"money\",\"type\":\"uint256\"}],\"name\":\"LotteryEscrow__ClaimedFund\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"lotteryAddress\",\"type\":\"address\"}],\"name\":\"LotteryEscrow__CompleteDraw\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"concertId\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"ticketType\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"money\",\"type\":\"uint256\"}],\"name\":\"LotteryEscrow__Deposited\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"concertId\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"ticketType\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"nonWinner\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"money\",\"type\":\"uint256\"}],\"name\":\"LotteryEscrow__NonWinner\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"concertId\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"ticketType\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"money\",\"type\":\"uint256\"}],\"name\":\"LotteryEscrow__Refunded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"concertId\",\"type\":\"string\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"ticketType\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"winner\",\"type\":\"address\"}],\"name\":\"LotteryEscrow__Winner\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"MetadataUpdate\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"OwnershipTransferRequested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"Factory\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"acceptOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allBuyer\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"approve\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"completeDraw\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"concertId\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ddl\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"deposit\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"deposits\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"getApproved\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"owner\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"}],\"name\":\"isApprovedForAll\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"isWinner\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"lastRequestId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"linkToken\",\"outputs\":[{\"internalType\":\"contractLinkTokenInterface\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"organizer\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"price\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_requestId\",\"type\":\"uint256\"},{\"internalType\":\"uint256[]\",\"name\":\"_randomWords\",\"type\":\"uint256[]\"}],\"name\":\"rawFulfillRandomWords\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"participant\",\"type\":\"address\"}],\"name\":\"refund\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"remainingTicketCount\",\"outputs\":[{\"internalType\":\"uint32\",\"name\":\"\",\"type\":\"uint32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"requestIds\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"s_requests\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"paid\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"fulfilled\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"data\",\"type\":\"bytes\"}],\"name\":\"safeTransferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"operator\",\"type\":\"address\"},{\"internalType\":\"bool\",\"name\":\"approved\",\"type\":\"bool\"}],\"name\":\"setApprovalForAll\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"startLottery\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ticketCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"ticketType\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"tokenURI\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"from\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"tokenId\",\"type\":\"uint256\"}],\"name\":\"transferFrom\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"to\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"url\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_amount\",\"type\":\"uint256\"}],\"name\":\"withdrawLink\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"stateMutability\":\"payable\",\"type\":\"receive\"}]",
 }
 
 // LotteryEscrowABI is the input ABI used to generate the binding from.
@@ -306,16 +306,16 @@ func (_LotteryEscrow *LotteryEscrowCallerSession) CompleteDraw() (bool, error) {
 
 // ConcertId is a free data retrieval call binding the contract method 0xbd73f75f.
 //
-// Solidity: function concertId() view returns(uint256)
-func (_LotteryEscrow *LotteryEscrowCaller) ConcertId(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function concertId() view returns(string)
+func (_LotteryEscrow *LotteryEscrowCaller) ConcertId(opts *bind.CallOpts) (string, error) {
 	var out []interface{}
 	err := _LotteryEscrow.contract.Call(opts, &out, "concertId")
 
 	if err != nil {
-		return *new(*big.Int), err
+		return *new(string), err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+	out0 := *abi.ConvertType(out[0], new(string)).(*string)
 
 	return out0, err
 
@@ -323,15 +323,15 @@ func (_LotteryEscrow *LotteryEscrowCaller) ConcertId(opts *bind.CallOpts) (*big.
 
 // ConcertId is a free data retrieval call binding the contract method 0xbd73f75f.
 //
-// Solidity: function concertId() view returns(uint256)
-func (_LotteryEscrow *LotteryEscrowSession) ConcertId() (*big.Int, error) {
+// Solidity: function concertId() view returns(string)
+func (_LotteryEscrow *LotteryEscrowSession) ConcertId() (string, error) {
 	return _LotteryEscrow.Contract.ConcertId(&_LotteryEscrow.CallOpts)
 }
 
 // ConcertId is a free data retrieval call binding the contract method 0xbd73f75f.
 //
-// Solidity: function concertId() view returns(uint256)
-func (_LotteryEscrow *LotteryEscrowCallerSession) ConcertId() (*big.Int, error) {
+// Solidity: function concertId() view returns(string)
+func (_LotteryEscrow *LotteryEscrowCallerSession) ConcertId() (string, error) {
 	return _LotteryEscrow.Contract.ConcertId(&_LotteryEscrow.CallOpts)
 }
 
@@ -2064,7 +2064,7 @@ func (it *LotteryEscrowLotteryEscrowClaimedFundIterator) Close() error {
 
 // LotteryEscrowLotteryEscrowClaimedFund represents a LotteryEscrowClaimedFund event raised by the LotteryEscrow contract.
 type LotteryEscrowLotteryEscrowClaimedFund struct {
-	ConcertId  *big.Int
+	ConcertId  string
 	TicketType *big.Int
 	Organizer  common.Address
 	Winner     common.Address
@@ -2072,42 +2072,34 @@ type LotteryEscrowLotteryEscrowClaimedFund struct {
 	Raw        types.Log // Blockchain specific contextual infos
 }
 
-// FilterLotteryEscrowClaimedFund is a free log retrieval operation binding the contract event 0xa9da42c6927041d56acc2d4ffb558cbb663c3193365eaa60f80f43836e78861d.
+// FilterLotteryEscrowClaimedFund is a free log retrieval operation binding the contract event 0x55afc2b602fdf10b8b9c5ec43d0c93e0abf8d0486fe82aa9ec6d599591876610.
 //
-// Solidity: event LotteryEscrow__ClaimedFund(uint256 indexed concertId, uint256 indexed ticketType, address organizer, address winner, uint256 money)
-func (_LotteryEscrow *LotteryEscrowFilterer) FilterLotteryEscrowClaimedFund(opts *bind.FilterOpts, concertId []*big.Int, ticketType []*big.Int) (*LotteryEscrowLotteryEscrowClaimedFundIterator, error) {
+// Solidity: event LotteryEscrow__ClaimedFund(string concertId, uint256 indexed ticketType, address organizer, address winner, uint256 money)
+func (_LotteryEscrow *LotteryEscrowFilterer) FilterLotteryEscrowClaimedFund(opts *bind.FilterOpts, ticketType []*big.Int) (*LotteryEscrowLotteryEscrowClaimedFundIterator, error) {
 
-	var concertIdRule []interface{}
-	for _, concertIdItem := range concertId {
-		concertIdRule = append(concertIdRule, concertIdItem)
-	}
 	var ticketTypeRule []interface{}
 	for _, ticketTypeItem := range ticketType {
 		ticketTypeRule = append(ticketTypeRule, ticketTypeItem)
 	}
 
-	logs, sub, err := _LotteryEscrow.contract.FilterLogs(opts, "LotteryEscrow__ClaimedFund", concertIdRule, ticketTypeRule)
+	logs, sub, err := _LotteryEscrow.contract.FilterLogs(opts, "LotteryEscrow__ClaimedFund", ticketTypeRule)
 	if err != nil {
 		return nil, err
 	}
 	return &LotteryEscrowLotteryEscrowClaimedFundIterator{contract: _LotteryEscrow.contract, event: "LotteryEscrow__ClaimedFund", logs: logs, sub: sub}, nil
 }
 
-// WatchLotteryEscrowClaimedFund is a free log subscription operation binding the contract event 0xa9da42c6927041d56acc2d4ffb558cbb663c3193365eaa60f80f43836e78861d.
+// WatchLotteryEscrowClaimedFund is a free log subscription operation binding the contract event 0x55afc2b602fdf10b8b9c5ec43d0c93e0abf8d0486fe82aa9ec6d599591876610.
 //
-// Solidity: event LotteryEscrow__ClaimedFund(uint256 indexed concertId, uint256 indexed ticketType, address organizer, address winner, uint256 money)
-func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowClaimedFund(opts *bind.WatchOpts, sink chan<- *LotteryEscrowLotteryEscrowClaimedFund, concertId []*big.Int, ticketType []*big.Int) (event.Subscription, error) {
+// Solidity: event LotteryEscrow__ClaimedFund(string concertId, uint256 indexed ticketType, address organizer, address winner, uint256 money)
+func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowClaimedFund(opts *bind.WatchOpts, sink chan<- *LotteryEscrowLotteryEscrowClaimedFund, ticketType []*big.Int) (event.Subscription, error) {
 
-	var concertIdRule []interface{}
-	for _, concertIdItem := range concertId {
-		concertIdRule = append(concertIdRule, concertIdItem)
-	}
 	var ticketTypeRule []interface{}
 	for _, ticketTypeItem := range ticketType {
 		ticketTypeRule = append(ticketTypeRule, ticketTypeItem)
 	}
 
-	logs, sub, err := _LotteryEscrow.contract.WatchLogs(opts, "LotteryEscrow__ClaimedFund", concertIdRule, ticketTypeRule)
+	logs, sub, err := _LotteryEscrow.contract.WatchLogs(opts, "LotteryEscrow__ClaimedFund", ticketTypeRule)
 	if err != nil {
 		return nil, err
 	}
@@ -2139,9 +2131,9 @@ func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowClaimedFund(opts 
 	}), nil
 }
 
-// ParseLotteryEscrowClaimedFund is a log parse operation binding the contract event 0xa9da42c6927041d56acc2d4ffb558cbb663c3193365eaa60f80f43836e78861d.
+// ParseLotteryEscrowClaimedFund is a log parse operation binding the contract event 0x55afc2b602fdf10b8b9c5ec43d0c93e0abf8d0486fe82aa9ec6d599591876610.
 //
-// Solidity: event LotteryEscrow__ClaimedFund(uint256 indexed concertId, uint256 indexed ticketType, address organizer, address winner, uint256 money)
+// Solidity: event LotteryEscrow__ClaimedFund(string concertId, uint256 indexed ticketType, address organizer, address winner, uint256 money)
 func (_LotteryEscrow *LotteryEscrowFilterer) ParseLotteryEscrowClaimedFund(log types.Log) (*LotteryEscrowLotteryEscrowClaimedFund, error) {
 	event := new(LotteryEscrowLotteryEscrowClaimedFund)
 	if err := _LotteryEscrow.contract.UnpackLog(event, "LotteryEscrow__ClaimedFund", log); err != nil {
@@ -2354,49 +2346,41 @@ func (it *LotteryEscrowLotteryEscrowDepositedIterator) Close() error {
 
 // LotteryEscrowLotteryEscrowDeposited represents a LotteryEscrowDeposited event raised by the LotteryEscrow contract.
 type LotteryEscrowLotteryEscrowDeposited struct {
-	ConcertId  *big.Int
+	ConcertId  string
 	TicketType *big.Int
 	Buyer      common.Address
 	Money      *big.Int
 	Raw        types.Log // Blockchain specific contextual infos
 }
 
-// FilterLotteryEscrowDeposited is a free log retrieval operation binding the contract event 0xbb5116f7c5baded95ebecb639657a3ca3eb8ce830fc866168555f40e9838aa95.
+// FilterLotteryEscrowDeposited is a free log retrieval operation binding the contract event 0x4d6ce4580c5dacbd2299d8ff3d4e3a3c48eb2d078d17a7e679e1078bb1769b74.
 //
-// Solidity: event LotteryEscrow__Deposited(uint256 indexed concertId, uint256 indexed ticketType, address buyer, uint256 money)
-func (_LotteryEscrow *LotteryEscrowFilterer) FilterLotteryEscrowDeposited(opts *bind.FilterOpts, concertId []*big.Int, ticketType []*big.Int) (*LotteryEscrowLotteryEscrowDepositedIterator, error) {
+// Solidity: event LotteryEscrow__Deposited(string concertId, uint256 indexed ticketType, address buyer, uint256 money)
+func (_LotteryEscrow *LotteryEscrowFilterer) FilterLotteryEscrowDeposited(opts *bind.FilterOpts, ticketType []*big.Int) (*LotteryEscrowLotteryEscrowDepositedIterator, error) {
 
-	var concertIdRule []interface{}
-	for _, concertIdItem := range concertId {
-		concertIdRule = append(concertIdRule, concertIdItem)
-	}
 	var ticketTypeRule []interface{}
 	for _, ticketTypeItem := range ticketType {
 		ticketTypeRule = append(ticketTypeRule, ticketTypeItem)
 	}
 
-	logs, sub, err := _LotteryEscrow.contract.FilterLogs(opts, "LotteryEscrow__Deposited", concertIdRule, ticketTypeRule)
+	logs, sub, err := _LotteryEscrow.contract.FilterLogs(opts, "LotteryEscrow__Deposited", ticketTypeRule)
 	if err != nil {
 		return nil, err
 	}
 	return &LotteryEscrowLotteryEscrowDepositedIterator{contract: _LotteryEscrow.contract, event: "LotteryEscrow__Deposited", logs: logs, sub: sub}, nil
 }
 
-// WatchLotteryEscrowDeposited is a free log subscription operation binding the contract event 0xbb5116f7c5baded95ebecb639657a3ca3eb8ce830fc866168555f40e9838aa95.
+// WatchLotteryEscrowDeposited is a free log subscription operation binding the contract event 0x4d6ce4580c5dacbd2299d8ff3d4e3a3c48eb2d078d17a7e679e1078bb1769b74.
 //
-// Solidity: event LotteryEscrow__Deposited(uint256 indexed concertId, uint256 indexed ticketType, address buyer, uint256 money)
-func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowDeposited(opts *bind.WatchOpts, sink chan<- *LotteryEscrowLotteryEscrowDeposited, concertId []*big.Int, ticketType []*big.Int) (event.Subscription, error) {
+// Solidity: event LotteryEscrow__Deposited(string concertId, uint256 indexed ticketType, address buyer, uint256 money)
+func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowDeposited(opts *bind.WatchOpts, sink chan<- *LotteryEscrowLotteryEscrowDeposited, ticketType []*big.Int) (event.Subscription, error) {
 
-	var concertIdRule []interface{}
-	for _, concertIdItem := range concertId {
-		concertIdRule = append(concertIdRule, concertIdItem)
-	}
 	var ticketTypeRule []interface{}
 	for _, ticketTypeItem := range ticketType {
 		ticketTypeRule = append(ticketTypeRule, ticketTypeItem)
 	}
 
-	logs, sub, err := _LotteryEscrow.contract.WatchLogs(opts, "LotteryEscrow__Deposited", concertIdRule, ticketTypeRule)
+	logs, sub, err := _LotteryEscrow.contract.WatchLogs(opts, "LotteryEscrow__Deposited", ticketTypeRule)
 	if err != nil {
 		return nil, err
 	}
@@ -2428,9 +2412,9 @@ func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowDeposited(opts *b
 	}), nil
 }
 
-// ParseLotteryEscrowDeposited is a log parse operation binding the contract event 0xbb5116f7c5baded95ebecb639657a3ca3eb8ce830fc866168555f40e9838aa95.
+// ParseLotteryEscrowDeposited is a log parse operation binding the contract event 0x4d6ce4580c5dacbd2299d8ff3d4e3a3c48eb2d078d17a7e679e1078bb1769b74.
 //
-// Solidity: event LotteryEscrow__Deposited(uint256 indexed concertId, uint256 indexed ticketType, address buyer, uint256 money)
+// Solidity: event LotteryEscrow__Deposited(string concertId, uint256 indexed ticketType, address buyer, uint256 money)
 func (_LotteryEscrow *LotteryEscrowFilterer) ParseLotteryEscrowDeposited(log types.Log) (*LotteryEscrowLotteryEscrowDeposited, error) {
 	event := new(LotteryEscrowLotteryEscrowDeposited)
 	if err := _LotteryEscrow.contract.UnpackLog(event, "LotteryEscrow__Deposited", log); err != nil {
@@ -2509,49 +2493,41 @@ func (it *LotteryEscrowLotteryEscrowNonWinnerIterator) Close() error {
 
 // LotteryEscrowLotteryEscrowNonWinner represents a LotteryEscrowNonWinner event raised by the LotteryEscrow contract.
 type LotteryEscrowLotteryEscrowNonWinner struct {
-	ConcertId  *big.Int
+	ConcertId  string
 	TicketType *big.Int
 	NonWinner  common.Address
 	Money      *big.Int
 	Raw        types.Log // Blockchain specific contextual infos
 }
 
-// FilterLotteryEscrowNonWinner is a free log retrieval operation binding the contract event 0xe7d940172a728ff1d3be17ee88351c67291e24ec6cfa5ec2b4635fca5e1addd2.
+// FilterLotteryEscrowNonWinner is a free log retrieval operation binding the contract event 0x1295862289ea0b345ce149601493b6287e4d2e428d7def6919d6255231cfa741.
 //
-// Solidity: event LotteryEscrow__NonWinner(uint256 indexed concertId, uint256 indexed ticketType, address nonWinner, uint256 money)
-func (_LotteryEscrow *LotteryEscrowFilterer) FilterLotteryEscrowNonWinner(opts *bind.FilterOpts, concertId []*big.Int, ticketType []*big.Int) (*LotteryEscrowLotteryEscrowNonWinnerIterator, error) {
+// Solidity: event LotteryEscrow__NonWinner(string concertId, uint256 indexed ticketType, address nonWinner, uint256 money)
+func (_LotteryEscrow *LotteryEscrowFilterer) FilterLotteryEscrowNonWinner(opts *bind.FilterOpts, ticketType []*big.Int) (*LotteryEscrowLotteryEscrowNonWinnerIterator, error) {
 
-	var concertIdRule []interface{}
-	for _, concertIdItem := range concertId {
-		concertIdRule = append(concertIdRule, concertIdItem)
-	}
 	var ticketTypeRule []interface{}
 	for _, ticketTypeItem := range ticketType {
 		ticketTypeRule = append(ticketTypeRule, ticketTypeItem)
 	}
 
-	logs, sub, err := _LotteryEscrow.contract.FilterLogs(opts, "LotteryEscrow__NonWinner", concertIdRule, ticketTypeRule)
+	logs, sub, err := _LotteryEscrow.contract.FilterLogs(opts, "LotteryEscrow__NonWinner", ticketTypeRule)
 	if err != nil {
 		return nil, err
 	}
 	return &LotteryEscrowLotteryEscrowNonWinnerIterator{contract: _LotteryEscrow.contract, event: "LotteryEscrow__NonWinner", logs: logs, sub: sub}, nil
 }
 
-// WatchLotteryEscrowNonWinner is a free log subscription operation binding the contract event 0xe7d940172a728ff1d3be17ee88351c67291e24ec6cfa5ec2b4635fca5e1addd2.
+// WatchLotteryEscrowNonWinner is a free log subscription operation binding the contract event 0x1295862289ea0b345ce149601493b6287e4d2e428d7def6919d6255231cfa741.
 //
-// Solidity: event LotteryEscrow__NonWinner(uint256 indexed concertId, uint256 indexed ticketType, address nonWinner, uint256 money)
-func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowNonWinner(opts *bind.WatchOpts, sink chan<- *LotteryEscrowLotteryEscrowNonWinner, concertId []*big.Int, ticketType []*big.Int) (event.Subscription, error) {
+// Solidity: event LotteryEscrow__NonWinner(string concertId, uint256 indexed ticketType, address nonWinner, uint256 money)
+func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowNonWinner(opts *bind.WatchOpts, sink chan<- *LotteryEscrowLotteryEscrowNonWinner, ticketType []*big.Int) (event.Subscription, error) {
 
-	var concertIdRule []interface{}
-	for _, concertIdItem := range concertId {
-		concertIdRule = append(concertIdRule, concertIdItem)
-	}
 	var ticketTypeRule []interface{}
 	for _, ticketTypeItem := range ticketType {
 		ticketTypeRule = append(ticketTypeRule, ticketTypeItem)
 	}
 
-	logs, sub, err := _LotteryEscrow.contract.WatchLogs(opts, "LotteryEscrow__NonWinner", concertIdRule, ticketTypeRule)
+	logs, sub, err := _LotteryEscrow.contract.WatchLogs(opts, "LotteryEscrow__NonWinner", ticketTypeRule)
 	if err != nil {
 		return nil, err
 	}
@@ -2583,9 +2559,9 @@ func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowNonWinner(opts *b
 	}), nil
 }
 
-// ParseLotteryEscrowNonWinner is a log parse operation binding the contract event 0xe7d940172a728ff1d3be17ee88351c67291e24ec6cfa5ec2b4635fca5e1addd2.
+// ParseLotteryEscrowNonWinner is a log parse operation binding the contract event 0x1295862289ea0b345ce149601493b6287e4d2e428d7def6919d6255231cfa741.
 //
-// Solidity: event LotteryEscrow__NonWinner(uint256 indexed concertId, uint256 indexed ticketType, address nonWinner, uint256 money)
+// Solidity: event LotteryEscrow__NonWinner(string concertId, uint256 indexed ticketType, address nonWinner, uint256 money)
 func (_LotteryEscrow *LotteryEscrowFilterer) ParseLotteryEscrowNonWinner(log types.Log) (*LotteryEscrowLotteryEscrowNonWinner, error) {
 	event := new(LotteryEscrowLotteryEscrowNonWinner)
 	if err := _LotteryEscrow.contract.UnpackLog(event, "LotteryEscrow__NonWinner", log); err != nil {
@@ -2664,49 +2640,41 @@ func (it *LotteryEscrowLotteryEscrowRefundedIterator) Close() error {
 
 // LotteryEscrowLotteryEscrowRefunded represents a LotteryEscrowRefunded event raised by the LotteryEscrow contract.
 type LotteryEscrowLotteryEscrowRefunded struct {
-	ConcertId  *big.Int
+	ConcertId  string
 	TicketType *big.Int
 	Buyer      common.Address
 	Money      *big.Int
 	Raw        types.Log // Blockchain specific contextual infos
 }
 
-// FilterLotteryEscrowRefunded is a free log retrieval operation binding the contract event 0x5760598089661e85377df061128b09cf866f4ca83b8bdb788ee2cac6b312da94.
+// FilterLotteryEscrowRefunded is a free log retrieval operation binding the contract event 0x3ec87ffb561b22adf9a03fb21194f35302ad5744806919bd41cda5c63011b6ea.
 //
-// Solidity: event LotteryEscrow__Refunded(uint256 indexed concertId, uint256 indexed ticketType, address buyer, uint256 money)
-func (_LotteryEscrow *LotteryEscrowFilterer) FilterLotteryEscrowRefunded(opts *bind.FilterOpts, concertId []*big.Int, ticketType []*big.Int) (*LotteryEscrowLotteryEscrowRefundedIterator, error) {
+// Solidity: event LotteryEscrow__Refunded(string concertId, uint256 indexed ticketType, address buyer, uint256 money)
+func (_LotteryEscrow *LotteryEscrowFilterer) FilterLotteryEscrowRefunded(opts *bind.FilterOpts, ticketType []*big.Int) (*LotteryEscrowLotteryEscrowRefundedIterator, error) {
 
-	var concertIdRule []interface{}
-	for _, concertIdItem := range concertId {
-		concertIdRule = append(concertIdRule, concertIdItem)
-	}
 	var ticketTypeRule []interface{}
 	for _, ticketTypeItem := range ticketType {
 		ticketTypeRule = append(ticketTypeRule, ticketTypeItem)
 	}
 
-	logs, sub, err := _LotteryEscrow.contract.FilterLogs(opts, "LotteryEscrow__Refunded", concertIdRule, ticketTypeRule)
+	logs, sub, err := _LotteryEscrow.contract.FilterLogs(opts, "LotteryEscrow__Refunded", ticketTypeRule)
 	if err != nil {
 		return nil, err
 	}
 	return &LotteryEscrowLotteryEscrowRefundedIterator{contract: _LotteryEscrow.contract, event: "LotteryEscrow__Refunded", logs: logs, sub: sub}, nil
 }
 
-// WatchLotteryEscrowRefunded is a free log subscription operation binding the contract event 0x5760598089661e85377df061128b09cf866f4ca83b8bdb788ee2cac6b312da94.
+// WatchLotteryEscrowRefunded is a free log subscription operation binding the contract event 0x3ec87ffb561b22adf9a03fb21194f35302ad5744806919bd41cda5c63011b6ea.
 //
-// Solidity: event LotteryEscrow__Refunded(uint256 indexed concertId, uint256 indexed ticketType, address buyer, uint256 money)
-func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowRefunded(opts *bind.WatchOpts, sink chan<- *LotteryEscrowLotteryEscrowRefunded, concertId []*big.Int, ticketType []*big.Int) (event.Subscription, error) {
+// Solidity: event LotteryEscrow__Refunded(string concertId, uint256 indexed ticketType, address buyer, uint256 money)
+func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowRefunded(opts *bind.WatchOpts, sink chan<- *LotteryEscrowLotteryEscrowRefunded, ticketType []*big.Int) (event.Subscription, error) {
 
-	var concertIdRule []interface{}
-	for _, concertIdItem := range concertId {
-		concertIdRule = append(concertIdRule, concertIdItem)
-	}
 	var ticketTypeRule []interface{}
 	for _, ticketTypeItem := range ticketType {
 		ticketTypeRule = append(ticketTypeRule, ticketTypeItem)
 	}
 
-	logs, sub, err := _LotteryEscrow.contract.WatchLogs(opts, "LotteryEscrow__Refunded", concertIdRule, ticketTypeRule)
+	logs, sub, err := _LotteryEscrow.contract.WatchLogs(opts, "LotteryEscrow__Refunded", ticketTypeRule)
 	if err != nil {
 		return nil, err
 	}
@@ -2738,9 +2706,9 @@ func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowRefunded(opts *bi
 	}), nil
 }
 
-// ParseLotteryEscrowRefunded is a log parse operation binding the contract event 0x5760598089661e85377df061128b09cf866f4ca83b8bdb788ee2cac6b312da94.
+// ParseLotteryEscrowRefunded is a log parse operation binding the contract event 0x3ec87ffb561b22adf9a03fb21194f35302ad5744806919bd41cda5c63011b6ea.
 //
-// Solidity: event LotteryEscrow__Refunded(uint256 indexed concertId, uint256 indexed ticketType, address buyer, uint256 money)
+// Solidity: event LotteryEscrow__Refunded(string concertId, uint256 indexed ticketType, address buyer, uint256 money)
 func (_LotteryEscrow *LotteryEscrowFilterer) ParseLotteryEscrowRefunded(log types.Log) (*LotteryEscrowLotteryEscrowRefunded, error) {
 	event := new(LotteryEscrowLotteryEscrowRefunded)
 	if err := _LotteryEscrow.contract.UnpackLog(event, "LotteryEscrow__Refunded", log); err != nil {
@@ -2819,48 +2787,40 @@ func (it *LotteryEscrowLotteryEscrowWinnerIterator) Close() error {
 
 // LotteryEscrowLotteryEscrowWinner represents a LotteryEscrowWinner event raised by the LotteryEscrow contract.
 type LotteryEscrowLotteryEscrowWinner struct {
-	ConcertId  *big.Int
+	ConcertId  string
 	TicketType *big.Int
 	Winner     common.Address
 	Raw        types.Log // Blockchain specific contextual infos
 }
 
-// FilterLotteryEscrowWinner is a free log retrieval operation binding the contract event 0x4ee3936676cf241a4d8ad30d25af1aa73ce1dbe84d17c8824d4b5cc26c34cdaa.
+// FilterLotteryEscrowWinner is a free log retrieval operation binding the contract event 0xaab09bf34c5ca80680ba85d2bbc5ae2668156ed988ddf090b1b6300439be0e74.
 //
-// Solidity: event LotteryEscrow__Winner(uint256 indexed concertId, uint256 indexed ticketType, address winner)
-func (_LotteryEscrow *LotteryEscrowFilterer) FilterLotteryEscrowWinner(opts *bind.FilterOpts, concertId []*big.Int, ticketType []*big.Int) (*LotteryEscrowLotteryEscrowWinnerIterator, error) {
+// Solidity: event LotteryEscrow__Winner(string concertId, uint256 indexed ticketType, address winner)
+func (_LotteryEscrow *LotteryEscrowFilterer) FilterLotteryEscrowWinner(opts *bind.FilterOpts, ticketType []*big.Int) (*LotteryEscrowLotteryEscrowWinnerIterator, error) {
 
-	var concertIdRule []interface{}
-	for _, concertIdItem := range concertId {
-		concertIdRule = append(concertIdRule, concertIdItem)
-	}
 	var ticketTypeRule []interface{}
 	for _, ticketTypeItem := range ticketType {
 		ticketTypeRule = append(ticketTypeRule, ticketTypeItem)
 	}
 
-	logs, sub, err := _LotteryEscrow.contract.FilterLogs(opts, "LotteryEscrow__Winner", concertIdRule, ticketTypeRule)
+	logs, sub, err := _LotteryEscrow.contract.FilterLogs(opts, "LotteryEscrow__Winner", ticketTypeRule)
 	if err != nil {
 		return nil, err
 	}
 	return &LotteryEscrowLotteryEscrowWinnerIterator{contract: _LotteryEscrow.contract, event: "LotteryEscrow__Winner", logs: logs, sub: sub}, nil
 }
 
-// WatchLotteryEscrowWinner is a free log subscription operation binding the contract event 0x4ee3936676cf241a4d8ad30d25af1aa73ce1dbe84d17c8824d4b5cc26c34cdaa.
+// WatchLotteryEscrowWinner is a free log subscription operation binding the contract event 0xaab09bf34c5ca80680ba85d2bbc5ae2668156ed988ddf090b1b6300439be0e74.
 //
-// Solidity: event LotteryEscrow__Winner(uint256 indexed concertId, uint256 indexed ticketType, address winner)
-func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowWinner(opts *bind.WatchOpts, sink chan<- *LotteryEscrowLotteryEscrowWinner, concertId []*big.Int, ticketType []*big.Int) (event.Subscription, error) {
+// Solidity: event LotteryEscrow__Winner(string concertId, uint256 indexed ticketType, address winner)
+func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowWinner(opts *bind.WatchOpts, sink chan<- *LotteryEscrowLotteryEscrowWinner, ticketType []*big.Int) (event.Subscription, error) {
 
-	var concertIdRule []interface{}
-	for _, concertIdItem := range concertId {
-		concertIdRule = append(concertIdRule, concertIdItem)
-	}
 	var ticketTypeRule []interface{}
 	for _, ticketTypeItem := range ticketType {
 		ticketTypeRule = append(ticketTypeRule, ticketTypeItem)
 	}
 
-	logs, sub, err := _LotteryEscrow.contract.WatchLogs(opts, "LotteryEscrow__Winner", concertIdRule, ticketTypeRule)
+	logs, sub, err := _LotteryEscrow.contract.WatchLogs(opts, "LotteryEscrow__Winner", ticketTypeRule)
 	if err != nil {
 		return nil, err
 	}
@@ -2892,9 +2852,9 @@ func (_LotteryEscrow *LotteryEscrowFilterer) WatchLotteryEscrowWinner(opts *bind
 	}), nil
 }
 
-// ParseLotteryEscrowWinner is a log parse operation binding the contract event 0x4ee3936676cf241a4d8ad30d25af1aa73ce1dbe84d17c8824d4b5cc26c34cdaa.
+// ParseLotteryEscrowWinner is a log parse operation binding the contract event 0xaab09bf34c5ca80680ba85d2bbc5ae2668156ed988ddf090b1b6300439be0e74.
 //
-// Solidity: event LotteryEscrow__Winner(uint256 indexed concertId, uint256 indexed ticketType, address winner)
+// Solidity: event LotteryEscrow__Winner(string concertId, uint256 indexed ticketType, address winner)
 func (_LotteryEscrow *LotteryEscrowFilterer) ParseLotteryEscrowWinner(log types.Log) (*LotteryEscrowLotteryEscrowWinner, error) {
 	event := new(LotteryEscrowLotteryEscrowWinner)
 	if err := _LotteryEscrow.contract.UnpackLog(event, "LotteryEscrow__Winner", log); err != nil {
