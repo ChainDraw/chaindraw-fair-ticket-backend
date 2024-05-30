@@ -8,6 +8,46 @@
     },
     "basePath": "/api/v1",
     "paths": {
+        "/concert/cancel": {
+            "post": {
+                "description": "Cancel concerts",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Concert"
+                ],
+                "summary": "Cancel concerts",
+                "parameters": [
+                    {
+                        "description": "Concert Cancel Request",
+                        "name": "concertCancelReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/commonreq.ConcertCancelReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/commonresp.ConcertListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/commonresp.ConcertListResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/concert/commit": {
             "post": {
                 "description": "Add a new concert with the given details",
@@ -48,49 +88,6 @@
                 }
             }
         },
-        "/concert/cancel": {
-            "post": {
-                "description": "cancel a existed concert by cid",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Concert"
-                ],
-                "summary": "Concel a concert",
-                "parameters": [
-                    {
-                        "description": "Concert Cancel Request",
-                        "name": "concertCancelReq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/commonreq.ConcertCancelReq"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/commonresp.ConcertCancelResp"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "object",
-                            "$ref": "#/definitions/commonresp.ConcertCancelResp"
-                        }
-                    }
-                }
-            }
-        },
         "/concert/concert_list": {
             "get": {
                 "description": "Get list of concerts by IDs with pagination",
@@ -122,6 +119,46 @@
                         "description": "Number of items per page",
                         "name": "page_size",
                         "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/commonresp.ConcertListResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/commonresp.ConcertListResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/concert/publish": {
+            "post": {
+                "description": "publish concerts",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Concert"
+                ],
+                "summary": "publish concerts",
+                "parameters": [
+                    {
+                        "description": "Concert publish Request",
+                        "name": "ConcertPublishReq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/commonreq.ConcertPublishReq"
+                        }
                     }
                 ],
                 "responses": {
@@ -418,6 +455,10 @@
                     "description": "演唱会日期",
                     "type": "string"
                 },
+                "concert_end_date": {
+                    "description": "演唱会结束日期",
+                    "type": "string"
+                },
                 "concert_id": {
                     "description": "演唱会ID",
                     "type": "string"
@@ -456,6 +497,28 @@
                     "items": {
                         "$ref": "#/definitions/commonreq.Ticket"
                     }
+                }
+            }
+        },
+        "commonreq.ConcertCancelReq": {
+            "type": "object",
+            "properties": {
+                "cancel_reason": {
+                    "description": "是否通过",
+                    "type": "string"
+                },
+                "concert_id": {
+                    "description": "提交的演唱会id",
+                    "type": "string"
+                }
+            }
+        },
+        "commonreq.ConcertPublishReq": {
+            "type": "object",
+            "properties": {
+                "concert_id": {
+                    "description": "提交的演唱会id",
+                    "type": "string"
                 }
             }
         },
@@ -542,97 +605,67 @@
                 }
             }
         },
-        "commonresp.ConcertCancelResp": {
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "status": {
-                    "type": "string"
-                },
-                "msg": {
-                    "type": "string"
-                },
-                "reason": {
-                    "type": "string"
-                },
-                "request_id": {
-                    "type": "string"
-                },
-                "result": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/commonresp.CancelResult"
-                    }
-                }
-            },
+        "commonresp.Concert": {
             "type": "object",
-            "example": {
-                "code": 0,
-                "status": "failed",
-                "msg": "failed to cancel ticket",
-                "reason": "",
-                "request_id": "234",
-                "result": {
-                    "concert_id": "234"
-                }
-            }
-        },
-        "commonreq.ConcertCancelReq": {
             "properties": {
-                "concert_id": {
+                "address": {
+                    "description": "演唱会地点",
                     "type": "string"
                 },
                 "cancel_reason": {
+                    "description": "取消原因",
                     "type": "string"
-                }
-            },
-            "type": "object",
-            "example": {
-                "code": 0,
-                "status": "failed",
-                "msg": "failed to cancel ticket",
-                "reason": "",
-                "request_id": "234",
-                "result": {
-                    "concert_id": "234",
-                    "cancel_reason": "天气原因"
-                }
-            }
-        }
-    },
-    "commonresp.Concert": {
-        "type": "object",
-        "properties": {
-            "concert_date": {
-                "description": "演唱会日期",
-                "type": "string"
-            },
-            "concert_id": {
-                "description": "演唱会ID",
-                "type": "string"
-            },
-            "concert_img": {
-                "description": "演唱会图片",
-                "type": "string"
-            },
-            "concert_name": {
-                "description": "演唱会名称",
-                "type": "string"
-            },
-            "concert_status": {
-                "description": "演唱会状态",
-                "type": "integer"
-            },
-            "status": {
-                "description": "演唱会状态",
-                "type": "string"
-            },
-            "ticket_types": {
-                "description": "门票类型列表",
-                "type": "array",
-                "items": {
-                    "$ref": "#/definitions/commonresp.TicketType"
+                },
+                "concert_date": {
+                    "description": "演唱会日期",
+                    "type": "string"
+                },
+                "concert_end_date": {
+                    "description": "演唱会结束日期",
+                    "type": "string"
+                },
+                "concert_id": {
+                    "description": "演唱会ID",
+                    "type": "string"
+                },
+                "concert_img": {
+                    "description": "演唱会图片",
+                    "type": "string"
+                },
+                "concert_name": {
+                    "description": "演唱会名称",
+                    "type": "string"
+                },
+                "concert_status": {
+                    "description": "演唱会状态",
+                    "type": "integer"
+                },
+                "lottery_end_date": {
+                    "description": "彩票开始日期",
+                    "type": "string"
+                },
+                "lottery_start_date": {
+                    "description": "彩票开始日期",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "演唱会备注",
+                    "type": "string"
+                },
+                "review_status": {
+                    "description": "审核状态",
+                    "type": "integer"
+                },
+                "status": {
+                    "description": "演唱会状态",
+                    "type": "string"
+                },
+                "ticket_types": {
+                    "description": "门票类型列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/commonresp.TicketType"
+                    }
                 }
             }
         },
@@ -754,20 +787,40 @@
         "commonresp.TicketType": {
             "type": "object",
             "properties": {
+                "create_at": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
                 "max_quantity_per_wallet": {
                     "description": "单个钱包最大购买数量",
                     "type": "integer"
                 },
+                "num": {
+                    "description": "数量",
+                    "type": "integer"
+                },
                 "price": {
                     "description": "价格",
+                    "type": "number"
+                },
+                "ticket_img": {
+                    "description": "票图片",
                     "type": "string"
                 },
                 "ticket_type": {
                     "description": "门票种类唯一键",
-                    "type": "string"
+                    "type": "integer"
+                },
+                "trade": {
+                    "description": "是否交易",
+                    "type": "boolean"
                 },
                 "type_name": {
                     "description": "类型名称",
+                    "type": "string"
+                },
+                "update_at": {
+                    "description": "更新时间",
                     "type": "string"
                 }
             }

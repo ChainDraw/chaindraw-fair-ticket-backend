@@ -138,3 +138,34 @@ func ConcertCancel(concertCancelReq *commonreq.ConcertCancelReq) (commonresp.Con
 
 	return res, nil
 }
+
+func ConcertPublish(concertPublishReq *commonreq.ConcertPublishReq) (commonresp.ConcertCancellationResponse, error) {
+	result := global.DB.Model(&model.TbConcert{}).Where("concert_id = ?", concertPublishReq.ConcertID).Updates(map[string]interface{}{
+		"concert_status": 3,
+	})
+
+	var res commonresp.ConcertCancellationResponse
+	if result.RowsAffected > 0 {
+		res = commonresp.ConcertCancellationResponse{
+			Code:      200,
+			Status:    "success",
+			Msg:       "Concert was published!",
+			RequestID: concertPublishReq.ConcertID,
+			Result: commonresp.CancelResult{
+				ConcertID: concertPublishReq.ConcertID,
+			},
+		}
+	} else {
+		res = commonresp.ConcertCancellationResponse{
+			Code:      200,
+			Status:    "failed",
+			Msg:       "Failed to publish ticket",
+			RequestID: concertPublishReq.ConcertID,
+			Result: commonresp.CancelResult{
+				ConcertID: concertPublishReq.ConcertID,
+			},
+		}
+	}
+
+	return res, nil
+}

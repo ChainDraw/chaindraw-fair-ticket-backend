@@ -133,3 +133,32 @@ func CancelConcert(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, resp)
 }
+
+// @Summary publish concerts
+// @Description publish concerts
+// @Tags Concert
+// @Accept  json
+// @Produce  json
+// @Param   ConcertPublishReq  body    commonreq.ConcertPublishReq  true  "Concert publish Request"
+// @Success 200 {object} commonresp.ConcertListResponse
+// @Failure 400 {object} commonresp.ConcertListResponse
+// @Router /concert/publish [post]
+func PublishConcert(ctx *gin.Context) {
+	req := &commonreq.ConcertPublishReq{}
+	resp := &commonresp.ConcertCancellationResponse{}
+	err := ctx.ShouldBindJSON(req)
+	if err != nil {
+		global.LOGGER.Info("CancelConcert failed, bind json params failed", zap.Any("req", req))
+		commonresp.FailWithMessage(ctx, "参数绑定失败")
+		return
+	}
+
+	concerts, err := service.ConcertPublish(req)
+	resp = &concerts
+	if err != nil {
+		global.LOGGER.Error("review concerts logic failed", zap.Error(err))
+		ctx.JSON(http.StatusBadRequest, resp)
+	}
+
+	ctx.JSON(http.StatusOK, resp)
+}
