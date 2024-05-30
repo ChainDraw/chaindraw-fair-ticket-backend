@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.20;
 
-import "../../lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol";
-import "../../lib/openzeppelin-contracts/contracts/token/ERC721/extensions/IERC721Metadata.sol";
-import "../../lib/openzeppelin-contracts/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
-import "../../lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol";
-import "../../lib/openzeppelin-contracts/contracts/access/Ownable.sol";
+import "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol";
+import "lib/openzeppelin-contracts/contracts/token/ERC721/extensions/IERC721Metadata.sol";
+import "lib/openzeppelin-contracts/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
+import "lib/openzeppelin-contracts/contracts/utils/ReentrancyGuard.sol";
+import "lib/openzeppelin-contracts/contracts/access/Ownable.sol";
+import "lib/openzeppelin-contracts/contracts/token/ERC721/IERC721Receiver.sol";
 
 interface IFactory {
     function isRegistered(address lotteryAddress) external view returns (bool);
@@ -15,7 +16,7 @@ interface ILottery {
     function price() external view returns (uint256);
 }
 
-contract LotteryMarket is ReentrancyGuard, Ownable {
+contract LotteryMarket is ReentrancyGuard, IERC721Receiver, Ownable {
     struct Listing {
         address seller;
         address lotteryAddress;
@@ -42,9 +43,7 @@ contract LotteryMarket is ReentrancyGuard, Ownable {
         uint256 indexed tokenId
     );
 
-    constructor()  Ownable(msg.sender){
-        
-    }
+    constructor() Ownable(msg.sender) {}
 
     modifier onlyRegistered(address lotteryAddress) {
         require(
@@ -115,5 +114,15 @@ contract LotteryMarket is ReentrancyGuard, Ownable {
 
     receive() external payable {
         revert("Direct payments not allowed");
+    }
+
+    function onERC721Received(
+        address operator,
+        address from,
+        uint256 tokenId,
+        bytes calldata data
+    ) external override returns (bytes4) {
+        // 返回函数选择器
+        return this.onERC721Received.selector;
     }
 }
