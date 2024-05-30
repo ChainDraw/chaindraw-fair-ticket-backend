@@ -31,8 +31,8 @@ var (
 
 func ListerInit(db *gorm.DB) {
 	//dsn   = "root:12345678@tcp(127.0.0.1:3306)/chaindraw?charset=utf8mb4&parseTime=True&loc=Local&timeout=10000ms"
-	//WSS = "wss://go.getblock.io/74d1785308b244db9c9fda86104694c5" // 合约部署所在链的WSS  wss://go.getblock.io/74d1785308b244db9c9fda86104694c5
-	WSS = "ws://127.0.0.1:8545" // 合约部署所在链的WSS
+	WSS = "wss://go.getblock.io/74d1785308b244db9c9fda86104694c5" // 合约部署所在链的WSS  wss://go.getblock.io/74d1785308b244db9c9fda86104694c5
+	//WSS = "ws://127.0.0.1:8545" // 合约部署所在链的WSS
 	ListenAddress = []common.Address{
 		common.HexToAddress("0x683A3c225FFbAAC03F25Eab457edeB202cEBEd26"), //factory合约地址
 		common.HexToAddress("0x13882152805c189574006E180e7fAbb0119c8618"), //factory合约地址 v2
