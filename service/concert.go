@@ -67,8 +67,8 @@ func ConcertList(ids []string, page, pageSize int) ([]commonresp.Concert, error)
 					TicketImg:            ticket.TicketImg,
 					Trade:                isTrade,
 					MaxQuantityPerWallet: ticket.MaxQuantityPerWallet,
-					CreateAt:             utils.Time.Timestamp2RFC3339(ticket.CreateAt),
-					UpdateAt:             utils.Time.Timestamp2RFC3339(ticket.UpdateAt),
+					CreateAt:             strconv.Itoa(int(ticket.CreateAt)),
+					UpdateAt:             strconv.Itoa(int(ticket.UpdateAt)),
 				})
 			}
 		}

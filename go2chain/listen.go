@@ -35,7 +35,7 @@ func ListerInit(db *gorm.DB) {
 	ListenAddress = []common.Address{
 		common.HexToAddress("0x683A3c225FFbAAC03F25Eab457edeB202cEBEd26"), //factory合约地址
 		common.HexToAddress("0xD2BDf4F1F8f667d91809594cbbdCc7b23a160656"), // LotteryMarket合约地址
-	}                               // 监听的合约地址
+	} // 监听的合约地址
 	client, _ = ethclient.Dial(WSS) // 客户端
 	events = map[string]DB{
 		crypto.Keccak256Hash([]byte("EscrowCreated(uint256,uint256,address)")).Hex(): DB(func(data types.Log) {
@@ -126,7 +126,7 @@ func ListerInit(db *gorm.DB) {
 			getLotteryEscrowABI().UnpackIntoInterface(event, "LotteryEscrow__CompleteDraw", data.Data)
 			db.Save(event)
 		}),
-		crypto.Keccak256Hash([]byte("event_nft_listed(address,address,uint256,uint256)")).Hex(): DB(func(data types.Log) {
+		crypto.Keccak256Hash([]byte("NFTListed(address,address,uint256,uint256)")).Hex(): DB(func(data types.Log) {
 			event := &model.EventNftListed{
 				Seller:         data.Topics[1].Hex(),
 				LotteryAddress: data.Topics[2].Hex(),
