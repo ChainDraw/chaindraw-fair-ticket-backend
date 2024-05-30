@@ -13,6 +13,7 @@ type ConcertAddReq struct {
 	LotteryStartDate string   `json:"lottery_start_date"` // 抽奖开始时间
 	LotteryEndDate   string   `json:"lottery_end_date"`   // 抽奖结束时间
 	ConcertDate      string   `json:"concert_date"`       // 演唱会日期
+	ConcertEndDate   string   `json:"concert_end_date"`   //演唱会结束日期
 	ConcertImg       string   `json:"concert_img"`        // 演唱会图片
 	ConcertStatus    int      `json:"concert_status"`     // 演唱会状态（0: 未开始, 1: 已过期, 2: 已取消）
 	ReviewStatus     int      `json:"review_status"`      // 审核状态（0: 未审核, 1: 审核通过, 2: 审核失败）
