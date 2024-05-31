@@ -109,7 +109,7 @@ func ConcertReview(concertViewRecord *commonreq.ConcertReViewReq) ([]commonresp.
 
 func ConcertCancel(concertCancelReq *commonreq.ConcertCancelReq) (commonresp.ConcertCancellationResponse, error) {
 	result := global.DB.Model(&model.TbConcert{}).Where("concert_id = ?", concertCancelReq.ConcertID).Updates(map[string]interface{}{
-		"concert_status": 1,
+		"concert_status": 2,
 		"cancel_reason":  concertCancelReq.CancelReason,
 	})
 
